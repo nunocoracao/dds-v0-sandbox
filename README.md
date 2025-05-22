@@ -28,14 +28,14 @@ This repo acts as a sandbox for design-to-code generation using v0.dev. It prelo
 ## Development
 
 1. Install dependencies:
-```bash
+\`\`\`bash
 npm install
-```
+\`\`\`
 
 2. Run the development server:
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 ## Status
 
