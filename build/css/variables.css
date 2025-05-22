@@ -1,0 +1,310 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --borderRadiusSm: 4px; /** Default border radius */
+  --borderRadiusMd: 8px; /** Medium border radius */
+  --borderRadiusLg: 16px; /** Large border radius */
+  --borderRadiusXl: 24px; /** Extra large border radius */
+  --borderRadiusNone: 0px; /** No border radius */
+  --breakpointsXl: 1536; /** Extra large breakpoint, large screens like desktop monitors */
+  --breakpointsLg: 1200; /** Large breakpoint, large screens like laptops */
+  --breakpointsMd: 900; /** Medium breakpoint, medium screens like tablets */
+  --breakpointsSm: 600; /** Small breakpoint, small screens like phones */
+  --breakpointsXs: 444; /** Extra small breakpoint, small screens like watches */
+  --colorGrey50: #fafafa; /** Amanda demo - Grey 50 */
+  --colorGrey100: #f5f5f5; /** Grey 100 */
+  --colorGrey200: #eeeeee; /** Grey 200 */
+  --colorGrey300: #e0e0e0; /** Grey 300 */
+  --colorGrey400: #bdbdbd; /** Grey 400 */
+  --colorGrey500: #9e9e9e; /** Grey 500 */
+  --colorGrey600: #757575; /** Grey 600 */
+  --colorGrey700: #616161; /** Grey 700 */
+  --colorGrey800: #424242; /** Grey 800 */
+  --colorGrey900: #212121; /** Grey 900 */
+  --colorGreyA100: #f5f5f5; /** Grey A100 */
+  --colorGreyA200: #eeeeee; /** Grey A200 */
+  --colorGreyA400: #bdbdbd; /** Grey A400 */
+  --colorGreyA700: #616161; /** Grey A700 */
+  --colorBlue50: #e3f2fd; /** Blue 50 */
+  --colorBlue100: #bbdefb; /** Blue 100 */
+  --colorBlue200: #90caf9; /** Blue 200 */
+  --colorBlue300: #64b5f6; /** Blue 300 */
+  --colorBlue400: #42a5f5; /** Blue 400 */
+  --colorBlue500: #2560ff; /** DDS Blue #2560FF */
+  --colorBlue600: #1e88e5; /** Blue 600 */
+  --colorBlue700: #1976d2; /** Blue 700 - Fixed */
+  --colorBlue800: #1565c0; /** Blue 800 */
+  --colorBlue900: #0d47a1; /** Blue 900 */
+  --colorBlueA100: #82b1ff; /** Blue A100 */
+  --colorBlueA200: #448aff; /** Blue A200 */
+  --colorBlueA400: #2979ff; /** Blue A400 */
+  --colorBlueA700: #2962ff; /** Blue A700 */
+  --colorPurple50: #f3e5f5; /** Purple 50 */
+  --colorPurple100: #e1bee7; /** Purple 100 */
+  --colorPurple200: #ce93d8; /** Purple 200 */
+  --colorPurple300: #ba68c8; /** Purple 300 */
+  --colorPurple400: #ab47bc; /** Purple 400 */
+  --colorPurple500: #9c27b0; /** Purple 500 */
+  --colorPurple600: #8e24aa; /** Purple 600 */
+  --colorPurple700: #7b1fa2; /** Purple 700 */
+  --colorPurple800: #6a1b9a; /** Purple 800 */
+  --colorPurple900: #4a148c; /** Purple 900 */
+  --colorPurpleA100: #ea80fc; /** Purple A100 */
+  --colorPurpleA200: #e040fb; /** Purple A200 */
+  --colorPurpleA400: #d500f9; /** Purple A400 */
+  --colorPurpleA700: #aa00ff; /** Purple A700 */
+  --colorRed50: #feebee; /** Red 50 */
+  --colorRed100: #fecdd2; /** Red 100 */
+  --colorRed200: #ef9a9a; /** Red 200 */
+  --colorRed300: #e57373; /** Red 300 */
+  --colorRed400: #ef5350; /** Red 400 */
+  --colorRed500: #f44336; /** Red 500 */
+  --colorRed600: #e53935; /** Red 600 */
+  --colorRed700: #d32f2f; /** Red 700 */
+  --colorRed800: #c62828; /** Red 800 */
+  --colorRed900: #b71c1c; /** Red 900 */
+  --colorRedA100: #ff8a80; /** Red A100 */
+  --colorRedA200: #ff5252; /** Red A200 */
+  --colorRedA400: #ff1744; /** Red A400 */
+  --colorRedA700: #d50000; /** Red A700 */
+  --colorGreen50: #e8f5e9; /** Green 50 */
+  --colorGreen100: #c8e6c9; /** Green 100 */
+  --colorGreen200: #a5d6a7; /** Green 200 */
+  --colorGreen300: #81c784; /** Green 300 */
+  --colorGreen400: #66bb6a; /** Green 400 */
+  --colorGreen500: #4caf50; /** Green 500 */
+  --colorGreen600: #43a047; /** Green 600 */
+  --colorGreen700: #388e3c; /** Green 700 */
+  --colorGreen800: #2e7d32; /** Green 800 */
+  --colorGreen900: #1b5e20; /** Green 900 */
+  --colorGreenA100: #b9f6ca; /** Green A100 */
+  --colorGreenA200: #69f0ae; /** Green A200 */
+  --colorGreenA400: #00e676; /** Green A400 */
+  --colorGreenA700: #00c853; /** Green A700 */
+  --colorOrange50: #fff3e0; /** Orange 50 */
+  --colorOrange100: #ffe0b2; /** Orange 100 */
+  --colorOrange200: #ffcc80; /** Orange 200 */
+  --colorOrange300: #ffb74d; /** Orange 300 */
+  --colorOrange400: #ffa726; /** Orange 400 */
+  --colorOrange500: #ff9800; /** Orange 500 */
+  --colorOrange600: #fb8c00; /** Orange 600 */
+  --colorOrange700: #f57c00; /** Orange 700 */
+  --colorOrange800: #ef6c00; /** Orange 800 */
+  --colorOrange900: #e65100; /** Orange 900 */
+  --colorOrangeA100: #ffd180; /** Orange A100 */
+  --colorOrangeA200: #ffab40; /** Orange A200 */
+  --colorOrangeA400: #ff9100; /** Orange A400 */
+  --colorOrangeA700: #ff6d00; /** Orange A700 */
+  --colorLightblue50: #e1f5fe; /** Light Blue 50 */
+  --colorLightblue100: #b3e5fc; /** Light Blue 100 */
+  --colorLightblue200: #81d4fa; /** Light Blue 200 */
+  --colorLightblue300: #4fc3f7; /** Light Blue 300 */
+  --colorLightblue400: #29b6f6; /** Light Blue 400 */
+  --colorLightblue500: #03a9f4; /** Light Blue 500 */
+  --colorLightblue600: #039be5; /** Light Blue 600 */
+  --colorLightblue700: #0288d1; /** Light Blue 700 */
+  --colorLightblue800: #0277bd; /** Light Blue 800 */
+  --colorLightblue900: #01579b; /** Light Blue 900 */
+  --colorLightblueA100: #80d8ff; /** Light Blue A100 */
+  --colorLightblueA200: #40c4ff; /** Light Blue A200 */
+  --colorLightblueA400: #00b0ff; /** Light Blue A400 */
+  --colorLightblueA700: #0091ea; /** Light Blue A700 */
+  --colorIndigo50: #e8eaf6; /** Indigo 50 */
+  --colorIndigo100: #c5cae9; /** Indigo 100 */
+  --colorIndigo200: #9fa8da; /** Indigo 200 */
+  --colorIndigo300: #7986cb; /** Indigo 300 */
+  --colorIndigo400: #5c6bc0; /** Indigo 400 */
+  --colorIndigo500: #3f51b5; /** Indigo 500 */
+  --colorIndigo600: #3949ab; /** Indigo 600 */
+  --colorIndigo700: #303f9f; /** Indigo 700 */
+  --colorIndigo800: #283593; /** Indigo 800 */
+  --colorIndigo900: #1a237e; /** Indigo 900 */
+  --colorIndigoA100: #8c9eff; /** Indigo A100 */
+  --colorIndigoA200: #536dfe; /** Indigo A200 */
+  --colorIndigoA400: #3d5afe; /** Indigo A400 */
+  --colorIndigoA700: #304ffe; /** Indigo A700 */
+  --colorDeeppurple50: #ede7f6; /** Deep Purple 50 */
+  --colorDeeppurple100: #d1c4e9; /** Deep Purple 100 */
+  --colorDeeppurple200: #b39ddb; /** Deep Purple 200 */
+  --colorDeeppurple300: #9575cd; /** Deep Purple 300 */
+  --colorDeeppurple400: #7e57c2; /** Deep Purple 400 */
+  --colorDeeppurple500: #673ab7; /** Deep Purple 500 */
+  --colorDeeppurple600: #5e35b1; /** Deep Purple 600 */
+  --colorDeeppurple700: #512da8; /** Deep Purple 700 */
+  --colorDeeppurple800: #4527a0; /** Deep Purple 800 */
+  --colorDeeppurple900: #311b92; /** Deep Purple 900 */
+  --colorDeeppurpleA100: #b388ff; /** Deep Purple A100 */
+  --colorDeeppurpleA200: #7c4dff; /** Deep Purple A200 */
+  --colorDeeppurpleA400: #651fff; /** Deep Purple A400 */
+  --colorDeeppurpleA700: #6200ea; /** Deep Purple A700 */
+  --colorAmber50: #fff8e1; /** Amber 50 */
+  --colorAmber100: #ffecb3; /** Amber 100 */
+  --colorAmber200: #ffe082; /** Amber 200 */
+  --colorAmber300: #ffd54f; /** Amber 300 */
+  --colorAmber400: #ffca28; /** Amber 400 */
+  --colorAmber500: #ffc107; /** Amber 500 */
+  --colorAmber600: #ffb300; /** Amber 600 */
+  --colorAmber700: #ffa000; /** Amber 700 */
+  --colorAmber800: #ff8f00; /** Amber 800 */
+  --colorAmber900: #ff6f00; /** Amber 900 */
+  --colorAmberA100: #ffe57f; /** Amber A100 */
+  --colorAmberA200: #ffd740; /** Amber A200 */
+  --colorAmberA400: #ffc400; /** Amber A400 */
+  --colorAmberA700: #ffab00; /** Amber A700 */
+  --colorPink50: #fce4ec; /** Pink 50 */
+  --colorPink100: #f8bbd0; /** Pink 100 */
+  --colorPink200: #f48fb1; /** Pink 200 */
+  --colorPink300: #f06292; /** Pink 300 */
+  --colorPink400: #ec407a; /** Pink 400 */
+  --colorPink500: #e91e63; /** Pink 500 */
+  --colorPink600: #d81b60; /** Pink 600 */
+  --colorPink700: #c2185b; /** Pink 700 */
+  --colorPink800: #ad1457; /** Pink 800 */
+  --colorPink900: #880e4f; /** Pink 900 */
+  --colorPinkA100: #ff80ab; /** Pink A100 */
+  --colorPinkA200: #ff4081; /** Pink A200 */
+  --colorPinkA400: #f50057; /** Pink A400 */
+  --colorPinkA700: #c51162; /** Pink A700 */
+  --colorDeeporange50: #fbe9e7; /** Deep Orange 50 */
+  --colorDeeporange100: #ffccbc; /** Deep Orange 100 */
+  --colorDeeporange200: #ffab91; /** Deep Orange 200 */
+  --colorDeeporange300: #ff8a65; /** Deep Orange 300 */
+  --colorDeeporange400: #ff7043; /** Deep Orange 400 */
+  --colorDeeporange500: #ff5722; /** Deep Orange 500 */
+  --colorDeeporange600: #f4511e; /** Deep Orange 600 */
+  --colorDeeporange700: #e64a19; /** Deep Orange 700 */
+  --colorDeeporange800: #d84315; /** Deep Orange 800 */
+  --colorDeeporange900: #bf360c; /** Deep Orange 900 */
+  --colorDeeporangeA100: #ff9e80; /** Deep Orange A100 */
+  --colorDeeporangeA200: #ff6e40; /** Deep Orange A200 */
+  --colorDeeporangeA400: #ff3d00; /** Deep Orange A400 */
+  --colorDeeporangeA700: #dd2c00; /** Deep Orange A700 */
+  --colorLightgreen50: #f1f8e9; /** Light Green 50 */
+  --colorLightgreen100: #dcedc8; /** Light Green 100 */
+  --colorLightgreen200: #c5e1a5; /** Light Green 200 */
+  --colorLightgreen300: #aed581; /** Light Green 300 */
+  --colorLightgreen400: #8bc34a; /** Light Green 400 */
+  --colorLightgreen500: #8bc34a; /** Light Green 500 */
+  --colorLightgreen600: #7cb342; /** Light Green 600 */
+  --colorLightgreen700: #689f38; /** Light Green 700 */
+  --colorLightgreen800: #558b2f; /** Light Green 800 */
+  --colorLightgreen900: #33691e; /** Light Green 900 */
+  --colorLightgreenA100: #ccff90; /** Light Green A100 */
+  --colorLightgreenA200: #b2ff59; /** Light Green A200 */
+  --colorLightgreenA400: #76ff03; /** Light Green A400 */
+  --colorLightgreenA700: #64dd17; /** Light Green A700 */
+  --colorLime50: #f9fbe7; /** Lime 50 */
+  --colorLime100: #f0f4c3; /** Lime 100 */
+  --colorLime200: #e6ee9c; /** Lime 200 */
+  --colorLime300: #dce775; /** Lime 300 */
+  --colorLime400: #d4e157; /** Lime 400 */
+  --colorLime500: #cddc39; /** Lime 500 */
+  --colorLime600: #c0ca33; /** Lime 600 */
+  --colorLime700: #afb42b; /** Lime 700 */
+  --colorLime800: #9e9d24; /** Lime 800 */
+  --colorLime900: #827717; /** Lime 900 */
+  --colorLimeA100: #f4ff81; /** Lime A100 */
+  --colorLimeA200: #eeff41; /** Lime A200 */
+  --colorLimeA400: #c6ff00; /** Lime A400 */
+  --colorLimeA700: #aeea00; /** Lime A700 */
+  --colorYellow50: #fffde7; /** Yellow 50 */
+  --colorYellow100: #fff9c4; /** Yellow 100 */
+  --colorYellow200: #fff59d; /** Yellow 200 */
+  --colorYellow300: #fff176; /** Yellow 300 */
+  --colorYellow400: #ffee58; /** Yellow 400 */
+  --colorYellow500: #ffeb3b; /** Yellow 500 */
+  --colorYellow600: #fdd835; /** Yellow 600 */
+  --colorYellow700: #fbc02d; /** Yellow 700 */
+  --colorYellow800: #f9a825; /** Yellow 800 */
+  --colorYellow900: #f57f17; /** Yellow 900 */
+  --colorYellowA100: #ffff8d; /** Yellow A100 */
+  --colorYellowA200: #ffff00; /** Yellow A200 */
+  --colorYellowA400: #ffea00; /** Yellow A400 */
+  --colorYellowA700: #ffd600; /** Yellow A700 */
+  --colorCyan50: #e0f7fa; /** Cyan 50 */
+  --colorCyan100: #b2ebf2; /** Cyan 100 */
+  --colorCyan200: #80deea; /** Cyan 200 */
+  --colorCyan300: #4dd0e1; /** Cyan 300 */
+  --colorCyan400: #26c6da; /** Cyan 400 */
+  --colorCyan500: #00bcd4; /** Cyan 500 */
+  --colorCyan600: #00acc1; /** Cyan 600 */
+  --colorCyan700: #0097a7; /** Cyan 700 */
+  --colorCyan800: #00838f; /** Cyan 800 */
+  --colorCyan900: #006064; /** Cyan 900 */
+  --colorCyanA100: #84ffff; /** Cyan A100 */
+  --colorCyanA200: #18ffff; /** Cyan A200 */
+  --colorCyanA400: #00e5ff; /** Cyan A400 */
+  --colorCyanA700: #00b8d4; /** Cyan A700 */
+  --colorTeal50: #e0f2f1; /** Teal 50 */
+  --colorTeal100: #b2dfdb; /** Teal 100 */
+  --colorTeal200: #80cbc4; /** Teal 200 */
+  --colorTeal300: #4db6ac; /** Teal 300 */
+  --colorTeal400: #26a69a; /** Teal 400 */
+  --colorTeal500: #009688; /** Teal 500 */
+  --colorTeal600: #00897b; /** Teal 600 */
+  --colorTeal700: #00796b; /** Teal 700 */
+  --colorTeal800: #00695c; /** Teal 800 */
+  --colorTeal900: #004d40; /** Teal 900 */
+  --colorTealA100: #a7ffeb; /** Teal A100 */
+  --colorTealA200: #64ffda; /** Teal A200 */
+  --colorTealA400: #1de9b6; /** Teal A400 */
+  --colorTealA700: #00bfa5; /** Teal A700 */
+  --colorBluegrey50: #eceff1; /** Blue Grey 50 */
+  --colorBluegrey100: #cfd8dc; /** Blue Grey 100 */
+  --colorBluegrey200: #b0bec5; /** Blue Grey 200 */
+  --colorBluegrey300: #90a4ae; /** Blue Grey 300 */
+  --colorBluegrey400: #78909c; /** Blue Grey 400 */
+  --colorBluegrey500: #607d8b; /** Blue Grey 500 */
+  --colorBluegrey600: #546e7a; /** Blue Grey 600 */
+  --colorBluegrey700: #455a64; /** Blue Grey 700 */
+  --colorBluegrey800: #37474f; /** Blue Grey 800 */
+  --colorBluegrey900: #263238; /** Blue Grey 900 */
+  --colorBluegreyA100: #cfd8dc; /** Blue Grey A100 */
+  --colorBluegreyA200: #b0bec5; /** Blue Grey A200 */
+  --colorBluegreyA400: #78909c; /** Blue Grey A400 */
+  --colorBluegreyA700: #455a64; /** Blue Grey A700 */
+  --fontFamiliesPoppins: Poppins; /** Poppins font family */
+  --fontFamiliesInter: Inter; /** Inter font family */
+  --fontFamiliesRobotoMono: Roboto Mono; /** Roboto Mono font family */
+  --fontFamiliesRoboto: Roboto; /** Roboto font family */
+  --fontSizes10: 10px; /** Font size 10px (Material.io: Caption) */
+  --fontSizes12: 12px; /** Font size 12px (Material.io: Body 2) */
+  --fontSizes14: 14px; /** Font size 14px (Material.io: Body 1) */
+  --fontSizes16: 16px; /** Font size 16px (Material.io: Subtitle 1) */
+  --fontSizes18: 18px; /** Font size 18px (Material.io: Headline 4) */
+  --fontSizes21: 21px; /** Font size 21px (Material.io: Headline 3) */
+  --fontSizes24: 24px; /** Font size 24px (Material.io: Headline 6) */
+  --fontSizes32: 32px; /** Font size 32px (Material.io: Headline 5) */
+  --fontSizes40: 40px; /** Font size 40px (Material.io: Headline 2) */
+  --fontSizes48: 48px; /** Font size 48px (Material.io: Headline 1) */
+  --fontWeightsRegular: 400; /** Font weight 400 (Regular) */
+  --fontWeightsSemibold: 500; /** Font weight 500 (Semibold) */
+  --fontWeightsBold: 700; /** Font weight 700 (Bold) */
+  --fontWeightsBlack: 900; /** Font weight 900 (Black) */
+  --spacings0: 0; /** 0px spacing */
+  --spacings1: 8; /** 8px spacing */
+  --spacings2: 16; /** 16px spacing */
+  --spacings3: 24; /** 24px spacing */
+  --spacings4: 32; /** 32px spacing */
+  --spacings5: 40; /** 40px spacing */
+  --spacings6: 48; /** 48px spacing */
+  --spacings7: 56; /** 56px spacing */
+  --spacings8: 64; /** 64px spacing */
+  --spacings9: 72; /** 72px spacing */
+  --spacings10: 80; /** 80px spacing */
+  --spacings11: 88; /** 88px spacing */
+  --spacings12: 96; /** 96px spacing */
+  --lineHeights100: 1; /** Line height 100% */
+  --paragraphSpacings0: 0; /** Paragraph spacing 0 */
+  --letterSpacingsDefault: 0%; /** Default letter spacing */
+  --letterSpacingsWide: 2%; /** Wide letter spacing */
+  --letterSpacingsTight: 1.5%; /** Tight letter spacing */
+  --textCasesCapitalize: capitalize; /** Text case capitalize */
+  --textCasesNone: none; /** Text case none */
+  --textCasesUppercase: uppercase; /** Text case uppercase */
+  --textDecorationsNone: none; /** Text decoration none */
+  --textDecorationsUnderline: underline; /** Text decoration underline */
+  --varunToken: #2560ff; /** THIS IS WRONG YOU'RE BAD AT YOUR JOB */
+}
