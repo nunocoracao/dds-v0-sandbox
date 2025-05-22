@@ -39,8 +39,11 @@ export interface ButtonProps {
   asChild?: boolean
 }
 
-export const getButtonClasses = (props: ButtonProps) => {
-  return cn(buttonVariants({ variant: props.variant, size: props.size }), props.className)
+const Button = (props: ButtonProps) => {
+  return {
+    className: cn(buttonVariants({ variant: props.variant, size: props.size }), props.className)
+  }
 }
 
+export default Button
 export { buttonVariants }
