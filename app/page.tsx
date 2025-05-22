@@ -1,4 +1,6 @@
 "use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -24,7 +26,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ToastAction } from "@/components/ui/toast"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
-import { useTheme } from "next-themes"
 import {
   Bell,
   ChevronDown,
@@ -44,14 +45,16 @@ import {
 
 export default function ComponentShowcase() {
   const { toast } = useToast()
-  const { theme, setTheme } = useTheme()
+  const [theme, setTheme] = useState<"light" | "dark">("light")
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light")
+    const newTheme = theme === "light" ? "dark" : "light"
+    setTheme(newTheme)
+    document.documentElement.classList.toggle("dark", newTheme === "dark")
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className={`min-h-screen bg-background p-6 ${theme === "dark" ? "dark" : ""}`}>
       <div className="container mx-auto">
         <header className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Docker Design System</h1>
