@@ -1,0 +1,71 @@
+@import "../build/css/variables.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: var(--colorGrey50);
+    --foreground: var(--colorGrey900);
+    --card: var(--colorGrey100);
+    --card-foreground: var(--colorGrey900);
+    --popover: var(--colorGrey100);
+    --popover-foreground: var(--colorGrey900);
+    --primary: var(--colorBlue500);
+    --primary-foreground: var(--colorGrey50);
+    --secondary: var(--colorGrey100);
+    --secondary-foreground: var(--colorGrey900);
+    --muted: var(--colorGrey200);
+    --muted-foreground: var(--colorGrey700);
+    --accent: var(--colorPurple500);
+    --accent-foreground: var(--colorGrey50);
+    --destructive: var(--colorRed500);
+    --destructive-foreground: var(--colorGrey50);
+    --border: var(--colorGrey300);
+    --input: var(--colorGrey300);
+    --ring: var(--colorBlue500);
+    --radius: var(--borderRadiusMd);
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
