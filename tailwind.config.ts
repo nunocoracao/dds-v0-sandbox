@@ -20,10 +20,10 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        poppins: ["var(--font-poppins)", "system-ui", "sans-serif"],
-        roboto: ["var(--font-roboto)", "system-ui", "sans-serif"],
-        mono: ["var(--font-roboto-mono)", "monospace"],
+        sans: ["var(--font-family-sans)"],
+        poppins: ["var(--font-family-poppins)"],
+        roboto: ["var(--font-family-roboto)"],
+        mono: ["var(--font-family-mono)"],
       },
       colors: {
         border: "hsl(var(--border))",
