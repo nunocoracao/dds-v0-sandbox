@@ -17,16 +17,16 @@
 
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/Inter_18pt-SemiBold.ttf") format("truetype");
-  font-weight: 600;
+  src: url("/fonts/Inter_18pt-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/Inter_18pt-Bold.ttf") format("truetype");
-  font-weight: 700;
+  src: url("/fonts/Inter_18pt-Black.ttf") format("truetype");
+  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
@@ -49,15 +49,31 @@
 
 @font-face {
   font-family: "Poppins";
-  src: url("/fonts/Poppins-SemiBold.ttf") format("truetype");
-  font-weight: 600;
+  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Poppins";
-  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
+  src: url("/fonts/Poppins-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoCondensed-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoCondensed-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -87,15 +103,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Roboto Mono";
-  src: url("/fonts/RobotoMono-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Tailwind imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -108,56 +115,55 @@
 
 @layer base {
   :root {
-    /* Typography tokens - now using our loaded fonts */
-    --font-family-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-family-poppins: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-family-roboto: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-family-mono: "Roboto Mono", ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo,
-      monospace;
+    /* Font families mapped to shadcn's expectations but using our semantic naming */
+    --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: Roboto Mono, ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    --font-content: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-    /* Color tokens */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 13%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 13%;
-    --popover: 0 0% 98%;
-    --popover-foreground: 0 0% 13%;
-    --primary: 224 100% 57%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 13%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 46%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 13%;
-    --destructive: 4 90% 58%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 93%;
-    --input: 0 0% 93%;
-    --ring: 224 100% 57%;
-    --radius: 0.75rem;
+    /* Color system */
+    --background: hsl(0 0% 98%);
+    --foreground: hsl(0 0% 13%);
+    --card: hsl(0 0% 98%);
+    --card-foreground: hsl(0 0% 13%);
+    --popover: hsl(0 0% 98%);
+    --popover-foreground: hsl(0 0% 13%);
+    --primary: hsl(224 100% 57%);
+    --primary-foreground: hsl(0 0% 98%);
+    --secondary: hsl(0 0% 96%);
+    --secondary-foreground: hsl(0 0% 13%);
+    --muted: hsl(0 0% 96%);
+    --muted-foreground: hsl(0 0% 46%);
+    --accent: hsl(0 0% 96%);
+    --accent-foreground: hsl(0 0% 13%);
+    --destructive: hsl(4 90% 58%);
+    --destructive-foreground: hsl(0 0% 98%);
+    --border: hsl(0 0% 93%);
+    --input: hsl(0 0% 93%);
+    --ring: hsl(224 100% 57%);
+    --radius: 0.5rem;
   }
-
+ 
   .dark {
-    --background: 0 0% 13%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 13%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 224 100% 57%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 26%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 26%;
-    --muted-foreground: 0 0% 74%;
-    --accent: 0 0% 26%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 65% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 26%;
-    --input: 0 0% 26%;
-    --ring: 224 100% 57%;
+    --background: hsl(0 0% 13%);
+    --foreground: hsl(0 0% 98%);
+    --card: hsl(0 0% 13%);
+    --card-foreground: hsl(0 0% 98%);
+    --popover: hsl(0 0% 13%);
+    --popover-foreground: hsl(0 0% 98%);
+    --primary: hsl(224 100% 57%);
+    --primary-foreground: hsl(0 0% 98%);
+    --secondary: hsl(0 0% 26%);
+    --secondary-foreground: hsl(0 0% 98%);
+    --muted: hsl(0 0% 26%);
+    --muted-foreground: hsl(0 0% 74%);
+    --accent: hsl(0 0% 26%);
+    --accent-foreground: hsl(0 0% 98%);
+    --destructive: hsl(0 65% 51%);
+    --destructive-foreground: hsl(0 0% 98%);
+    --border: hsl(0 0% 26%);
+    --input: hsl(0 0% 26%);
+    --ring: hsl(224 100% 57%);
   }
 }
 
@@ -167,6 +173,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-family-sans);
+    font-family: var(--font-sans);
   }
 }
