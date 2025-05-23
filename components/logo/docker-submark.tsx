@@ -17,13 +17,13 @@ export function DockerSubmark({ className, size = "md" }: DockerSubmarkProps) {
     <div className={cn(sizeClasses[size], className)}>
       {/* Light mode - show primary submark */}
       <img
-        src="/components/sub-marks/subMarkPrimary.svg"
+        src="/sub-marks/subMarkPrimary.svg"
         alt="Docker Submark"
         className="w-full h-full object-contain dark:hidden"
       />
       {/* Dark mode - show white submark */}
       <img
-        src="/components/sub-marks/subMarkWhite.svg"
+        src="/sub-marks/subMarkWhite.svg"
         alt="Docker Submark"
         className="w-full h-full object-contain hidden dark:block"
       />

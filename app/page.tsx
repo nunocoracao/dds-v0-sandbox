@@ -227,125 +227,35 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          {/* All Logo Variants Test */}
+          {/* Asset Test Card */}
           <Card>
             <CardHeader>
-              <CardTitle>Logo Variants Test</CardTitle>
-              <CardDescription>Testing all logo paths</CardDescription>
+              <CardTitle>Asset Test</CardTitle>
+              <CardDescription>Testing public asset paths</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">PRIMARY LOGO</p>
+                <p className="text-xs font-medium text-muted-foreground">LOGO TEST</p>
                 <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/logo/LogoPrimary.svg" alt="Primary Logo" className="h-8" />
+                  <img src="/logo/LogoPrimary.svg" alt="Primary Logo" className="h-8" />
                 </div>
               </div>
               <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">BLACK LOGO</p>
+                <p className="text-xs font-medium text-muted-foreground">SUBMARK TEST</p>
                 <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/logo/LogoBlack.svg" alt="Black Logo" className="h-8" />
+                  <img src="/sub-marks/subMarkPrimary.svg" alt="Primary Submark" className="h-6" />
                 </div>
               </div>
               <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">WHITE LOGO</p>
-                <div className="flex justify-center p-4 bg-gray-800 rounded">
-                  <img src="/components/logo/LogoWhite.svg" alt="White Logo" className="h-8" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* All Submark Variants Test */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Submark Variants Test</CardTitle>
-              <CardDescription>Testing all submark paths</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">PRIMARY SUBMARK</p>
+                <p className="text-xs font-medium text-muted-foreground">APP ICON TEST</p>
                 <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/sub-marks/subMarkPrimary.svg" alt="Primary Submark" className="h-6" />
+                  <img src="/app-icons/Primary.svg" alt="Primary Icon" className="h-8" />
                 </div>
               </div>
               <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">BLACK SUBMARK</p>
+                <p className="text-xs font-medium text-muted-foreground">ILLUSTRATION TEST</p>
                 <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/sub-marks/subMarkBlack.svg" alt="Black Submark" className="h-6" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">WHITE SUBMARK</p>
-                <div className="flex justify-center p-4 bg-gray-800 rounded">
-                  <img src="/components/sub-marks/subMarkWhite.svg" alt="White Submark" className="h-6" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* App Icons Test */}
-          <Card>
-            <CardHeader>
-              <CardTitle>App Icons Test</CardTitle>
-              <CardDescription>Testing all app icon paths</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">PRIMARY ICON</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/app icons/Primary.svg" alt="Primary Icon" className="h-8" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">SECONDARY ICON</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/app icons/Secondary.svg" alt="Secondary Icon" className="h-8" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">TERTIARY ICON</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/app icons/Tertiary.svg" alt="Tertiary Icon" className="h-8" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Illustrations Test */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Illustrations Test</CardTitle>
-              <CardDescription>Testing illustration paths</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">FOLDER DOCS</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img
-                    src="/components/illustrations/Product Illustration/Lg/Folder w Docs.png"
-                    alt="Folder Docs"
-                    className="h-16"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">LIST USERS</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img
-                    src="/components/illustrations/Product Illustration/Lg/List w Users.png"
-                    alt="List Users"
-                    className="h-16"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">RUN IMAGE</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img
-                    src="/components/illustrations/Product Illustration/Sm/Run Image.png"
-                    alt="Run Image"
-                    className="h-16"
-                  />
+                  <img src="/illustrations/sm/run-image.png" alt="Run Image" className="h-12" />
                 </div>
               </div>
             </CardContent>

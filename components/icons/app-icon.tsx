@@ -17,13 +17,13 @@ export function AppIcon({ className, size = "md", variant = "primary" }: AppIcon
   const getIconPath = () => {
     switch (variant) {
       case "primary":
-        return "/components/app icons/Primary.svg"
+        return "/app-icons/Primary.svg"
       case "secondary":
-        return "/components/app icons/Secondary.svg"
+        return "/app-icons/Secondary.svg"
       case "tertiary":
-        return "/components/app icons/Tertiary.svg"
+        return "/app-icons/Tertiary.svg"
       default:
-        return "/components/app icons/Primary.svg"
+        return "/app-icons/Primary.svg"
     }
   }
 

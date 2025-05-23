@@ -25,19 +25,19 @@ export function ProductIllustration({ type, className, size = "md" }: ProductIll
   const getIllustrationPath = () => {
     switch (type) {
       case "folder-docs":
-        return "/components/illustrations/Product Illustration/Lg/Folder w Docs.png"
+        return "/illustrations/lg/folder-w-docs.png"
       case "list-users":
-        return "/components/illustrations/Product Illustration/Lg/List w Users.png"
+        return "/illustrations/lg/list-w-users.png"
       case "mock-panels-lg":
-        return "/components/illustrations/Product Illustration/Lg/Mock Panels.png"
+        return "/illustrations/lg/mock-panels.png"
       case "mock-panels-md":
-        return "/components/illustrations/Product Illustration/Md/Mock Panels.png"
+        return "/illustrations/md/mock-panels.png"
       case "list-panel":
-        return "/components/illustrations/Product Illustration/Md/List Panel.png"
+        return "/illustrations/md/list-panel.png"
       case "option-select":
-        return "/components/illustrations/Product Illustration/Md/Option Select.png"
+        return "/illustrations/md/option-select.png"
       case "run-image":
-        return "/components/illustrations/Product Illustration/Sm/Run Image.png"
+        return "/illustrations/sm/run-image.png"
       default:
         return "/placeholder.svg"
     }
