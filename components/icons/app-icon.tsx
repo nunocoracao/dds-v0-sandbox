@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 type AppIconProps = {
   className?: string
@@ -23,13 +22,7 @@ export function AppIcon({ className, size = "md", variant = "primary" }: AppIcon
 
   return (
     <div className={cn(sizeClasses[size], className)}>
-      <Image
-        src={iconSrc[variant] || "/placeholder.svg"}
-        alt="Docker App Icon"
-        width={64}
-        height={64}
-        className="w-full h-full"
-      />
+      <img src={iconSrc[variant] || "/placeholder.svg"} alt="Docker App Icon" className="w-full h-full" />
     </div>
   )
 }

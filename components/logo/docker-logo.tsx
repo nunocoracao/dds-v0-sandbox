@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 type DockerLogoProps = {
   className?: string
@@ -15,6 +14,7 @@ export function DockerLogo({ className, size = "md", variant = "primary" }: Dock
     xl: "w-16 h-16",
   }
 
+  // Using the actual file paths from the repo structure
   const logoSrc = {
     primary: "/components/logo/LogoPrimary.svg",
     black: "/components/logo/LogoBlack.svg",
@@ -23,13 +23,7 @@ export function DockerLogo({ className, size = "md", variant = "primary" }: Dock
 
   return (
     <div className={cn(sizeClasses[size], className)}>
-      <Image
-        src={logoSrc[variant] || "/placeholder.svg"}
-        alt="Docker Logo"
-        width={64}
-        height={64}
-        className="w-full h-full"
-      />
+      <img src={logoSrc[variant] || "/placeholder.svg"} alt="Docker Logo" className="w-full h-full" />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 type ProductIllustrationType =
   | "folder-docs"
@@ -23,6 +22,7 @@ export function ProductIllustration({ className, size = "md", type }: ProductIll
     lg: "w-32 h-32",
   }
 
+  // Using the actual file paths from the repo structure
   const illustrationSrc = {
     "folder-docs": "/components/illustrations/Product Illustration/Lg/Folder w Docs.png",
     "list-users": "/components/illustrations/Product Illustration/Lg/List w Users.png",
@@ -35,11 +35,9 @@ export function ProductIllustration({ className, size = "md", type }: ProductIll
 
   return (
     <div className={cn(sizeClasses[size], className)}>
-      <Image
+      <img
         src={illustrationSrc[type] || "/placeholder.svg"}
         alt="Product Illustration"
-        width={128}
-        height={128}
         className="w-full h-full object-contain"
       />
     </div>
