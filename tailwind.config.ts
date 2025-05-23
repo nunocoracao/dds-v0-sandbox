@@ -21,6 +21,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-family-sans)"],
+        heading: ["var(--font-family-heading)"],
         mono: ["var(--font-family-mono)"],
       },
       borderWidth: {
