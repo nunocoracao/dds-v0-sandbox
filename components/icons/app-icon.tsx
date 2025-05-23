@@ -25,7 +25,7 @@ export function AppIcon({ className, size = "md", variant = "primary" }: AppIcon
     <div className={cn(sizeClasses[size], className)}>
       <Image
         src={iconSrc[variant] || "/placeholder.svg"}
-        alt={`Docker App Icon (${variant})`}
+        alt="Docker App Icon"
         width={64}
         height={64}
         className="w-full h-full"
