@@ -3,10 +3,9 @@ import { cn } from "@/lib/utils"
 type DockerLogoProps = {
   className?: string
   size?: "sm" | "md" | "lg" | "xl"
-  variant?: "primary" | "black" | "white"
 }
 
-export function DockerLogo({ className, size = "md", variant = "primary" }: DockerLogoProps) {
+export function DockerLogo({ className, size = "md" }: DockerLogoProps) {
   const sizeClasses = {
     sm: "w-6 h-6",
     md: "w-8 h-8",
@@ -14,16 +13,12 @@ export function DockerLogo({ className, size = "md", variant = "primary" }: Dock
     xl: "w-16 h-16",
   }
 
-  // Using the actual file paths from the repo structure
-  const logoSrc = {
-    primary: "/components/logo/LogoPrimary.svg",
-    black: "/components/logo/LogoBlack.svg",
-    white: "/components/logo/LogoWhite.svg",
-  }
-
   return (
     <div className={cn(sizeClasses[size], className)}>
-      <img src={logoSrc[variant] || "/placeholder.svg"} alt="Docker Logo" className="w-full h-full" />
+      {/* Light mode - show primary logo */}
+      <img src="/components/logo/LogoPrimary.svg" alt="Docker Logo" className="w-full h-full dark:hidden" />
+      {/* Dark mode - show white logo */}
+      <img src="/components/logo/LogoWhite.svg" alt="Docker Logo" className="w-full h-full hidden dark:block" />
     </div>
   )
 }

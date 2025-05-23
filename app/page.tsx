@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-// Import ContainerIllustration from "@/components/illustrations"
+import { DockerLogo, DockerSubmark } from "@/components/logo"
+import { ProductIllustration } from "@/components/illustrations"
 import {
   Dialog,
   DialogContent,
@@ -28,7 +29,6 @@ import { ToastAction } from "@/components/ui/toast"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
 import {
-  Bell,
   ChevronDown,
   CreditCard,
   Download,
@@ -58,7 +58,10 @@ export default function ComponentShowcase() {
     <div className={`min-h-screen bg-background p-6 ${theme === "dark" ? "dark" : ""}`}>
       <div className="container mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Docker Design System</h1>
+          <div className="flex items-center gap-3">
+            <DockerLogo size="lg" />
+            <h1 className="text-3xl font-bold">Docker Design System</h1>
+          </div>
           <Button variant="outline" size="icon" onClick={toggleTheme}>
             {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           </Button>
@@ -193,56 +196,38 @@ export default function ComponentShowcase() {
             </CardContent>
           </Card>
 
-          {/* Tabs Showcase */}
+          {/* Container Management Card with Illustration */}
           <Card className="row-span-2">
             <CardHeader>
-              <CardTitle>Tabs</CardTitle>
-              <CardDescription>Tabbed interface for content organization</CardDescription>
+              <div className="flex items-center gap-2">
+                <DockerSubmark size="md" />
+                <div>
+                  <CardTitle>Container Management</CardTitle>
+                  <CardDescription>Manage your Docker containers</CardDescription>
+                </div>
+              </div>
             </CardHeader>
-            <CardContent>
-              <Tabs defaultValue="account">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="account">Account</TabsTrigger>
-                  <TabsTrigger value="password">Password</TabsTrigger>
-                  <TabsTrigger value="settings">Settings</TabsTrigger>
-                </TabsList>
-                <TabsContent value="account" className="mt-4 space-y-4">
-                  <h3 className="text-lg font-medium">Account Settings</h3>
-                  <p className="text-sm text-muted-foreground">Manage your account information and preferences.</p>
-                  <div className="flex items-center space-x-2">
-                    <Input placeholder="Email" defaultValue="example@docker.com" />
-                    <Button size="sm">Save</Button>
-                  </div>
-                </TabsContent>
-                <TabsContent value="password" className="mt-4 space-y-4">
-                  <h3 className="text-lg font-medium">Change Password</h3>
-                  <p className="text-sm text-muted-foreground">Update your password to keep your account secure.</p>
-                  <div className="space-y-2">
-                    <Input type="password" placeholder="Current password" />
-                    <Input type="password" placeholder="New password" />
-                    <Button className="w-full">Update Password</Button>
-                  </div>
-                </TabsContent>
-                <TabsContent value="settings" className="mt-4 space-y-4">
-                  <h3 className="text-lg font-medium">Notification Settings</h3>
-                  <p className="text-sm text-muted-foreground">Configure how you receive notifications.</p>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span>Email Notifications</span>
-                      <Button variant="outline" size="sm">
-                        Configure
-                      </Button>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Push Notifications</span>
-                      <Button variant="outline" size="sm">
-                        Configure
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-              </Tabs>
+            <CardContent className="space-y-4">
+              <div className="flex justify-center">
+                <ProductIllustration type="mock-panels-md" size="lg" />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                View and manage all your running containers from a unified dashboard interface.
+              </p>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Running Containers</span>
+                  <span className="text-sm font-medium">12</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Stopped Containers</span>
+                  <span className="text-sm font-medium">3</span>
+                </div>
+              </div>
             </CardContent>
+            <CardFooter>
+              <Button className="w-full">View All Containers</Button>
+            </CardFooter>
           </Card>
 
           {/* Sheet Showcase */}
@@ -293,43 +278,63 @@ export default function ComponentShowcase() {
             </CardContent>
           </Card>
 
-          {/* Docker-themed Card */}
+          {/* Docker Hub Card with Illustration */}
           <Card className="bg-gradient-to-br from-blue-600 to-blue-800 text-white">
             <CardHeader>
-              <CardTitle>Docker Design System</CardTitle>
-              <CardDescription className="text-blue-100">Powerful components for container management</CardDescription>
+              <div className="flex items-center gap-2">
+                <DockerSubmark size="sm" />
+                <CardTitle>Docker Hub</CardTitle>
+              </div>
+              <CardDescription className="text-blue-100">Find and share container images</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Build beautiful interfaces for Docker container management with our design system components.</p>
+              <div className="flex justify-center mb-4">
+                <ProductIllustration type="list-users" size="md" />
+              </div>
+              <p className="text-sm">Discover millions of container images from the Docker community.</p>
             </CardContent>
             <CardFooter>
               <Button variant="secondary" className="w-full">
-                <Github className="mr-2 h-4 w-4" /> View on GitHub
+                <Github className="mr-2 h-4 w-4" /> Browse Images
               </Button>
             </CardFooter>
           </Card>
 
-          {/* Button Sizes */}
+          {/* File Management Card */}
           <Card>
             <CardHeader>
-              <CardTitle>Button Sizes</CardTitle>
-              <CardDescription>Different button size variants</CardDescription>
+              <CardTitle>File Management</CardTitle>
+              <CardDescription>Organize your Docker files</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <Button size="sm">Small</Button>
-                <Button>Default</Button>
-                <Button size="lg">Large</Button>
+            <CardContent className="space-y-4">
+              <div className="flex justify-center">
+                <ProductIllustration type="folder-docs" size="md" />
               </div>
-              <div className="flex items-center gap-2">
-                <Button size="icon" variant="outline">
-                  <Plus className="h-4 w-4" />
+              <p className="text-sm text-muted-foreground">Keep your Dockerfiles and configurations organized.</p>
+            </CardContent>
+            <CardFooter>
+              <Button variant="outline" className="w-full">
+                Manage Files
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Quick Actions Card */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+              <CardDescription>Common Docker operations</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex justify-center">
+                <ProductIllustration type="run-image" size="md" />
+              </div>
+              <div className="space-y-2">
+                <Button variant="outline" className="w-full justify-start">
+                  <Plus className="mr-2 h-4 w-4" /> Run New Container
                 </Button>
-                <Button size="icon" variant="outline">
-                  <Download className="h-4 w-4" />
-                </Button>
-                <Button size="icon" variant="outline">
-                  <Bell className="h-4 w-4" />
+                <Button variant="outline" className="w-full justify-start">
+                  <Download className="mr-2 h-4 w-4" /> Pull Image
                 </Button>
               </div>
             </CardContent>
