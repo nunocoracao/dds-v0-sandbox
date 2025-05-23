@@ -1,1 +1,1 @@
-export * from "./app-icon"
+export { AppIcon } from "./app-icon"

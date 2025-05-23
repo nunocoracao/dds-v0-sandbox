@@ -14,12 +14,23 @@ export function AppIcon({ className, size = "md", variant = "primary" }: AppIcon
     xl: "w-10 h-10",
   }
 
-  const iconPath = `/app-icon-${variant}.svg`
+  const getIconPath = () => {
+    switch (variant) {
+      case "primary":
+        return "/components/app icons/Primary.svg"
+      case "secondary":
+        return "/components/app icons/Secondary.svg"
+      case "tertiary":
+        return "/components/app icons/Tertiary.svg"
+      default:
+        return "/components/app icons/Primary.svg"
+    }
+  }
 
   return (
-    <div className={cn(sizeClasses[size], className, "relative")}>
+    <div className={cn(sizeClasses[size], className)}>
       <img
-        src={iconPath || "/placeholder.svg"}
+        src={getIconPath() || "/placeholder.svg"}
         alt={`Docker App Icon ${variant}`}
         className="w-full h-full object-contain"
       />

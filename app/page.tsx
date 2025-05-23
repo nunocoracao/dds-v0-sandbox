@@ -3,10 +3,9 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DockerLogo } from "@/components/logo/docker-logo"
-import { DockerSubmark } from "@/components/logo/docker-submark"
-import { ProductIllustration } from "@/components/illustrations/product-illustration"
-import { AppIcon } from "@/components/icons/app-icon"
+import { DockerLogo, DockerSubmark } from "@/components/logo"
+import { AppIcon } from "@/components/icons"
+import { ProductIllustration } from "@/components/illustrations"
 import {
   Dialog,
   DialogContent,
@@ -46,7 +45,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
           {/* Logo Showcase */}
-          <Card className="row-span-1">
+          <Card>
             <CardHeader>
               <CardTitle>Docker Logos</CardTitle>
               <CardDescription>Theme-aware Docker branding</CardDescription>
@@ -68,7 +67,7 @@ export default function Home() {
           </Card>
 
           {/* App Icons Showcase */}
-          <Card className="row-span-1">
+          <Card>
             <CardHeader>
               <CardTitle>App Icons</CardTitle>
               <CardDescription>Docker application icons</CardDescription>
@@ -124,7 +123,7 @@ export default function Home() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-center">
-                <ProductIllustration type="mock-panels" size="lg" />
+                <ProductIllustration type="mock-panels-lg" size="lg" />
               </div>
               <p className="text-sm text-muted-foreground">
                 View and manage all your running containers from a unified dashboard interface.
@@ -161,6 +160,13 @@ export default function Home() {
               <div className="text-center">
                 <h3 className="font-medium">List Management</h3>
                 <p className="text-sm text-muted-foreground">Organize and filter your containers</p>
+              </div>
+              <div className="flex justify-center">
+                <ProductIllustration type="mock-panels-md" size="md" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-medium">Dashboard Panels</h3>
+                <p className="text-sm text-muted-foreground">Customizable dashboard views</p>
               </div>
               <div className="flex justify-center">
                 <ProductIllustration type="option-select" size="md" />
@@ -220,8 +226,92 @@ export default function Home() {
             </CardContent>
           </Card>
 
+          {/* All Logo Variants Test */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Logo Variants Test</CardTitle>
+              <CardDescription>Testing all logo paths</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">PRIMARY LOGO</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/logo/LogoPrimary.svg" alt="Primary Logo" className="h-8" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">BLACK LOGO</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/logo/LogoBlack.svg" alt="Black Logo" className="h-8" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">WHITE LOGO</p>
+                <div className="flex justify-center p-4 bg-gray-800 rounded">
+                  <img src="/components/logo/LogoWhite.svg" alt="White Logo" className="h-8" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* All Submark Variants Test */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Submark Variants Test</CardTitle>
+              <CardDescription>Testing all submark paths</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">PRIMARY SUBMARK</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/sub-marks/subMarkPrimary.svg" alt="Primary Submark" className="h-6" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">BLACK SUBMARK</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/sub-marks/subMarkBlack.svg" alt="Black Submark" className="h-6" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">WHITE SUBMARK</p>
+                <div className="flex justify-center p-4 bg-gray-800 rounded">
+                  <img src="/components/sub-marks/subMarkWhite.svg" alt="White Submark" className="h-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* App Icons Test */}
+          <Card>
+            <CardHeader>
+              <CardTitle>App Icons Test</CardTitle>
+              <CardDescription>Testing all app icon paths</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">PRIMARY ICON</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/app icons/Primary.svg" alt="Primary Icon" className="h-8" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">SECONDARY ICON</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/app icons/Secondary.svg" alt="Secondary Icon" className="h-8" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">TERTIARY ICON</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img src="/components/app icons/Tertiary.svg" alt="Tertiary Icon" className="h-8" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Button Showcase */}
-          <Card className="row-span-1">
+          <Card>
             <CardHeader>
               <CardTitle>Buttons</CardTitle>
               <CardDescription>Interactive button elements</CardDescription>
@@ -237,7 +327,7 @@ export default function Home() {
           </Card>
 
           {/* Input Showcase */}
-          <Card className="row-span-1">
+          <Card>
             <CardHeader>
               <CardTitle>Inputs</CardTitle>
               <CardDescription>Form input elements</CardDescription>
