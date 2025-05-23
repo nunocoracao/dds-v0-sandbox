@@ -3,8 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DockerLogo, DockerSubmark } from "@/components/logo"
-import { ProductIllustration } from "@/components/illustrations"
+// Import ContainerIllustration from "@/components/illustrations"
 import {
   Dialog,
   DialogContent,
@@ -59,10 +58,7 @@ export default function ComponentShowcase() {
     <div className={`min-h-screen bg-background p-6 ${theme === "dark" ? "dark" : ""}`}>
       <div className="container mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-3">
-            <DockerLogo variant="primary" size="md" />
-            <h1 className="text-3xl font-bold">Docker Design System</h1>
-          </div>
+          <h1 className="text-3xl font-bold">Docker Design System</h1>
           <Button variant="outline" size="icon" onClick={toggleTheme}>
             {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           </Button>
@@ -300,17 +296,11 @@ export default function ComponentShowcase() {
           {/* Docker-themed Card */}
           <Card className="bg-gradient-to-br from-blue-600 to-blue-800 text-white">
             <CardHeader>
-              <div className="flex items-center gap-2">
-                <DockerSubmark variant="white" size="sm" />
-                <CardTitle>Docker Design System</CardTitle>
-              </div>
+              <CardTitle>Docker Design System</CardTitle>
               <CardDescription className="text-blue-100">Powerful components for container management</CardDescription>
             </CardHeader>
             <CardContent>
               <p>Build beautiful interfaces for Docker container management with our design system components.</p>
-              <div className="flex justify-center mt-4">
-                <ProductIllustration type="mock-panels" size="md" />
-              </div>
             </CardContent>
             <CardFooter>
               <Button variant="secondary" className="w-full">
