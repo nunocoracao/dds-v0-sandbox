@@ -3,9 +3,10 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DockerLogo, DockerSubmark } from "@/components/logo"
-import { AppIcon } from "@/components/icons"
-import { ProductIllustration } from "@/components/illustrations"
+import { DockerLogo } from "@/components/logo/docker-logo"
+import { DockerSubmark } from "@/components/logo/docker-submark"
+import { AppIcon } from "@/components/icons/app-icon"
+import { ProductIllustration } from "@/components/illustrations/product-illustration"
 import {
   Dialog,
   DialogContent,
@@ -305,6 +306,46 @@ export default function Home() {
                 <p className="text-xs font-medium text-muted-foreground">TERTIARY ICON</p>
                 <div className="flex justify-center p-4 bg-muted rounded">
                   <img src="/components/app icons/Tertiary.svg" alt="Tertiary Icon" className="h-8" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Illustrations Test */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Illustrations Test</CardTitle>
+              <CardDescription>Testing illustration paths</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">FOLDER DOCS</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img
+                    src="/components/illustrations/Product Illustration/Lg/Folder w Docs.png"
+                    alt="Folder Docs"
+                    className="h-16"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">LIST USERS</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img
+                    src="/components/illustrations/Product Illustration/Lg/List w Users.png"
+                    alt="List Users"
+                    className="h-16"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">RUN IMAGE</p>
+                <div className="flex justify-center p-4 bg-muted rounded">
+                  <img
+                    src="/components/illustrations/Product Illustration/Sm/Run Image.png"
+                    alt="Run Image"
+                    className="h-16"
+                  />
                 </div>
               </div>
             </CardContent>
