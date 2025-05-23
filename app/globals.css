@@ -1,4 +1,4 @@
-/* Load your custom fonts first */
+/* Load Inter font */
 @font-face {
   font-family: "Inter";
   src: url("/fonts/Inter_18pt-Regular.ttf") format("truetype");
@@ -23,30 +23,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Poppins";
-  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("/fonts/Poppins-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Poppins";
-  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -59,13 +35,12 @@
 
 @layer base {
   :root {
-    /* Your design token mapping */
-    --font-family-body: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-family-heading: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* Typography tokens */
+    --font-family-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 
-    /* Keep existing shadcn variables but map to your tokens */
-    --font-family-sans: var(--font-family-body);
+    /* Border tokens */
+    --border-width: 0.125rem; /* 2px */
 
     /* Color tokens */
     --background: 0 0% 98%;
@@ -116,26 +91,37 @@
 @layer base {
   * {
     @apply border-border;
+    border-width: var(--border-width); /* Apply 2px border width globally */
   }
 
-  /* Your token mapping to HTML elements */
+  /* Reset border width for elements that shouldn't have 2px by default */
+  *:not(.border, .border-t, .border-r, .border-b, .border-l) {
+    border-width: 0;
+  }
+
+  /* Apply 2px to explicit border utilities */
+  .border {
+    border-width: var(--border-width);
+  }
+
+  .border-t {
+    border-top-width: var(--border-width);
+  }
+
+  .border-r {
+    border-right-width: var(--border-width);
+  }
+
+  .border-b {
+    border-bottom-width: var(--border-width);
+  }
+
+  .border-l {
+    border-left-width: var(--border-width);
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-family-body); /* Inter */
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-family-heading); /* Poppins */
-  }
-
-  /* Specific heading styles if needed */
-  h1 {
-    font-family: var(--font-family-heading);
-    font-weight: 700;
+    font-family: var(--font-family-sans); /* Inter */
   }
 }
