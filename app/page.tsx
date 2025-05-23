@@ -77,32 +77,24 @@ export default function DockerApp() {
   return (
     <div className={`min-h-screen bg-background ${theme === "dark" ? "dark" : ""}`}>
       {/* Application Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Left side - Logo and Navigation */}
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8">
-                <img src="/logo/LogoPrimary.svg" alt="Docker" className="w-full h-full object-contain dark:hidden" />
-                <img
-                  src="/logo/LogoWhite.svg"
-                  alt="Docker"
-                  className="w-full h-full object-contain hidden dark:block"
-                />
-              </div>
-              <span className="font-semibold text-lg">Docker Desktop</span>
+            <div className="w-[200px]">
+              <img src="/logo/LogoWhite.svg" alt="Docker" className="w-full h-full object-contain" />
             </div>
             <nav className="hidden md:flex items-center gap-6 text-sm">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
                 Containers
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
                 Images
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
                 Volumes
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
                 Networks
               </Button>
             </nav>
@@ -111,23 +103,203 @@ export default function DockerApp() {
           {/* Center - Search */}
           <div className="hidden md:flex flex-1 max-w-md mx-6">
             <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search containers, images..." className="pl-10" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Input
+                placeholder="Search containers, images..."
+                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus-visible:ring-white/30"
+              />
             </div>
           </div>
 
           {/* Right side - Actions and Profile */}
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon">
-              <Bell className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={toggleTheme}>
-              {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-            </Button>
+          <div className="flex items-center gap-4">
+            {/* Notifications Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 relative">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    5
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-80" align="end">
+                <DropdownMenuLabel className="flex items-center justify-between">
+                  <span>Notifications</span>
+                  <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
+                    Mark all as read
+                  </Button>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+
+                {/* Notification 1 */}
+                <div className="p-3 hover:bg-muted cursor-pointer">
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Container className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Container Started</p>
+                      <p className="text-xs text-muted-foreground">nginx-web is now running on port 80</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 minutes ago</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notification 2 */}
+                <div className="p-3 hover:bg-muted cursor-pointer">
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Download className="h-4 w-4 text-green-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Image Pulled</p>
+                      <p className="text-xs text-muted-foreground">Successfully pulled redis:7-alpine</p>
+                      <p className="text-xs text-muted-foreground mt-1">15 minutes ago</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notification 3 */}
+                <div className="p-3 hover:bg-muted cursor-pointer">
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Shield className="h-4 w-4 text-yellow-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Security Update</p>
+                      <p className="text-xs text-muted-foreground">New security patches available</p>
+                      <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notification 4 */}
+                <div className="p-3 hover:bg-muted cursor-pointer">
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Trash2 className="h-4 w-4 text-red-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Container Removed</p>
+                      <p className="text-xs text-muted-foreground">postgres-db was removed</p>
+                      <p className="text-xs text-muted-foreground mt-1">3 hours ago</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notification 5 */}
+                <div className="p-3 hover:bg-muted cursor-pointer">
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Settings className="h-4 w-4 text-purple-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">System Update</p>
+                      <p className="text-xs text-muted-foreground">Docker Desktop updated to v4.25.0</p>
+                      <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
+                    </div>
+                  </div>
+                </div>
+
+                <DropdownMenuSeparator />
+                <div className="p-2">
+                  <Button variant="outline" size="sm" className="w-full text-xs">
+                    View all notifications
+                  </Button>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* App Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+                  <div className="grid grid-cols-3 gap-0.5">
+                    {[...Array(9)].map((_, i) => (
+                      <div key={i} className="w-1 h-1 bg-white rounded-sm" />
+                    ))}
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-60" align="end">
+                <DropdownMenuLabel>Docker Apps</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+
+                <div className="grid grid-cols-3 gap-2 p-2">
+                  {/* App 1 */}
+                  <div className="flex flex-col items-center justify-center p-2 hover:bg-muted rounded cursor-pointer">
+                    <div className="w-10 h-10 mb-1">
+                      <img src="/app icons/Primary.svg" alt="Docker Desktop" className="w-full h-full object-contain" />
+                    </div>
+                    <span className="text-xs">Desktop</span>
+                  </div>
+
+                  {/* App 2 */}
+                  <div className="flex flex-col items-center justify-center p-2 hover:bg-muted rounded cursor-pointer">
+                    <div className="w-10 h-10 mb-1">
+                      <img
+                        src="/app icons/Secondary.svg"
+                        alt="Docker Compose"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs">Compose</span>
+                  </div>
+
+                  {/* App 3 */}
+                  <div className="flex flex-col items-center justify-center p-2 hover:bg-muted rounded cursor-pointer">
+                    <div className="w-10 h-10 mb-1">
+                      <img src="/app icons/Tertiary.svg" alt="Docker Scout" className="w-full h-full object-contain" />
+                    </div>
+                    <span className="text-xs">Scout</span>
+                  </div>
+
+                  {/* App 4 */}
+                  <div className="flex flex-col items-center justify-center p-2 hover:bg-muted rounded cursor-pointer">
+                    <div className="w-10 h-10 mb-1 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Container className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <span className="text-xs">Hub</span>
+                  </div>
+
+                  {/* App 5 */}
+                  <div className="flex flex-col items-center justify-center p-2 hover:bg-muted rounded cursor-pointer">
+                    <div className="w-10 h-10 mb-1 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Shield className="h-6 w-6 text-green-600" />
+                    </div>
+                    <span className="text-xs">Security</span>
+                  </div>
+
+                  {/* App 6 */}
+                  <div className="flex flex-col items-center justify-center p-2 hover:bg-muted rounded cursor-pointer">
+                    <div className="w-10 h-10 mb-1 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Settings className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <span className="text-xs">Settings</span>
+                  </div>
+                </div>
+
+                <DropdownMenuSeparator />
+                <div className="p-2">
+                  <Button variant="outline" size="sm" className="w-full text-xs">
+                    View all apps
+                  </Button>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Button variant="ghost" size="icon" onClick={toggleTheme} className="text-white hover:bg-white/10">
+              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="relative h-8 w-8 rounded-full border-2 border-white/30 hover:bg-white/10"
+                >
+                  <Avatar className="h-7 w-7">
                     <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
                     <AvatarFallback>DU</AvatarFallback>
                   </Avatar>
