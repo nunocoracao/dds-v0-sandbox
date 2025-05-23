@@ -14,7 +14,7 @@ export function AppIcon({ className, size = "md", variant = "primary" }: AppIcon
     xl: "w-10 h-10",
   }
 
-  const iconPath = `/components/app icons/${variant.charAt(0).toUpperCase() + variant.slice(1)}.svg`
+  const iconPath = `/app-icon-${variant}.svg`
 
   return (
     <div className={cn(sizeClasses[size], className, "relative")}>

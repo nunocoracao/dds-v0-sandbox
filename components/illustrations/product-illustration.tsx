@@ -3,9 +3,8 @@ import { cn } from "@/lib/utils"
 type ProductIllustrationType =
   | "folder-docs"
   | "list-users"
-  | "mock-panels-lg"
-  | "list-panel"
   | "mock-panels"
+  | "list-panel"
   | "option-select"
   | "run-image"
 
@@ -22,32 +21,12 @@ export function ProductIllustration({ type, className, size = "md" }: ProductIll
     lg: "w-32 h-32",
   }
 
-  // Map the type to the correct file path
-  const getIllustrationPath = () => {
-    switch (type) {
-      case "folder-docs":
-        return "/components/illustrations/Product Illustration/Lg/Folder w Docs.png"
-      case "list-users":
-        return "/components/illustrations/Product Illustration/Lg/List w Users.png"
-      case "mock-panels-lg":
-        return "/components/illustrations/Product Illustration/Lg/Mock Panels.png"
-      case "list-panel":
-        return "/components/illustrations/Product Illustration/Md/List Panel.png"
-      case "mock-panels":
-        return "/components/illustrations/Product Illustration/Md/Mock Panels.png"
-      case "option-select":
-        return "/components/illustrations/Product Illustration/Md/Option Select.png"
-      case "run-image":
-        return "/components/illustrations/Product Illustration/Sm/Run Image.png"
-      default:
-        return "/placeholder.svg"
-    }
-  }
+  const illustrationPath = `/illustration-${type}.png`
 
   return (
     <div className={cn(sizeClasses[size], className, "relative")}>
       <img
-        src={getIllustrationPath() || "/placeholder.svg"}
+        src={illustrationPath || "/placeholder.svg"}
         alt={`Docker ${type} illustration`}
         className="w-full h-full object-contain"
       />

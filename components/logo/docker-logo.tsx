@@ -16,18 +16,10 @@ export function DockerLogo({ className, size = "md" }: DockerLogoProps) {
   return (
     <div className={cn(sizeClasses[size], className, "relative")}>
       {/* Light mode logo */}
-      <img
-        src="/components/logo/LogoPrimary.svg"
-        alt="Docker Logo"
-        className="w-full h-full object-contain dark:hidden"
-      />
+      <img src="/logo-primary.svg" alt="Docker Logo" className="w-full h-full object-contain dark:hidden" />
 
       {/* Dark mode logo */}
-      <img
-        src="/components/logo/LogoWhite.svg"
-        alt="Docker Logo"
-        className="w-full h-full object-contain hidden dark:block"
-      />
+      <img src="/logo-white.svg" alt="Docker Logo" className="w-full h-full object-contain hidden dark:block" />
     </div>
   )
 }

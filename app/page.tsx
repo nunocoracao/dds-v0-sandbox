@@ -7,7 +7,6 @@ import { DockerLogo } from "@/components/logo/docker-logo"
 import { DockerSubmark } from "@/components/logo/docker-submark"
 import { ProductIllustration } from "@/components/illustrations/product-illustration"
 import { AppIcon } from "@/components/icons/app-icon"
-import AssetTest from "./asset-test"
 import {
   Dialog,
   DialogContent,
@@ -125,7 +124,7 @@ export default function Home() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-center">
-                <ProductIllustration type="mock-panels-lg" size="lg" />
+                <ProductIllustration type="mock-panels" size="lg" />
               </div>
               <p className="text-sm text-muted-foreground">
                 View and manage all your running containers from a unified dashboard interface.
@@ -162,13 +161,6 @@ export default function Home() {
               <div className="text-center">
                 <h3 className="font-medium">List Management</h3>
                 <p className="text-sm text-muted-foreground">Organize and filter your containers</p>
-              </div>
-              <div className="flex justify-center">
-                <ProductIllustration type="mock-panels-md" size="md" />
-              </div>
-              <div className="text-center">
-                <h3 className="font-medium">Dashboard Panels</h3>
-                <p className="text-sm text-muted-foreground">Customizable dashboard views</p>
               </div>
               <div className="flex justify-center">
                 <ProductIllustration type="option-select" size="md" />
@@ -224,62 +216,6 @@ export default function Home() {
                 <Button variant="outline" className="w-full justify-start">
                   <Download className="mr-2 h-4 w-4" /> Pull Image
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* All Logo Variants */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Logo Variants</CardTitle>
-              <CardDescription>All available logo styles</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">PRIMARY LOGO</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/logo/LogoPrimary.svg" alt="Primary Logo" className="h-8" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">BLACK LOGO</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/logo/LogoBlack.svg" alt="Black Logo" className="h-8" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">WHITE LOGO</p>
-                <div className="flex justify-center p-4 bg-gray-800 rounded">
-                  <img src="/components/logo/LogoWhite.svg" alt="White Logo" className="h-8" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* All Submark Variants */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Submark Variants</CardTitle>
-              <CardDescription>Compact branding elements</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">PRIMARY SUBMARK</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/sub-marks/subMarkPrimary.svg" alt="Primary Submark" className="h-6" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">BLACK SUBMARK</p>
-                <div className="flex justify-center p-4 bg-muted rounded">
-                  <img src="/components/sub-marks/subMarkBlack.svg" alt="Black Submark" className="h-6" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">WHITE SUBMARK</p>
-                <div className="flex justify-center p-4 bg-gray-800 rounded">
-                  <img src="/components/sub-marks/subMarkWhite.svg" alt="White Submark" className="h-6" />
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -341,17 +277,6 @@ export default function Home() {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-            </CardContent>
-          </Card>
-
-          {/* Asset Test Component */}
-          <Card className="row-span-1">
-            <CardHeader>
-              <CardTitle>Asset Test</CardTitle>
-              <CardDescription>Testing asset components</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <AssetTest />
             </CardContent>
           </Card>
         </div>
