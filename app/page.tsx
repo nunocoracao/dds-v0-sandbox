@@ -7,6 +7,7 @@ import { DockerLogo } from "@/components/logo/docker-logo"
 import { DockerSubmark } from "@/components/logo/docker-submark"
 import { ProductIllustration } from "@/components/illustrations/product-illustration"
 import { AppIcon } from "@/components/icons/app-icon"
+import AssetTest from "./asset-test"
 import {
   Dialog,
   DialogContent,
@@ -21,7 +22,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
 import { Download, Github, Moon, Plus, Sun } from "lucide-react"
 
-export default function ComponentShowcase() {
+export default function Home() {
   const { toast } = useToast()
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
@@ -32,7 +33,7 @@ export default function ComponentShowcase() {
   }
 
   return (
-    <div className={`min-h-screen bg-background p-6 ${theme === "dark" ? "dark" : ""}`}>
+    <main className={`min-h-screen bg-background p-6 ${theme === "dark" ? "dark" : ""}`}>
       <div className="container mx-auto">
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-3">
@@ -342,10 +343,21 @@ export default function ComponentShowcase() {
               </Dialog>
             </CardContent>
           </Card>
+
+          {/* Asset Test Component */}
+          <Card className="row-span-1">
+            <CardHeader>
+              <CardTitle>Asset Test</CardTitle>
+              <CardDescription>Testing asset components</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AssetTest />
+            </CardContent>
+          </Card>
         </div>
       </div>
 
       <Toaster />
-    </div>
+    </main>
   )
 }
