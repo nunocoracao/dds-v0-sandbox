@@ -21,8 +21,6 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-family-sans)"],
-        poppins: ["var(--font-family-poppins)"],
-        roboto: ["var(--font-family-roboto)"],
         mono: ["var(--font-family-mono)"],
       },
       colors: {
