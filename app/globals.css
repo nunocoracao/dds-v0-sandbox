@@ -41,6 +41,7 @@
 
     /* Border tokens */
     --border-width: 0.125rem; /* 2px */
+    --border-radius: 0.25rem; /* 4px */
 
     /* Color tokens */
     --background: 0 0% 98%;
@@ -62,7 +63,7 @@
     --border: 0 0% 93%;
     --input: 0 0% 93%;
     --ring: 224 100% 57%;
-    --radius: 0.75rem;
+    --radius: var(--border-radius);
   }
 
   .dark {
