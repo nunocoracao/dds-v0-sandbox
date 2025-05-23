@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
-type DockerLogoProps = {
+type DockerSubmarkProps = {
   className?: string
   size?: "sm" | "md" | "lg" | "xl"
   variant?: "primary" | "black" | "white"
 }
 
-export function DockerLogo({ className, size = "md", variant = "primary" }: DockerLogoProps) {
+export function DockerSubmark({ className, size = "md", variant = "primary" }: DockerSubmarkProps) {
   const sizeClasses = {
     sm: "w-6 h-6",
     md: "w-8 h-8",
@@ -15,17 +15,17 @@ export function DockerLogo({ className, size = "md", variant = "primary" }: Dock
     xl: "w-16 h-16",
   }
 
-  const logoSrc = {
-    primary: "/components/logo/LogoPrimary.svg",
-    black: "/components/logo/LogoBlack.svg",
-    white: "/components/logo/LogoWhite.svg",
+  const submarkSrc = {
+    primary: "/components/sub-marks/subMarkPrimary.svg",
+    black: "/components/sub-marks/subMarkBlack.svg",
+    white: "/components/sub-marks/subMarkWhite.svg",
   }
 
   return (
     <div className={cn(sizeClasses[size], className)}>
       <Image
-        src={logoSrc[variant] || "/placeholder.svg"}
-        alt="Docker Logo"
+        src={submarkSrc[variant] || "/placeholder.svg"}
+        alt="Docker Submark"
         width={64}
         height={64}
         className="w-full h-full"

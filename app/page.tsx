@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DockerLogo } from "@/components/logo"
-import { ContainerIllustration } from "@/components/illustrations"
+import { DockerLogo, DockerSubmark } from "@/components/logo"
+import { ProductIllustration } from "@/components/illustrations"
 import {
   Dialog,
   DialogContent,
@@ -60,7 +60,7 @@ export default function ComponentShowcase() {
       <div className="container mx-auto">
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-3">
-            <DockerLogo size="md" color="primary" />
+            <DockerLogo variant="primary" size="md" />
             <h1 className="text-3xl font-bold">Docker Design System</h1>
           </div>
           <Button variant="outline" size="icon" onClick={toggleTheme}>
@@ -301,7 +301,7 @@ export default function ComponentShowcase() {
           <Card className="bg-gradient-to-br from-blue-600 to-blue-800 text-white">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <DockerLogo size="sm" color="foreground" variant="mono" />
+                <DockerSubmark variant="white" size="sm" />
                 <CardTitle>Docker Design System</CardTitle>
               </div>
               <CardDescription className="text-blue-100">Powerful components for container management</CardDescription>
@@ -309,11 +309,7 @@ export default function ComponentShowcase() {
             <CardContent>
               <p>Build beautiful interfaces for Docker container management with our design system components.</p>
               <div className="flex justify-center mt-4">
-                <ContainerIllustration
-                  size="sm"
-                  primaryColor="rgba(255, 255, 255, 0.9)"
-                  secondaryColor="rgba(255, 255, 255, 0.7)"
-                />
+                <ProductIllustration type="mock-panels" size="md" />
               </div>
             </CardContent>
             <CardFooter>
