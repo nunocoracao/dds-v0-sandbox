@@ -356,9 +356,10 @@ export default function DockerApp() {
 
       {/* Main Content */}
       <main className="container mx-auto p-6 max-w-7xl">
-        {/* Docker Hardened Images Bento Box Announcement */}
-        <div className="mb-8">
-          <Card className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white border-0 overflow-hidden relative">
+        {/* Docker Announcements Grid */}
+        <div className="mb-8 grid gap-6 md:grid-cols-3">
+          {/* Main HDI Announcement */}
+          <Card className="md:col-span-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/90 to-indigo-700/90" />
             <CardContent className="relative p-8">
               <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -445,26 +446,100 @@ export default function DockerApp() {
               </div>
             </CardContent>
           </Card>
+
+          {/* v0 + DDS Resources Box */}
+          <Card className="bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-600 text-white border-0 overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/90 via-teal-600/90 to-cyan-600/90" />
+            <CardContent className="relative p-6">
+              <div className="text-center">
+                <div className="w-20 h-20 mx-auto mb-4">
+                  <img
+                    src="/illustrations/Product Illustration/Md/Option Select.png"
+                    alt="v0 + DDS Resources"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <Zap className="h-6 w-6" />
+                  <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                    LIVE
+                  </Badge>
+                </div>
+                <h3 className="text-xl font-bold mb-2">v0 + DDS Resources</h3>
+                <p className="text-emerald-100 mb-4 text-sm">
+                  AI-powered design system components with instant deployment and real-time collaboration.
+                </p>
+                <Button variant="secondary" size="sm" className="w-full">
+                  <Globe className="mr-2 h-4 w-4" />
+                  Explore Resources
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* DDS NEXT GEN Announcement */}
+        <div className="mb-8">
+          <Card className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white border-0 overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/90 via-red-500/90 to-pink-600/90" />
+            <CardContent className="relative p-6">
+              <div className="grid md:grid-cols-4 gap-6 items-center">
+                <div className="md:col-span-3">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Star className="h-6 w-6" />
+                    <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                      COMING SOON
+                    </Badge>
+                  </div>
+                  <h2 className="text-2xl font-bold mb-2">DDS NEXT GEN</h2>
+                  <p className="text-orange-100 text-lg">
+                    Revolutionary design system with AI-native components, quantum-fast rendering, and neural design
+                    patterns. The future of containerized UI development starts here.
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-24 h-24 mx-auto mb-3">
+                    <img
+                      src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
+                      alt="DDS Next Gen"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <Button variant="secondary">
+                    <Bell className="mr-2 h-4 w-4" />
+                    Notify Me
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Masonry Grid */}
         <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
           {/* Container Management with Modal */}
-          <Card className="break-inside-avoid">
+          <Card className="break-inside-avoid bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 text-white border-0">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Container className="h-5 w-5 text-blue-600" />
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Container className="h-5 w-5" />
                 Active Containers
               </CardTitle>
-              <CardDescription>Manage running containers</CardDescription>
+              <CardDescription className="text-violet-100">Manage running containers</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
+              <div className="w-full h-32 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Lg/Mock Panels.png"
+                  alt="Container Management"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div className="flex items-center justify-between p-3 border rounded">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <div>
-                    <div className="font-medium">nginx-web</div>
-                    <div className="text-sm text-muted-foreground">nginx:latest</div>
+                    <div className="font-medium text-white">nginx-web</div>
+                    <div className="text-sm text-violet-100">nginx:latest</div>
                   </div>
                 </div>
                 <Dialog>
@@ -527,8 +602,8 @@ export default function DockerApp() {
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <div>
-                    <div className="font-medium">redis-cache</div>
-                    <div className="text-sm text-muted-foreground">redis:7-alpine</div>
+                    <div className="font-medium text-white">redis-cache</div>
+                    <div className="text-sm text-violet-100">redis:7-alpine</div>
                   </div>
                 </div>
                 <AlertDialog>
@@ -717,15 +792,22 @@ export default function DockerApp() {
           </Card>
 
           {/* System Monitoring with Interactive Progress */}
-          <Card className="break-inside-avoid">
+          <Card className="break-inside-avoid bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 text-white border-0">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-500" />
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Zap className="h-5 w-5" />
                 System Resources
               </CardTitle>
-              <CardDescription>Real-time monitoring</CardDescription>
+              <CardDescription className="text-amber-100">Real-time monitoring</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="w-full h-28 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Md/List Panel.png"
+                  alt="System Monitoring"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div>
                 <div className="flex justify-between text-sm mb-2">
                   <span>CPU Usage</span>
@@ -842,12 +924,19 @@ export default function DockerApp() {
           </Card>
 
           {/* Docker Apps with Modal Details */}
-          <Card className="break-inside-avoid">
+          <Card className="break-inside-avoid bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-700 text-white border-0">
             <CardHeader>
-              <CardTitle>Docker Ecosystem</CardTitle>
-              <CardDescription>Integrated development tools</CardDescription>
+              <CardTitle className="text-white">Docker Ecosystem</CardTitle>
+              <CardDescription className="text-cyan-100">Integrated development tools</CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="w-full h-32 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
+                  alt="Docker Ecosystem"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div className="grid grid-cols-3 gap-4 mb-4">
                 <Dialog>
                   <DialogTrigger asChild>
@@ -923,15 +1012,22 @@ export default function DockerApp() {
           </Card>
 
           {/* Terminal/Logs with Sheet */}
-          <Card className="break-inside-avoid">
+          <Card className="break-inside-avoid bg-gradient-to-br from-slate-700 via-gray-800 to-black text-white border-0">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Terminal className="h-5 w-5" />
                 Container Logs
               </CardTitle>
-              <CardDescription>Real-time output monitoring</CardDescription>
+              <CardDescription className="text-slate-300">Real-time output monitoring</CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="w-full h-24 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Md/Mock Panels.png"
+                  alt="Terminal Interface"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <div className="bg-black text-green-400 p-3 rounded font-mono text-xs mb-4">
                 <div>2024-01-15 10:30:15 [INFO] Server started</div>
                 <div>2024-01-15 10:30:16 [INFO] Listening on port 80</div>
