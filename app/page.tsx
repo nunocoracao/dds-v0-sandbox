@@ -3,8 +3,9 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DockerLogo, DockerSubmark } from "@/components/logo"
-import { ProductIllustration } from "@/components/illustrations"
+import { DockerLogo } from "@/components/logo/docker-logo"
+import { DockerSubmark } from "@/components/logo/docker-submark"
+import { ProductIllustration } from "@/components/illustrations/product-illustration"
 import {
   Dialog,
   DialogContent,
