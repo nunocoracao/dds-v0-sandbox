@@ -82,7 +82,7 @@ export default function DockerApp() {
           {/* Left side - Logo and Navigation */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-64 h-10">
+              <div className="w-32 h-10">
                 <img src="/logo/LogoWhite.svg" alt="Docker" className="w-full h-full object-contain" />
               </div>
             </div>
