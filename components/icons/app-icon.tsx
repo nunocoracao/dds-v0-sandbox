@@ -14,15 +14,15 @@ export function AppIcon({ className, size = "md", variant = "primary" }: AppIcon
     xl: "w-10 h-10",
   }
 
-  const iconSrc = {
-    primary: "/components/app icons/Primary.svg",
-    secondary: "/components/app icons/Secondary.svg",
-    tertiary: "/components/app icons/Tertiary.svg",
-  }
+  const iconPath = `/components/app icons/${variant.charAt(0).toUpperCase() + variant.slice(1)}.svg`
 
   return (
-    <div className={cn(sizeClasses[size], className)}>
-      <img src={iconSrc[variant] || "/placeholder.svg"} alt={`Docker App Icon ${variant}`} className="w-full h-full" />
+    <div className={cn(sizeClasses[size], className, "relative")}>
+      <img
+        src={iconPath || "/placeholder.svg"}
+        alt={`Docker App Icon ${variant}`}
+        className="w-full h-full object-contain"
+      />
     </div>
   )
 }
