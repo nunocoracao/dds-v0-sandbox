@@ -23,23 +23,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ToastAction } from "@/components/ui/toast"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import {
   Bell,
   Container,
@@ -58,9 +46,24 @@ import {
   Star,
   Sun,
   Terminal,
-  Trash2,
   User,
   Zap,
+  Database,
+  Network,
+  HardDrive,
+  Cpu,
+  Activity,
+  Code,
+  Layers,
+  Package,
+  Cloud,
+  Lock,
+  Rocket,
+  BarChart3,
+  FileText,
+  Camera,
+  Wifi,
+  Monitor,
 } from "lucide-react"
 
 export default function DockerApp() {
@@ -77,7 +80,7 @@ export default function DockerApp() {
   return (
     <div className={`min-h-screen bg-background ${theme === "dark" ? "dark" : ""}`}>
       {/* Application Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-blue-600 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Left side - Logo and Navigation */}
           <div className="flex items-center gap-6">
@@ -359,8 +362,7 @@ export default function DockerApp() {
         {/* Docker Announcements Grid */}
         <div className="mb-8 grid gap-6 md:grid-cols-3">
           {/* Main HDI Announcement */}
-          <Card className="md:col-span-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white border-0 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/90 to-indigo-700/90" />
+          <Card className="md:col-span-2 bg-blue-600 text-white border-0 overflow-hidden relative">
             <CardContent className="relative p-8">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -448,8 +450,7 @@ export default function DockerApp() {
           </Card>
 
           {/* v0 + DDS Resources Box */}
-          <Card className="bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/90 via-teal-600/90 to-cyan-600/90" />
+          <Card className="bg-green-600 text-white border-0 overflow-hidden relative">
             <CardContent className="relative p-6">
               <div className="text-center">
                 <div className="w-20 h-20 mx-auto mb-4">
@@ -466,7 +467,7 @@ export default function DockerApp() {
                   </Badge>
                 </div>
                 <h3 className="text-xl font-bold mb-2">v0 + DDS Resources</h3>
-                <p className="text-emerald-100 mb-4 text-sm">
+                <p className="text-green-100 mb-4 text-sm">
                   AI-powered design system components with instant deployment and real-time collaboration.
                 </p>
                 <Button variant="secondary" size="sm" className="w-full">
@@ -480,8 +481,7 @@ export default function DockerApp() {
 
         {/* DDS NEXT GEN Announcement */}
         <div className="mb-8">
-          <Card className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/90 via-red-500/90 to-pink-600/90" />
+          <Card className="bg-purple-600 text-white border-0 overflow-hidden relative">
             <CardContent className="relative p-6">
               <div className="grid md:grid-cols-4 gap-6 items-center">
                 <div className="md:col-span-3">
@@ -492,7 +492,7 @@ export default function DockerApp() {
                     </Badge>
                   </div>
                   <h2 className="text-2xl font-bold mb-2">DDS NEXT GEN</h2>
-                  <p className="text-orange-100 text-lg">
+                  <p className="text-purple-100 text-lg">
                     Revolutionary design system with AI-native components, quantum-fast rendering, and neural design
                     patterns. The future of containerized UI development starts here.
                   </p>
@@ -515,16 +515,16 @@ export default function DockerApp() {
           </Card>
         </div>
 
-        {/* Masonry Grid */}
+        {/* Masonry Grid - DOUBLED! */}
         <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-          {/* Container Management with Modal */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 text-white border-0">
+          {/* Container Management */}
+          <Card className="break-inside-avoid bg-purple-600 text-white border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Container className="h-5 w-5" />
                 Active Containers
               </CardTitle>
-              <CardDescription className="text-violet-100">Manage running containers</CardDescription>
+              <CardDescription className="text-purple-100">Manage running containers</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="w-full h-32 mb-4">
@@ -534,17 +534,17 @@ export default function DockerApp() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <div className="flex items-center justify-between p-3 border rounded">
+              <div className="flex items-center justify-between p-3 border border-white/20 rounded">
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   <div>
                     <div className="font-medium text-white">nginx-web</div>
-                    <div className="text-sm text-violet-100">nginx:latest</div>
+                    <div className="text-sm text-purple-100">nginx:latest</div>
                   </div>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10">
                       <Settings className="h-4 w-4" />
                     </Button>
                   </DialogTrigger>
@@ -597,88 +597,196 @@ export default function DockerApp() {
                   </DialogContent>
                 </Dialog>
               </div>
-
-              <div className="flex items-center justify-between p-3 border rounded">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <div>
-                    <div className="font-medium text-white">redis-cache</div>
-                    <div className="text-sm text-violet-100">redis:7-alpine</div>
-                  </div>
-                </div>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button size="sm" variant="destructive">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Remove Container</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure you want to remove the "redis-cache" container? This action cannot be undone.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                        Remove Container
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
             </CardContent>
             <CardFooter>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="w-full">
-                    <Plus className="mr-2 h-4 w-4" /> Deploy New Container
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Deploy New Container</DialogTitle>
-                    <DialogDescription>Configure and deploy a new container instance</DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Container Name</label>
-                        <Input placeholder="my-container" />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium">Image</label>
-                        <Input placeholder="nginx:latest" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Port Mapping</label>
-                      <Input placeholder="8080:80" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Environment Variables</label>
-                      <Input placeholder="KEY=value" />
-                    </div>
-                    <div className="w-full h-24">
-                      <img
-                        src="/illustrations/Product Illustration/Md/Option Select.png"
-                        alt="Container Configuration"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button variant="outline">Cancel</Button>
-                    <Button>Deploy Container</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+              <Button className="w-full" variant="secondary">
+                <Plus className="mr-2 h-4 w-4" /> Deploy New Container
+              </Button>
             </CardFooter>
           </Card>
 
-          {/* Image Registry with Sheet */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900">
+          {/* Tech Photo Card */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Camera className="h-5 w-5 text-blue-600" />
+                Development Environment
+              </CardTitle>
+              <CardDescription>Modern containerized workspace</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="w-full h-48 mb-4 rounded-lg overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop"
+                  alt="Development Setup"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Streamlined development with Docker containers, VS Code, and modern tooling for maximum productivity.
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Code className="mr-2 h-4 w-4" /> Setup Environment
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Network Management */}
+          <Card className="break-inside-avoid bg-green-600 text-white border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Network className="h-5 w-5" />
+                Network Management
+              </CardTitle>
+              <CardDescription className="text-green-100">Container networking</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-24 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Md/List Panel.png"
+                  alt="Network Management"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">bridge</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    Active
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">host</span>
+                  <Badge variant="outline" className="border-white/30 text-white">
+                    Available
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">none</span>
+                  <Badge variant="outline" className="border-white/30 text-white">
+                    Available
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="secondary">
+                <Plus className="mr-2 h-4 w-4" /> Create Network
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Volume Storage */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <HardDrive className="h-5 w-5 text-purple-600" />
+                Volume Storage
+              </CardTitle>
+              <CardDescription>Persistent data management</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-20 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Sm/Run Image.png"
+                  alt="Volume Storage"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>postgres_data</span>
+                  <span className="text-muted-foreground">2.1GB</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>redis_cache</span>
+                  <span className="text-muted-foreground">156MB</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>app_logs</span>
+                  <span className="text-muted-foreground">45MB</span>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Database className="mr-2 h-4 w-4" /> Manage Volumes
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* System Resources */}
+          <Card className="break-inside-avoid bg-blue-600 text-white border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Cpu className="h-5 w-5" />
+                System Resources
+              </CardTitle>
+              <CardDescription className="text-blue-100">Real-time monitoring</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-28 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Md/Mock Panels.png"
+                  alt="System Monitoring"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <div className="flex justify-between text-sm mb-2">
+                  <span>CPU Usage</span>
+                  <span>{progress}%</span>
+                </div>
+                <Progress value={progress} className="h-2" />
+              </div>
+              <div>
+                <div className="flex justify-between text-sm mb-2">
+                  <span>Memory</span>
+                  <span>2.1GB / 8GB</span>
+                </div>
+                <Progress value={26} className="h-2" />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="w-full"
+                onClick={() => setProgress(Math.floor(Math.random() * 100))}
+              >
+                Refresh Stats
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Cute Kitten Card */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Heart className="h-5 w-5 text-pink-600" />
+                Container Mascot
+              </CardTitle>
+              <CardDescription>Every good app needs a mascot!</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="w-full h-40 mb-4 rounded-lg overflow-hidden">
+                <img src="https://placekitten.com/300/240" alt="Docker Kitten" className="w-full h-full object-cover" />
+              </div>
+              <p className="text-sm text-muted-foreground text-center">
+                Meet Docker Cat! 🐱 The unofficial mascot of containerized applications.
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Heart className="mr-2 h-4 w-4" /> Adopt a Container
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Image Registry */}
+          <Card className="break-inside-avoid">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -729,32 +837,6 @@ export default function DockerApp() {
                           </div>
                           <Button size="sm">Pull</Button>
                         </div>
-                        <div className="flex items-center justify-between p-4 border rounded">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-red-100 rounded flex items-center justify-center">
-                              <Container className="h-5 w-5 text-red-600" />
-                            </div>
-                            <div>
-                              <div className="font-medium">redis</div>
-                              <div className="text-sm text-muted-foreground">Official build</div>
-                              <div className="text-xs text-muted-foreground">500M+ downloads</div>
-                            </div>
-                          </div>
-                          <Button size="sm">Pull</Button>
-                        </div>
-                        <div className="flex items-center justify-between p-4 border rounded">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">
-                              <Container className="h-5 w-5 text-blue-600" />
-                            </div>
-                            <div>
-                              <div className="font-medium">postgres</div>
-                              <div className="text-sm text-muted-foreground">Official build</div>
-                              <div className="text-xs text-muted-foreground">100M+ downloads</div>
-                            </div>
-                          </div>
-                          <Button size="sm">Pull</Button>
-                        </div>
                       </div>
                     </div>
                   </SheetContent>
@@ -778,10 +860,6 @@ export default function DockerApp() {
                   <span>Official Images</span>
                   <span className="text-muted-foreground">150+</span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>Verified Publishers</span>
-                  <span className="text-muted-foreground">500+</span>
-                </div>
               </div>
             </CardContent>
             <CardFooter>
@@ -791,234 +869,254 @@ export default function DockerApp() {
             </CardFooter>
           </Card>
 
-          {/* System Monitoring with Interactive Progress */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 text-white border-0">
+          {/* Security Scanner */}
+          <Card className="break-inside-avoid bg-green-600 text-white border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
-                <Zap className="h-5 w-5" />
-                System Resources
+                <Shield className="h-5 w-5" />
+                Security Scanner
               </CardTitle>
-              <CardDescription className="text-amber-100">Real-time monitoring</CardDescription>
+              <CardDescription className="text-green-100">Vulnerability detection</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-32 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Lg/List w Users.png"
+                  alt="Security Scanner"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Last Scan</span>
+                  <span className="text-sm text-green-100">2 hours ago</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Vulnerabilities</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    0 Critical
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Compliance</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    ✓ SOC2
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="secondary">
+                <Lock className="mr-2 h-4 w-4" /> Run Security Scan
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Build Pipeline */}
+          <Card className="break-inside-avoid bg-purple-600 text-white border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Rocket className="h-5 w-5" />
+                Build Pipeline
+              </CardTitle>
+              <CardDescription className="text-purple-100">CI/CD automation</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="w-full h-28 mb-4">
                 <img
-                  src="/illustrations/Product Illustration/Md/List Panel.png"
-                  alt="System Monitoring"
+                  src="/illustrations/Product Illustration/Md/Option Select.png"
+                  alt="Build Pipeline"
                   className="w-full h-full object-contain"
                 />
               </div>
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>CPU Usage</span>
-                  <span>{progress}%</span>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-sm">Build: Success</span>
                 </div>
-                <Progress value={progress} className="h-2" />
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Memory</span>
-                  <span>2.1GB / 8GB</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-sm">Test: Passed</span>
                 </div>
-                <Progress value={26} className="h-2" />
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Storage</span>
-                  <span>45GB / 100GB</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                  <span className="text-sm">Deploy: In Progress</span>
                 </div>
-                <Progress value={45} className="h-2" />
               </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-full">
-                    <Settings className="mr-2 h-4 w-4" /> Resource Settings
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Resource Allocation</DialogTitle>
-                    <DialogDescription>Configure Docker Desktop resource limits</DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">CPU Cores</label>
-                      <Input type="number" defaultValue="4" min="1" max="16" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Memory (GB)</label>
-                      <Input type="number" defaultValue="8" min="2" max="32" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Disk Space (GB)</label>
-                      <Input type="number" defaultValue="100" min="20" max="500" />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button variant="outline">Reset to Default</Button>
-                    <Button>Apply Changes</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full"
-                onClick={() => setProgress(Math.floor(Math.random() * 100))}
-              >
-                Refresh Stats
-              </Button>
             </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="secondary">
+                <Play className="mr-2 h-4 w-4" /> Trigger Build
+              </Button>
+            </CardFooter>
           </Card>
 
-          {/* Notification Center */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
+          {/* Analytics Dashboard */}
+          <Card className="break-inside-avoid">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Bell className="h-5 w-5 text-green-600" />
-                Notifications
+                <BarChart3 className="h-5 w-5 text-blue-600" />
+                Analytics Dashboard
               </CardTitle>
-              <CardDescription>System alerts and updates</CardDescription>
+              <CardDescription>Container performance metrics</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <Button
-                variant="outline"
-                className="w-full justify-start"
-                onClick={() => {
-                  toast({
-                    title: "Container Started",
-                    description: "nginx:latest is now running on port 80",
-                    action: <ToastAction altText="View logs">View Logs</ToastAction>,
-                  })
-                }}
-              >
-                <Play className="mr-2 h-4 w-4" /> Start Container Notification
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start"
-                onClick={() => {
-                  toast({
-                    title: "Image Pulled Successfully",
-                    description: "redis:7-alpine (15.2MB) downloaded",
-                    action: <ToastAction altText="Run image">Run Image</ToastAction>,
-                  })
-                }}
-              >
-                <Download className="mr-2 h-4 w-4" /> Pull Complete Notification
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start"
-                onClick={() => {
-                  toast({
-                    title: "Security Alert",
-                    description: "Vulnerability detected in base image",
-                    action: <ToastAction altText="View details">View Details</ToastAction>,
-                  })
-                }}
-              >
-                <Shield className="mr-2 h-4 w-4" /> Security Alert
-              </Button>
+            <CardContent className="space-y-4">
+              <div className="w-full h-36 mb-4 rounded-lg overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop"
+                  alt="Analytics Dashboard"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="text-center">
+                  <div className="font-bold text-lg">99.9%</div>
+                  <div className="text-muted-foreground">Uptime</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-bold text-lg">2.3s</div>
+                  <div className="text-muted-foreground">Avg Response</div>
+                </div>
+              </div>
             </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Activity className="mr-2 h-4 w-4" /> View Details
+              </Button>
+            </CardFooter>
           </Card>
 
-          {/* Docker Apps with Modal Details */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-700 text-white border-0">
+          {/* Cloud Integration */}
+          <Card className="break-inside-avoid bg-blue-600 text-white border-0">
             <CardHeader>
-              <CardTitle className="text-white">Docker Ecosystem</CardTitle>
-              <CardDescription className="text-cyan-100">Integrated development tools</CardDescription>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Cloud className="h-5 w-5" />
+                Cloud Integration
+              </CardTitle>
+              <CardDescription className="text-blue-100">Multi-cloud deployment</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="w-full h-32 mb-4">
+            <CardContent className="space-y-4">
+              <div className="w-full h-24 mb-4">
                 <img
-                  src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
-                  alt="Docker Ecosystem"
+                  src="/illustrations/Product Illustration/Md/List Panel.png"
+                  alt="Cloud Integration"
                   className="w-full h-full object-contain"
                 />
               </div>
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="text-center cursor-pointer hover:bg-muted/50 p-2 rounded">
-                      <div className="w-12 h-12 mx-auto mb-2">
-                        <img
-                          src="/app icons/Primary.svg"
-                          alt="Docker Desktop"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <div className="text-xs">Desktop</div>
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle className="flex items-center gap-2">
-                        <img src="/app icons/Primary.svg" alt="Docker Desktop" className="w-6 h-6" />
-                        Docker Desktop
-                      </DialogTitle>
-                      <DialogDescription>The fastest way to containerize applications</DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div className="w-full h-32">
-                        <img
-                          src="/illustrations/Product Illustration/Lg/Mock Panels.png"
-                          alt="Docker Desktop"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <h4 className="font-semibold mb-2">Features</h4>
-                          <ul className="space-y-1 text-muted-foreground">
-                            <li>• Container management</li>
-                            <li>• Image building</li>
-                            <li>• Kubernetes integration</li>
-                            <li>• Dev environments</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-2">Stats</h4>
-                          <ul className="space-y-1 text-muted-foreground">
-                            <li>• 20M+ downloads</li>
-                            <li>• 4.5/5 rating</li>
-                            <li>• Cross-platform</li>
-                            <li>• Free for personal use</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <Button variant="outline">Learn More</Button>
-                      <Button>Download</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2">
-                    <img src="/app icons/Secondary.svg" alt="Docker Compose" className="w-full h-full object-contain" />
-                  </div>
-                  <div className="text-xs">Compose</div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">AWS ECS</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    Connected
+                  </Badge>
                 </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2">
-                    <img src="/app icons/Tertiary.svg" alt="Docker Scout" className="w-full h-full object-contain" />
-                  </div>
-                  <div className="text-xs">Scout</div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Google Cloud Run</span>
+                  <Badge variant="outline" className="border-white/30 text-white">
+                    Available
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Azure Container</span>
+                  <Badge variant="outline" className="border-white/30 text-white">
+                    Available
+                  </Badge>
                 </div>
               </div>
             </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="secondary">
+                <Plus className="mr-2 h-4 w-4" /> Add Provider
+              </Button>
+            </CardFooter>
           </Card>
 
-          {/* Terminal/Logs with Sheet */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-slate-700 via-gray-800 to-black text-white border-0">
+          {/* Package Manager */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Package className="h-5 w-5 text-green-600" />
+                Package Manager
+              </CardTitle>
+              <CardDescription>Dependency management</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-20 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Sm/Run Image.png"
+                  alt="Package Manager"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>node_modules</span>
+                  <span className="text-muted-foreground">245MB</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>pip packages</span>
+                  <span className="text-muted-foreground">89MB</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>apt packages</span>
+                  <span className="text-muted-foreground">156MB</span>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Download className="mr-2 h-4 w-4" /> Update Packages
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Layer Inspector */}
+          <Card className="break-inside-avoid bg-green-600 text-white border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Layers className="h-5 w-5" />
+                Layer Inspector
+              </CardTitle>
+              <CardDescription className="text-green-100">Image layer analysis</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-28 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Lg/Mock Panels.png"
+                  alt="Layer Inspector"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Base Layer</span>
+                  <span className="text-green-100">72MB</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Dependencies</span>
+                  <span className="text-green-100">156MB</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Application</span>
+                  <span className="text-green-100">23MB</span>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="secondary">
+                <Search className="mr-2 h-4 w-4" /> Analyze Layers
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Terminal Interface */}
+          <Card className="break-inside-avoid bg-gray-900 text-white border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Terminal className="h-5 w-5" />
-                Container Logs
+                Container Terminal
               </CardTitle>
-              <CardDescription className="text-slate-300">Real-time output monitoring</CardDescription>
+              <CardDescription className="text-gray-300">Interactive shell access</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="w-full h-24 mb-4">
@@ -1029,14 +1127,18 @@ export default function DockerApp() {
                 />
               </div>
               <div className="bg-black text-green-400 p-3 rounded font-mono text-xs mb-4">
-                <div>2024-01-15 10:30:15 [INFO] Server started</div>
-                <div>2024-01-15 10:30:16 [INFO] Listening on port 80</div>
-                <div>2024-01-15 10:30:17 [INFO] Ready to accept connections</div>
+                <div>root@container:/app# ls -la</div>
+                <div>total 64</div>
+                <div>drwxr-xr-x 1 root root 4096 Jan 15 10:30 .</div>
+                <div>-rw-r--r-- 1 root root 245 Jan 15 10:30 package.json</div>
+                <div>
+                  root@container:/app# <span className="animate-pulse">_</span>
+                </div>
               </div>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="w-full">
-                    <Terminal className="mr-2 h-4 w-4" /> Full Terminal
+                  <Button variant="outline" className="w-full border-white/30 text-white hover:bg-white/10">
+                    <Terminal className="mr-2 h-4 w-4" /> Open Full Terminal
                   </Button>
                 </SheetTrigger>
                 <SheetContent className="w-[600px] sm:w-[800px]">
@@ -1071,8 +1173,118 @@ export default function DockerApp() {
             </CardContent>
           </Card>
 
+          {/* Documentation Hub */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-purple-600" />
+                Documentation Hub
+              </CardTitle>
+              <CardDescription>Guides and references</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-32 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
+                  alt="Documentation Hub"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-2">
+                <Button variant="ghost" className="w-full justify-start text-sm">
+                  📚 Getting Started Guide
+                </Button>
+                <Button variant="ghost" className="w-full justify-start text-sm">
+                  🔧 Configuration Reference
+                </Button>
+                <Button variant="ghost" className="w-full justify-start text-sm">
+                  🚀 Deployment Examples
+                </Button>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Globe className="mr-2 h-4 w-4" /> Browse Docs
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Monitoring Dashboard */}
+          <Card className="break-inside-avoid bg-purple-600 text-white border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Monitor className="h-5 w-5" />
+                Live Monitoring
+              </CardTitle>
+              <CardDescription className="text-purple-100">Real-time container health</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-32 mb-4 rounded-lg overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop"
+                  alt="Monitoring Dashboard"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="text-center">
+                  <div className="font-bold text-lg text-green-300">●</div>
+                  <div className="text-purple-100">All Systems</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-bold text-lg">24/7</div>
+                  <div className="text-purple-100">Monitoring</div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="secondary">
+                <Activity className="mr-2 h-4 w-4" /> View Metrics
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Network Connectivity */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Wifi className="h-5 w-5 text-blue-600" />
+                Network Status
+              </CardTitle>
+              <CardDescription>Container connectivity</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-20 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Md/List Panel.png"
+                  alt="Network Status"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">External Access</span>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Internal Network</span>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">DNS Resolution</span>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full" variant="outline">
+                <Network className="mr-2 h-4 w-4" /> Test Connectivity
+              </Button>
+            </CardFooter>
+          </Card>
+
           {/* Community Stats */}
-          <Card className="break-inside-avoid bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20">
+          <Card className="break-inside-avoid">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Heart className="h-5 w-5 text-red-500" />
