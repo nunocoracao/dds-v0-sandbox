@@ -4,15 +4,6 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -42,7 +33,6 @@ import {
   Shield,
   Star,
   Sun,
-  Terminal,
   User,
   Zap,
   Database,
@@ -51,23 +41,129 @@ import {
   Cpu,
   Activity,
   Code,
-  Package,
-  Cloud,
   Lock,
   Rocket,
   BarChart3,
   Camera,
+  CheckCircle,
+  XCircle,
+  RefreshCw,
+  Trash2,
 } from "lucide-react"
 
 export default function DockerApp() {
   const { toast } = useToast()
   const [theme, setTheme] = useState<"light" | "dark">("light")
   const [progress, setProgress] = useState(65)
+  const [containerCount, setContainerCount] = useState(3)
+  const [isScanning, setIsScanning] = useState(false)
+  const [networkStatus, setNetworkStatus] = useState("connected")
+  const [buildStatus, setBuildStatus] = useState("idle")
+  const [storageUsed, setStorageUsed] = useState(2.1)
+  const [uptime, setUptime] = useState(99.9)
+  const [pullCount, setPullCount] = useState(0)
+  const [starCount, setStarCount] = useState(65200)
+  const [isLiked, setIsLiked] = useState(false)
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light"
     setTheme(newTheme)
     document.documentElement.classList.toggle("dark", newTheme === "dark")
+    toast({
+      title: `Switched to ${newTheme} mode`,
+      description: `Interface is now in ${newTheme} theme`,
+    })
+  }
+
+  const deployContainer = () => {
+    setContainerCount((prev) => prev + 1)
+    toast({
+      title: "Container Deployed! 🚀",
+      description: `New container is starting up. Total: ${containerCount + 1}`,
+    })
+  }
+
+  const runSecurityScan = () => {
+    setIsScanning(true)
+    toast({
+      title: "Security Scan Started",
+      description: "Scanning for vulnerabilities...",
+    })
+    setTimeout(() => {
+      setIsScanning(false)
+      toast({
+        title: "Security Scan Complete ✅",
+        description: "No critical vulnerabilities found!",
+      })
+    }, 3000)
+  }
+
+  const toggleNetwork = () => {
+    const newStatus = networkStatus === "connected" ? "disconnected" : "connected"
+    setNetworkStatus(newStatus)
+    toast({
+      title: `Network ${newStatus}`,
+      description: `Container network is now ${newStatus}`,
+    })
+  }
+
+  const triggerBuild = () => {
+    setBuildStatus("building")
+    toast({
+      title: "Build Started 🔨",
+      description: "Building your container image...",
+    })
+    setTimeout(() => {
+      setBuildStatus("success")
+      toast({
+        title: "Build Complete! ✅",
+        description: "Container image built successfully",
+      })
+      setTimeout(() => setBuildStatus("idle"), 2000)
+    }, 4000)
+  }
+
+  const pullImage = () => {
+    setPullCount((prev) => prev + 1)
+    toast({
+      title: "Image Pulled! 📦",
+      description: `Downloaded latest image. Total pulls: ${pullCount + 1}`,
+    })
+  }
+
+  const refreshStats = () => {
+    setProgress(Math.floor(Math.random() * 100))
+    setUptime(99.5 + Math.random() * 0.4)
+    toast({
+      title: "Stats Refreshed 📊",
+      description: "System metrics updated",
+    })
+  }
+
+  const clearStorage = () => {
+    setStorageUsed(0.5)
+    toast({
+      title: "Storage Cleared! 🧹",
+      description: "Freed up 1.6GB of space",
+    })
+  }
+
+  const starProject = () => {
+    if (!isLiked) {
+      setStarCount((prev) => prev + 1)
+      setIsLiked(true)
+      toast({
+        title: "Thanks for starring! ⭐",
+        description: "You're now following Docker updates",
+      })
+    } else {
+      setStarCount((prev) => prev - 1)
+      setIsLiked(false)
+      toast({
+        title: "Unstarred",
+        description: "Removed from your starred repositories",
+      })
+    }
   }
 
   return (
@@ -83,16 +179,36 @@ export default function DockerApp() {
               </div>
             </div>
             <nav className="hidden md:flex items-center gap-6 text-sm">
-              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10"
+                onClick={() => toast({ title: "Containers", description: "Viewing container management" })}
+              >
                 Containers
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10"
+                onClick={() => toast({ title: "Images", description: "Viewing image registry" })}
+              >
                 Images
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10"
+                onClick={() => toast({ title: "Volumes", description: "Viewing volume storage" })}
+              >
                 Volumes
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10"
+                onClick={() => toast({ title: "Networks", description: "Viewing network configuration" })}
+              >
                 Networks
               </Button>
             </nav>
@@ -105,6 +221,7 @@ export default function DockerApp() {
               <Input
                 placeholder="Search containers, images..."
                 className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-300 focus:bg-white/20"
+                onFocus={() => toast({ title: "Search Active", description: "Start typing to search..." })}
               />
             </div>
           </div>
@@ -127,189 +244,16 @@ export default function DockerApp() {
                   <Badge variant="secondary">3 new</Badge>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-
-                {/* Notification Cards */}
-                <div className="max-h-96 overflow-y-auto">
-                  <div className="p-3 hover:bg-muted/50 border-b">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">Container Started</span>
-                          <span className="text-xs text-muted-foreground">2m ago</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">nginx-web is now running on port 80</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 hover:bg-muted/50 border-b">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">Image Pulled</span>
-                          <span className="text-xs text-muted-foreground">5m ago</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">redis:7-alpine downloaded successfully</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 hover:bg-muted/50 border-b">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">Security Scan</span>
-                          <span className="text-xs text-muted-foreground">10m ago</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Vulnerability scan completed for postgres:15</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 hover:bg-muted/50 border-b">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">Update Available</span>
-                          <span className="text-xs text-muted-foreground">1h ago</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Docker Desktop 4.26.1 is available</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 hover:bg-muted/50">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">Container Stopped</span>
-                          <span className="text-xs text-muted-foreground">2h ago</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">mysql-db container exited with code 0</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <DropdownMenuSeparator />
-                <div className="p-2 flex justify-between items-center">
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    Mark all as read
-                  </Button>
-                  <div className="flex gap-1">
-                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                      ←
-                    </Button>
-                    <span className="text-xs text-muted-foreground px-2">1 of 3</span>
-                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                      →
-                    </Button>
-                  </div>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* App Switcher Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-                  <div className="grid grid-cols-3 gap-0.5 w-4 h-4">
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                    <div className="w-1 h-1 bg-current rounded-sm"></div>
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-72" align="end">
-                <DropdownMenuLabel>Docker Apps</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-
-                <div className="p-4">
-                  <div className="grid grid-cols-3 gap-4">
-                    {/* Docker Desktop */}
-                    <div className="flex flex-col items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer">
-                      <div className="w-12 h-12 mb-2">
-                        <img
-                          src="/app icons/Primary.svg"
-                          alt="Docker Desktop"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <span className="text-xs font-medium text-center">Desktop</span>
-                      <span className="text-xs text-muted-foreground">Current</span>
-                    </div>
-
-                    {/* Docker Compose */}
-                    <div className="flex flex-col items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer">
-                      <div className="w-12 h-12 mb-2">
-                        <img
-                          src="/app icons/Secondary.svg"
-                          alt="Docker Compose"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <span className="text-xs font-medium text-center">Compose</span>
-                      <span className="text-xs text-muted-foreground">v2.24</span>
-                    </div>
-
-                    {/* Docker Scout */}
-                    <div className="flex flex-col items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer">
-                      <div className="w-12 h-12 mb-2">
-                        <img
-                          src="/app icons/Tertiary.svg"
-                          alt="Docker Scout"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                      <span className="text-xs font-medium text-center">Scout</span>
-                      <span className="text-xs text-muted-foreground">Security</span>
-                    </div>
-
-                    {/* Docker Hub */}
-                    <div className="flex flex-col items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer">
-                      <div className="w-12 h-12 mb-2 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Globe className="h-6 w-6 text-blue-600" />
-                      </div>
-                      <span className="text-xs font-medium text-center">Hub</span>
-                      <span className="text-xs text-muted-foreground">Registry</span>
-                    </div>
-
-                    {/* Docker Build */}
-                    <div className="flex flex-col items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer">
-                      <div className="w-12 h-12 mb-2 bg-green-100 rounded-lg flex items-center justify-center">
-                        <Container className="h-6 w-6 text-green-600" />
-                      </div>
-                      <span className="text-xs font-medium text-center">Build</span>
-                      <span className="text-xs text-muted-foreground">CI/CD</span>
-                    </div>
-
-                    {/* Docker Extensions */}
-                    <div className="flex flex-col items-center p-3 rounded-lg hover:bg-muted/50 cursor-pointer">
-                      <div className="w-12 h-12 mb-2 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <Plus className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="text-xs font-medium text-center">Extensions</span>
-                      <span className="text-xs text-muted-foreground">Marketplace</span>
-                    </div>
-                  </div>
-                </div>
-
-                <DropdownMenuSeparator />
                 <div className="p-2">
-                  <Button variant="ghost" className="w-full justify-start text-sm">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Manage Apps
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full"
+                    onClick={() =>
+                      toast({ title: "Notifications Cleared", description: "All notifications marked as read" })
+                    }
+                  >
+                    Mark all as read
                   </Button>
                 </div>
               </DropdownMenuContent>
@@ -331,16 +275,20 @@ export default function DockerApp() {
               <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>Docker User</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast({ title: "Profile", description: "Opening user profile..." })}>
                   <User className="mr-2 h-4 w-4" />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => toast({ title: "Settings", description: "Opening settings panel..." })}
+                >
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => toast({ title: "Signed Out", description: "Successfully logged out" })}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   Sign out
                 </DropdownMenuItem>
@@ -371,59 +319,21 @@ export default function DockerApp() {
                     images ready for production.
                   </p>
                   <div className="flex gap-3">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="secondary" size="lg">
-                          <Shield className="mr-2 h-5 w-5" />
-                          Learn More
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-2xl">
-                        <DialogHeader>
-                          <DialogTitle className="flex items-center gap-2">
-                            <Shield className="h-6 w-6 text-blue-600" />
-                            Docker Hardened Images (HDI)
-                          </DialogTitle>
-                          <DialogDescription>
-                            Enterprise-grade container images with enhanced security and DDS integration
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div className="grid md:grid-cols-2 gap-4">
-                            <div className="space-y-3">
-                              <h4 className="font-semibold">Security Features</h4>
-                              <ul className="text-sm space-y-1 text-muted-foreground">
-                                <li>• Vulnerability scanning</li>
-                                <li>• SBOM generation</li>
-                                <li>• Compliance reporting</li>
-                                <li>• Zero-day protection</li>
-                              </ul>
-                            </div>
-                            <div className="space-y-3">
-                              <h4 className="font-semibold">DDS + v0.dev Integration</h4>
-                              <ul className="text-sm space-y-1 text-muted-foreground">
-                                <li>• Design system components</li>
-                                <li>• AI-powered development</li>
-                                <li>• Automated deployments</li>
-                                <li>• Real-time collaboration</li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className="w-full h-32">
-                            <img
-                              src="/illustrations/Product Illustration/Lg/Mock Panels.png"
-                              alt="HDI Dashboard"
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                        </div>
-                        <DialogFooter>
-                          <Button variant="outline">Documentation</Button>
-                          <Button>Get Started</Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
-                    <Button variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20">
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      onClick={() =>
+                        toast({ title: "HDI Info", description: "Opening Docker Hardened Images documentation..." })
+                      }
+                    >
+                      <Shield className="mr-2 h-5 w-5" />
+                      Learn More
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                      onClick={() => toast({ title: "HDI Download", description: "Starting HDI image download..." })}
+                    >
                       <Download className="mr-2 h-4 w-4" />
                       Try Now
                     </Button>
@@ -463,7 +373,12 @@ export default function DockerApp() {
                 <p className="text-green-100 mb-4 text-sm">
                   AI-powered design system components with instant deployment and real-time collaboration.
                 </p>
-                <Button variant="secondary" size="sm" className="w-full">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="w-full"
+                  onClick={() => toast({ title: "v0 + DDS", description: "Opening design system resources..." })}
+                >
                   <Globe className="mr-2 h-4 w-4" />
                   Explore Resources
                 </Button>
@@ -485,7 +400,7 @@ export default function DockerApp() {
                     </Badge>
                   </div>
                   <h2 className="text-2xl font-bold mb-2">DDS NEXT GEN</h2>
-                  <p className="text-purple-100 text-lg">
+                  <p className="text-orange-100 text-lg">
                     Revolutionary design system with AI-native components, quantum-fast rendering, and neural design
                     patterns. The future of containerized UI development starts here.
                   </p>
@@ -498,7 +413,15 @@ export default function DockerApp() {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <Button variant="secondary">
+                  <Button
+                    variant="secondary"
+                    onClick={() =>
+                      toast({
+                        title: "Notification Set!",
+                        description: "You'll be notified when DDS Next Gen launches",
+                      })
+                    }
+                  >
                     <Bell className="mr-2 h-4 w-4" />
                     Notify Me
                   </Button>
@@ -508,9 +431,9 @@ export default function DockerApp() {
           </Card>
         </div>
 
-        {/* Masonry Grid - DOUBLED! */}
+        {/* Masonry Grid - Only 3 colored cards! */}
         <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-          {/* 1. Container Management - BLUE #1 */}
+          {/* 1. Container Management - BLUE (only blue card) */}
           <Card className="break-inside-avoid bg-blue-600 text-white border-0 overflow-hidden relative">
             <div className="absolute -top-4 -right-4 w-32 h-32 opacity-20">
               <img
@@ -522,7 +445,7 @@ export default function DockerApp() {
             <CardHeader className="relative z-10">
               <CardTitle className="flex items-center gap-2 text-white">
                 <Container className="h-5 w-5" />
-                Active Containers
+                Active Containers ({containerCount})
               </CardTitle>
               <CardDescription className="text-blue-100">Manage running containers</CardDescription>
             </CardHeader>
@@ -542,19 +465,152 @@ export default function DockerApp() {
                     <div className="text-sm text-blue-100">nginx:latest</div>
                   </div>
                 </div>
-                <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-white/30 text-white hover:bg-white/10"
+                  onClick={() =>
+                    toast({ title: "Container Settings", description: "Opening nginx-web configuration..." })
+                  }
+                >
                   <Settings className="h-4 w-4" />
                 </Button>
               </div>
             </CardContent>
             <CardFooter className="relative z-10">
-              <Button className="w-full" variant="secondary">
+              <Button className="w-full" variant="secondary" onClick={deployContainer}>
                 <Plus className="mr-2 h-4 w-4" /> Deploy New Container
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 2. Tech Photo Card - WHITE */}
+          {/* 2. Security Scanner - GREEN (only green card) */}
+          <Card className="break-inside-avoid bg-green-600 text-white border-0 overflow-hidden relative">
+            <div className="absolute -top-8 -left-8 w-48 h-48 opacity-15">
+              <img
+                src="/illustrations/Product Illustration/Lg/Mock Panels.png"
+                alt="Security Background"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <CardHeader className="relative z-10">
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Shield className="h-5 w-5" />
+                Security Scanner
+              </CardTitle>
+              <CardDescription className="text-green-100">Vulnerability detection</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 relative z-10">
+              <div className="w-full h-40 mb-4 relative overflow-hidden rounded-lg">
+                <img
+                  src="/illustrations/Product Illustration/Lg/List w Users.png"
+                  alt="Security Scanner"
+                  className="w-full h-full object-contain scale-120"
+                />
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Status</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    {isScanning ? "Scanning..." : "Secure"}
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Vulnerabilities</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    0 Critical
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Compliance</span>
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    ✓ SOC2
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="relative z-10">
+              <Button className="w-full" variant="secondary" onClick={runSecurityScan} disabled={isScanning}>
+                {isScanning ? (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Scanning...
+                  </>
+                ) : (
+                  <>
+                    <Lock className="mr-2 h-4 w-4" /> Run Security Scan
+                  </>
+                )}
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* 3. Build Pipeline - PURPLE (only purple card) */}
+          <Card className="break-inside-avoid bg-purple-600 text-white border-0 overflow-hidden relative">
+            <div className="absolute -bottom-6 -right-6 w-40 h-40 opacity-20">
+              <img
+                src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
+                alt="Build Background"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <CardHeader className="relative z-10">
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Rocket className="h-5 w-5" />
+                Build Pipeline
+              </CardTitle>
+              <CardDescription className="text-purple-100">CI/CD automation</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 relative z-10">
+              <div className="w-full h-36 mb-4 relative overflow-hidden rounded-lg">
+                <img
+                  src="/illustrations/Product Illustration/Md/Option Select.png"
+                  alt="Build Pipeline"
+                  className="w-full h-full object-contain scale-125"
+                />
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-2 h-2 rounded-full ${buildStatus === "success" ? "bg-green-400" : buildStatus === "building" ? "bg-yellow-400 animate-pulse" : "bg-gray-400"}`}
+                  ></div>
+                  <span className="text-sm">
+                    Build:{" "}
+                    {buildStatus === "building" ? "Building..." : buildStatus === "success" ? "Success" : "Ready"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-sm">Test: Passed</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                  <span className="text-sm">Deploy: Ready</span>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="relative z-10">
+              <Button
+                className="w-full"
+                variant="secondary"
+                onClick={triggerBuild}
+                disabled={buildStatus === "building"}
+              >
+                {buildStatus === "building" ? (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Building...
+                  </>
+                ) : (
+                  <>
+                    <Play className="mr-2 h-4 w-4" /> Trigger Build
+                  </>
+                )}
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* All remaining cards are WHITE with interactions */}
+
+          {/* Tech Photo Card - WHITE */}
           <Card className="break-inside-avoid overflow-hidden">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -579,59 +635,19 @@ export default function DockerApp() {
               </p>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" variant="outline">
+              <Button
+                className="w-full"
+                variant="outline"
+                onClick={() =>
+                  toast({ title: "Environment Setup", description: "Initializing development environment..." })
+                }
+              >
                 <Code className="mr-2 h-4 w-4" /> Setup Environment
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 3. Network Management - PURPLE #1 */}
-          <Card className="break-inside-avoid bg-purple-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute -top-6 -left-6 w-40 h-40 opacity-15">
-              <img
-                src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
-                alt="Network Background"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <CardHeader className="relative z-10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Network className="h-5 w-5" />
-                Network Management
-              </CardTitle>
-              <CardDescription className="text-purple-100">Container networking</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 relative z-10">
-              <div className="w-full h-32 mb-4 relative">
-                <img
-                  src="/illustrations/Product Illustration/Md/List Panel.png"
-                  alt="Network Management"
-                  className="w-full h-full object-contain scale-125"
-                />
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">bridge</span>
-                  <Badge variant="secondary" className="bg-white/20 text-white">
-                    Active
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">host</span>
-                  <Badge variant="outline" className="border-white/30 text-white">
-                    Available
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="relative z-10">
-              <Button className="w-full" variant="secondary">
-                <Plus className="mr-2 h-4 w-4" /> Create Network
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* 4. Volume Storage - WHITE */}
+          {/* Volume Storage - WHITE */}
           <Card className="break-inside-avoid overflow-hidden relative">
             <div className="absolute -top-4 -right-4 w-24 h-24 opacity-10">
               <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark" className="w-full h-full object-contain" />
@@ -654,7 +670,7 @@ export default function DockerApp() {
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>postgres_data</span>
-                  <span className="text-muted-foreground">2.1GB</span>
+                  <span className="text-muted-foreground">{storageUsed.toFixed(1)}GB</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>redis_cache</span>
@@ -666,16 +682,25 @@ export default function DockerApp() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="relative z-10">
-              <Button className="w-full" variant="outline">
-                <Database className="mr-2 h-4 w-4" /> Manage Volumes
+            <CardFooter className="relative z-10 flex gap-2">
+              <Button
+                className="flex-1"
+                variant="outline"
+                onClick={() =>
+                  toast({ title: "Volume Manager", description: "Opening volume management interface..." })
+                }
+              >
+                <Database className="mr-2 h-4 w-4" /> Manage
+              </Button>
+              <Button variant="outline" size="icon" onClick={clearStorage}>
+                <Trash2 className="h-4 w-4" />
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 5. System Resources - BLUE #2 */}
-          <Card className="break-inside-avoid bg-blue-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute -bottom-4 -left-4 w-36 h-36 opacity-20">
+          {/* System Resources - WHITE */}
+          <Card className="break-inside-avoid overflow-hidden relative">
+            <div className="absolute -bottom-4 -left-4 w-36 h-36 opacity-10">
               <img
                 src="/illustrations/Product Illustration/Lg/Mock Panels.png"
                 alt="System Background"
@@ -683,11 +708,11 @@ export default function DockerApp() {
               />
             </div>
             <CardHeader className="relative z-10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Cpu className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2">
+                <Cpu className="h-5 w-5 text-blue-600" />
                 System Resources
               </CardTitle>
-              <CardDescription className="text-blue-100">Real-time monitoring</CardDescription>
+              <CardDescription>Real-time monitoring</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 relative z-10">
               <div className="w-full h-32 mb-4">
@@ -713,22 +738,17 @@ export default function DockerApp() {
               </div>
             </CardContent>
             <CardFooter className="relative z-10">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="w-full"
-                onClick={() => setProgress(Math.floor(Math.random() * 100))}
-              >
-                Refresh Stats
+              <Button variant="outline" size="sm" className="w-full" onClick={refreshStats}>
+                <RefreshCw className="mr-2 h-4 w-4" /> Refresh Stats
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 6. Cute Kitten Card - WHITE */}
+          {/* Cute Kitten Card - WHITE */}
           <Card className="break-inside-avoid overflow-hidden">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Heart className="h-5 w-5 text-pink-600" />
+                <Heart className={`h-5 w-5 ${isLiked ? "text-red-500" : "text-gray-400"}`} />
                 Container Mascot
               </CardTitle>
               <CardDescription>Every good app needs a mascot!</CardDescription>
@@ -749,13 +769,24 @@ export default function DockerApp() {
               </p>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" variant="outline">
-                <Heart className="mr-2 h-4 w-4" /> Adopt a Container
+              <Button
+                className="w-full"
+                variant="outline"
+                onClick={() => {
+                  setIsLiked(!isLiked)
+                  toast({
+                    title: isLiked ? "Unadopted 😿" : "Adopted! 🎉",
+                    description: isLiked ? "Docker Cat is sad to see you go" : "Docker Cat is now part of your team!",
+                  })
+                }}
+              >
+                <Heart className={`mr-2 h-4 w-4 ${isLiked ? "fill-current text-red-500" : ""}`} />
+                {isLiked ? "Adopted!" : "Adopt Container"}
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 7. Image Registry - WHITE */}
+          {/* Image Registry - WHITE */}
           <Card className="break-inside-avoid overflow-hidden relative">
             <div className="absolute -top-6 -right-6 w-32 h-32 opacity-10">
               <img
@@ -784,7 +815,11 @@ export default function DockerApp() {
                     <CardDescription>Official image registry</CardDescription>
                   </div>
                 </div>
-                <Button size="icon" variant="ghost">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => toast({ title: "Search Hub", description: "Opening Docker Hub search..." })}
+                >
                   <Search className="h-4 w-4" />
                 </Button>
               </div>
@@ -803,115 +838,19 @@ export default function DockerApp() {
                   <span className="text-muted-foreground">15M+</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Official Images</span>
-                  <span className="text-muted-foreground">150+</span>
+                  <span>Your Pulls</span>
+                  <span className="text-muted-foreground">{pullCount}</span>
                 </div>
               </div>
             </CardContent>
             <CardFooter className="relative z-10">
-              <Button className="w-full" variant="outline">
-                <Globe className="mr-2 h-4 w-4" /> Browse Registry
+              <Button className="w-full" variant="outline" onClick={pullImage}>
+                <Download className="mr-2 h-4 w-4" /> Pull Latest Image
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 8. Security Scanner - GREEN (only green card) */}
-          <Card className="break-inside-avoid bg-green-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute -top-8 -left-8 w-48 h-48 opacity-15">
-              <img
-                src="/illustrations/Product Illustration/Lg/Mock Panels.png"
-                alt="Security Background"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <CardHeader className="relative z-10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Shield className="h-5 w-5" />
-                Security Scanner
-              </CardTitle>
-              <CardDescription className="text-green-100">Vulnerability detection</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 relative z-10">
-              <div className="w-full h-40 mb-4 relative overflow-hidden rounded-lg">
-                <img
-                  src="/illustrations/Product Illustration/Lg/List w Users.png"
-                  alt="Security Scanner"
-                  className="w-full h-full object-contain scale-120"
-                />
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Last Scan</span>
-                  <span className="text-sm text-green-100">2 hours ago</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Vulnerabilities</span>
-                  <Badge variant="secondary" className="bg-white/20 text-white">
-                    0 Critical
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Compliance</span>
-                  <Badge variant="secondary" className="bg-white/20 text-white">
-                    ✓ SOC2
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="relative z-10">
-              <Button className="w-full" variant="secondary">
-                <Lock className="mr-2 h-4 w-4" /> Run Security Scan
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* 9. Build Pipeline - PURPLE #2 */}
-          <Card className="break-inside-avoid bg-purple-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute -bottom-6 -right-6 w-40 h-40 opacity-20">
-              <img
-                src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
-                alt="Build Background"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <CardHeader className="relative z-10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Rocket className="h-5 w-5" />
-                Build Pipeline
-              </CardTitle>
-              <CardDescription className="text-purple-100">CI/CD automation</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 relative z-10">
-              <div className="w-full h-36 mb-4 relative overflow-hidden rounded-lg">
-                <img
-                  src="/illustrations/Product Illustration/Md/Option Select.png"
-                  alt="Build Pipeline"
-                  className="w-full h-full object-contain scale-125"
-                />
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-sm">Build: Success</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-sm">Test: Passed</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                  <span className="text-sm">Deploy: In Progress</span>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="relative z-10">
-              <Button className="w-full" variant="secondary">
-                <Play className="mr-2 h-4 w-4" /> Trigger Build
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* 10. Analytics Dashboard - WHITE */}
+          {/* Analytics Dashboard - WHITE */}
           <Card className="break-inside-avoid overflow-hidden">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -933,7 +872,7 @@ export default function DockerApp() {
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="text-center">
-                  <div className="font-bold text-lg">99.9%</div>
+                  <div className="font-bold text-lg">{uptime.toFixed(1)}%</div>
                   <div className="text-muted-foreground">Uptime</div>
                 </div>
                 <div className="text-center">
@@ -943,136 +882,69 @@ export default function DockerApp() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" variant="outline">
+              <Button
+                className="w-full"
+                variant="outline"
+                onClick={() => toast({ title: "Analytics", description: "Opening detailed performance metrics..." })}
+              >
                 <Activity className="mr-2 h-4 w-4" /> View Details
               </Button>
             </CardFooter>
           </Card>
 
-          {/* 11. Cloud Integration - BLUE #3 */}
-          <Card className="break-inside-avoid bg-blue-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute -top-4 -left-4 w-44 h-44 opacity-15">
-              <img
-                src="/illustrations/Product Illustration/Lg/List w Users.png"
-                alt="Cloud Background"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <CardHeader className="relative z-10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Cloud className="h-5 w-5" />
-                Cloud Integration
-              </CardTitle>
-              <CardDescription className="text-blue-100">Multi-cloud deployment</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 relative overflow-hidden z-10">
-              <div className="w-full h-32 mb-4 relative overflow-hidden rounded-lg">
-                <img
-                  src="/illustrations/Product Illustration/Md/List Panel.png"
-                  alt="Cloud Integration"
-                  className="w-full h-full object-contain scale-115"
-                />
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">AWS ECS</span>
-                  <Badge variant="secondary" className="bg-white/20 text-white">
-                    Connected
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Google Cloud Run</span>
-                  <Badge variant="outline" className="border-white/30 text-white">
-                    Available
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="relative z-10">
-              <Button className="w-full" variant="secondary">
-                <Plus className="mr-2 h-4 w-4" /> Add Provider
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* 12. Package Manager - WHITE */}
+          {/* Network Status - WHITE */}
           <Card className="break-inside-avoid overflow-hidden relative">
-            <div className="absolute -bottom-4 -right-4 w-28 h-28 opacity-10">
+            <div className="absolute -top-4 -right-4 w-28 h-28 opacity-10">
               <img src="/app icons/Secondary.svg" alt="Docker Compose" className="w-full h-full object-contain" />
             </div>
             <CardHeader className="relative z-10">
               <CardTitle className="flex items-center gap-2">
-                <Package className="h-5 w-5 text-green-600" />
-                Package Manager
+                <Network className="h-5 w-5 text-green-600" />
+                Network Status
               </CardTitle>
-              <CardDescription>Dependency management</CardDescription>
+              <CardDescription>Container connectivity</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 relative z-10">
-              <div className="w-full h-28 mb-4 relative overflow-hidden rounded-lg">
+              <div className="w-full h-20 mb-4">
                 <img
-                  src="/illustrations/Product Illustration/Sm/Run Image.png"
-                  alt="Package Manager"
-                  className="w-full h-full object-contain scale-150"
+                  src="/illustrations/Product Illustration/Md/List Panel.png"
+                  alt="Network Status"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>node_modules</span>
-                  <span className="text-muted-foreground">245MB</span>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Status</span>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-2 h-2 rounded-full ${networkStatus === "connected" ? "bg-green-500" : "bg-red-500"}`}
+                    ></div>
+                    <span className="text-sm capitalize">{networkStatus}</span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>pip packages</span>
-                  <span className="text-muted-foreground">89MB</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Bridge Network</span>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>apt packages</span>
-                  <span className="text-muted-foreground">156MB</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">DNS Resolution</span>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 </div>
               </div>
             </CardContent>
             <CardFooter className="relative z-10">
-              <Button className="w-full" variant="outline">
-                <Download className="mr-2 h-4 w-4" /> Update Packages
+              <Button className="w-full" variant="outline" onClick={toggleNetwork}>
+                {networkStatus === "connected" ? (
+                  <>
+                    <XCircle className="mr-2 h-4 w-4" /> Disconnect
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="mr-2 h-4 w-4" /> Connect
+                  </>
+                )}
               </Button>
             </CardFooter>
-          </Card>
-
-          {/* Continue with remaining cards as WHITE with large illustrations and logos... */}
-          {/* 13-20+ more cards following the same pattern */}
-
-          {/* Terminal Interface - WHITE */}
-          <Card className="break-inside-avoid bg-gray-900 text-white border-0 overflow-hidden relative">
-            <div className="absolute -top-6 -left-6 w-36 h-36 opacity-10">
-              <img src="/logo/LogoWhite.svg" alt="Docker Logo" className="w-full h-full object-contain" />
-            </div>
-            <CardHeader className="relative z-10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Terminal className="h-5 w-5" />
-                Container Terminal
-              </CardTitle>
-              <CardDescription className="text-gray-300">Interactive shell access</CardDescription>
-            </CardHeader>
-            <CardContent className="relative z-10">
-              <div className="w-full h-32 mb-4 relative overflow-hidden rounded-lg">
-                <img
-                  src="/illustrations/Product Illustration/Md/Mock Panels.png"
-                  alt="Terminal Interface"
-                  className="w-full h-full object-contain scale-120"
-                />
-              </div>
-              <div className="bg-black text-green-400 p-3 rounded font-mono text-xs mb-4">
-                <div>root@container:/app# ls -la</div>
-                <div>total 64</div>
-                <div>drwxr-xr-x 1 root root 4096 Jan 15 10:30 .</div>
-                <div>-rw-r--r-- 1 root root 245 Jan 15 10:30 package.json</div>
-                <div>
-                  root@container:/app# <span className="animate-pulse">_</span>
-                </div>
-              </div>
-              <Button variant="outline" className="w-full border-white/30 text-white hover:bg-white/10">
-                <Terminal className="mr-2 h-4 w-4" /> Open Full Terminal
-              </Button>
-            </CardContent>
           </Card>
 
           {/* Community Stats - WHITE */}
@@ -1091,8 +963,8 @@ export default function DockerApp() {
               <div className="flex items-center justify-between">
                 <span className="text-sm">GitHub Stars</span>
                 <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 text-yellow-500" />
-                  <span className="text-sm font-medium">65.2k</span>
+                  <Star className={`h-4 w-4 ${isLiked ? "text-yellow-500 fill-current" : "text-gray-400"}`} />
+                  <span className="text-sm font-medium">{(starCount / 1000).toFixed(1)}k</span>
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -1103,8 +975,40 @@ export default function DockerApp() {
                 <span className="text-sm">Active Users</span>
                 <span className="text-sm font-medium">20M+</span>
               </div>
-              <Button variant="outline" className="w-full">
-                <Github className="mr-2 h-4 w-4" /> Contribute
+              <Button variant="outline" className="w-full" onClick={starProject}>
+                <Star className={`mr-2 h-4 w-4 ${isLiked ? "fill-current text-yellow-500" : ""}`} />
+                {isLiked ? "Starred!" : "Star Project"}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Support Contact Form - WHITE */}
+          <Card className="break-inside-avoid">
+            <CardHeader>
+              <CardTitle>Get Support</CardTitle>
+              <CardDescription>Need help with Docker?</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="w-full h-16 mb-4">
+                <img
+                  src="/illustrations/Product Illustration/Md/List Panel.png"
+                  alt="Support"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <Input
+                placeholder="Your email"
+                onFocus={() => toast({ title: "Support Form", description: "Fill out the form for assistance" })}
+              />
+              <Input placeholder="Subject" />
+              <Input placeholder="How can we help?" />
+              <Button
+                className="w-full"
+                onClick={() =>
+                  toast({ title: "Message Sent! 📧", description: "Our support team will respond within 24 hours" })
+                }
+              >
+                <Github className="mr-2 h-4 w-4" /> Send Message
               </Button>
             </CardContent>
           </Card>
