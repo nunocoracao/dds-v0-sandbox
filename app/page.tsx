@@ -55,7 +55,7 @@ export default function IndexPage() {
                   <Rocket className="w-3 h-3 mr-1" />
                   Docker + v0.dev Partnership
                 </Badge>
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight font-inter">
                   Superhuman
                   <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {" "}
