@@ -20,9 +20,14 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-family-sans)"],
-        heading: ["var(--font-family-heading)"],
-        mono: ["var(--font-family-mono)"],
+        sans: ["var(--font-family-sans)", "Inter", "system-ui", "sans-serif"],
+        heading: ["var(--font-family-heading)", "Poppins", "system-ui", "sans-serif"],
+        mono: ["var(--font-family-mono)", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        // Override default heading sizes to use heading font
+        "5xl": ["3rem", { lineHeight: "1", fontFamily: "var(--font-family-heading)" }],
+        "6xl": ["3.75rem", { lineHeight: "1", fontFamily: "var(--font-family-heading)" }],
       },
       borderWidth: {
         DEFAULT: "var(--border-width)",

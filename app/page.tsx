@@ -55,7 +55,7 @@ export default function IndexPage() {
                   <Rocket className="w-3 h-3 mr-1" />
                   Docker + v0.dev Partnership
                 </Badge>
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight font-heading">
                   Superhuman
                   <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {" "}
@@ -393,13 +393,13 @@ export default function IndexPage() {
                             <TabsTrigger value="tokens">Token Pipeline</TabsTrigger>
                           </TabsList>
                           <TabsContent value="overview" className="space-y-4 mt-6">
-                            <h3 className="text-lg font-semibold">Docker Design System + v0.dev</h3>
+                            <h3 className="text-lg font-semibold font-heading">Docker Design System + v0.dev</h3>
                             <p className="text-gray-600">
                               This project bridges Docker Design System (DDS) with v0.dev's AI-powered component
                               generation, enabling teams to rapidly create DDS-compliant interfaces.
                             </p>
                             <div className="space-y-3">
-                              <h4 className="font-medium">What This Enables:</h4>
+                              <h4 className="font-medium font-heading">What This Enables:</h4>
                               <ul className="space-y-2 text-sm text-gray-600">
                                 <li>
                                   • <strong>Instant DDS Compliance:</strong> Every component uses Docker Design System
@@ -418,10 +418,10 @@ export default function IndexPage() {
                             </div>
                           </TabsContent>
                           <TabsContent value="getting-started" className="space-y-4 mt-6">
-                            <h3 className="text-lg font-semibold">Getting Started</h3>
+                            <h3 className="text-lg font-semibold font-heading">Getting Started</h3>
                             <div className="space-y-4">
                               <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <h4 className="font-medium text-blue-900 mb-2">Quick Setup</h4>
+                                <h4 className="font-medium font-heading text-blue-900 mb-2">Quick Setup</h4>
                                 <ol className="space-y-2 text-sm text-blue-800">
                                   <li>1. Fork this repository to your GitHub account</li>
                                   <li>2. Go to v0.dev and connect your GitHub account</li>
@@ -432,7 +432,7 @@ export default function IndexPage() {
                                 </ol>
                               </div>
                               <div className="space-y-3">
-                                <h4 className="font-medium">Need a Fresh Start?</h4>
+                                <h4 className="font-medium font-heading">Need a Fresh Start?</h4>
                                 <p className="text-sm text-gray-600">
                                   If you want to start over, simply delete your forked repository and fork again. It's
                                   like getting a fresh canvas while keeping all the Docker Design System goodness!
@@ -441,13 +441,13 @@ export default function IndexPage() {
                             </div>
                           </TabsContent>
                           <TabsContent value="tokens" className="space-y-4 mt-6">
-                            <h3 className="text-lg font-semibold">Token Pipeline</h3>
+                            <h3 className="text-lg font-semibold font-heading">Token Pipeline</h3>
                             <p className="text-gray-600">
                               A token pipeline that transforms Figma design tokens into multiple target formats for the
                               Docker Design System.
                             </p>
                             <div className="space-y-3">
-                              <h4 className="font-medium">Pipeline Outputs:</h4>
+                              <h4 className="font-medium font-heading">Pipeline Outputs:</h4>
                               <ul className="space-y-2 text-sm text-gray-600">
                                 <li>• Style Dictionary transformations</li>
                                 <li>• shadcn/ui theme variables</li>
@@ -456,7 +456,7 @@ export default function IndexPage() {
                               </ul>
                             </div>
                             <div className="p-4 bg-gray-50 rounded-lg">
-                              <h4 className="font-medium mb-2">Live Demo</h4>
+                              <h4 className="font-medium font-heading mb-2">Live Demo</h4>
                               <p className="text-sm text-gray-600">See the pipeline in action at our live deployment</p>
                             </div>
                           </TabsContent>
@@ -526,7 +526,7 @@ export default function IndexPage() {
         </div>
 
         <section className="mt-12">
-          <h2 className="text-2xl font-semibold mb-4">Interactive Elements</h2>
+          <h2 className="text-2xl font-semibold mb-4 font-heading">Interactive Elements</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
