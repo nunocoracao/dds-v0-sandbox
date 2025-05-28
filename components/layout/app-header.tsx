@@ -29,19 +29,19 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
               <SheetHeader className="text-left">
                 <div className="flex items-center gap-2">
                   <img src="/sub-marks/subMarkPrimary.svg" alt="Docker" className="h-8" />
-                  <Badge variant="outline" className="ml-5">
+                  <Badge variant="outline" className="ml-3">
                     v0.dev + DDS
                   </Badge>
                 </div>
               </SheetHeader>
 
-              <div className="space-y-6">
+              <div className="space-y-4 mt-6">
                 {/* Active Project */}
                 <Card className="rounded-sm">
-                  <CardHeader className="py-3">
+                  <CardHeader className="py-4">
                     <CardTitle className="text-sm font-medium">Active Project</CardTitle>
                   </CardHeader>
-                  <CardContent className="py-2">
+                  <CardContent className="py-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -95,11 +95,11 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
 
                 {/* Invitation Card */}
                 <Card className="bg-muted/50 rounded-sm">
-                  <CardHeader className="pb-2">
+                  <CardHeader className="pb-3">
                     <CardTitle className="text-sm">Join the Docker Design Team</CardTitle>
                     <CardDescription>Help build the next generation of design tools</CardDescription>
                   </CardHeader>
-                  <CardContent className="text-xs text-muted-foreground pb-2">
+                  <CardContent className="text-xs text-muted-foreground pb-3">
                     This is a proof of concept showcasing the integration of v0.dev with the Docker Design System. We're
                     exploring new ways to create powerful, consistent interfaces.
                   </CardContent>
@@ -114,7 +114,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
                 </Card>
 
                 {/* Version Footer */}
-                <div className="pt-4 text-center">
+                <div className="pt-6 text-center">
                   <div className="inline-flex items-center justify-center rounded-sm border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     v0.1.0-alpha
                   </div>
