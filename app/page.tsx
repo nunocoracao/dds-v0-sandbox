@@ -330,11 +330,29 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Docker Submark",
-      prompt: "Show the Docker submark logo for compact layouts",
+      title: "Docker Submark - Small",
+      prompt: "Show the Docker submark logo in small size for compact layouts",
       component: (
         <div className="flex items-center justify-center p-4">
-          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark" className="w-full h-auto object-contain" />
+          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark Small" className="h-6 w-auto object-contain" />
+        </div>
+      ),
+    },
+    {
+      title: "Docker Submark - Medium",
+      prompt: "Show the Docker submark logo in medium size for standard layouts",
+      component: (
+        <div className="flex items-center justify-center p-4">
+          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark Medium" className="h-12 w-auto object-contain" />
+        </div>
+      ),
+    },
+    {
+      title: "Docker Submark - Large",
+      prompt: "Show the Docker submark logo in large size with gradient background",
+      component: (
+        <div className="flex items-center justify-center p-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-sm">
+          <img src="/sub-marks/subMarkWhite.svg" alt="Docker Submark Large" className="h-16 w-auto object-contain" />
         </div>
       ),
     },
