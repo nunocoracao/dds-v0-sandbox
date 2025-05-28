@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { AppHeader } from "@/components/layout/app-header"
+import { AppHeader, NavigationTrigger } from "@/components/layout/app-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Stepper } from "@/components/ui/stepper"
@@ -19,7 +19,6 @@ import {
   Bell,
   Search,
   Upload,
-  Menu,
   Maximize2,
   Minimize2,
 } from "lucide-react"
@@ -44,7 +43,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -129,52 +127,18 @@ export default function HomePage() {
   }
 
   const componentCards = [
-    // Navigation demo card that opens the same nav as header
+    // Navigation card using the shared navigation component
     {
       title: "v0.dev+DDS Navigation",
-      prompt:
-        "Create a complex v0.dev+DDS navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
+      prompt: "Create a v0.dev-style navigation header with DDS styling using shadcn/ui components",
       component: (
         <div className="flex items-center gap-2">
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-80">
-              <SheetHeader>
-                <SheetTitle>Navigation</SheetTitle>
-                <SheetDescription>Navigate through the Docker Design System onboarding</SheetDescription>
-              </SheetHeader>
-              <div className="mt-6 space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-medium">Onboarding Steps</h4>
-                  <nav className="space-y-1">
-                    <a href="#step-1" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
-                      Step 1: Welcome
-                    </a>
-                    <a href="#step-2" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
-                      Step 2: Learn v0
-                    </a>
-                    <a href="#step-3" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
-                      Step 3: DDS Integration
-                    </a>
-                    <a href="#step-4" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
-                      Step 4: Get Started
-                    </a>
-                  </nav>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-          <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
-            Open v0.dev+DDS Nav
-          </Button>
+          <NavigationTrigger />
+          <span className="text-sm text-muted-foreground">Click hamburger to open nav</span>
         </div>
       ),
     },
-    // Rest of the cards...
+    // Rest of the cards remain the same...
     {
       title: "Primary Button",
       prompt: "Create a primary button using shadcn/ui Button component",
