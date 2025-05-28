@@ -875,9 +875,9 @@ export default function HomePage() {
                   <h3 className="text-white font-medium mb-4">Get Involved</h3>
                   <div className="space-y-3">
                     <Button
-                      variant="outline"
+                      variant="default"
                       size="sm"
-                      className="w-full border-white/30 text-white hover:bg-white/10"
+                      className=""
                       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     >
                       ↑ Back to Top
