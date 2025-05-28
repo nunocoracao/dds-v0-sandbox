@@ -23,7 +23,6 @@ import {
   Minimize2,
   Settings,
   HelpCircle,
-  Menu,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
 import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
@@ -46,7 +45,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -136,71 +134,34 @@ export default function HomePage() {
       title: "v0.dev+DDS Navigation",
       prompt: "Create a v0.dev-style navigation header with DDS styling using shadcn/ui components",
       component: (
-        <div className="flex items-center gap-2">
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-80">
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
-                    <span className="text-primary-foreground text-xs font-bold">v0</span>
-                  </div>
-                  <span>v0.dev + DDS</span>
-                  <Badge variant="outline" className="ml-2">
-                    Beta
-                  </Badge>
-                </SheetTitle>
-              </SheetHeader>
-              <div className="mt-6 space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-medium text-sm">Projects</h4>
-                  <nav className="space-y-1">
-                    <div className="flex items-center justify-between px-3 py-2 bg-muted rounded-md">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                        <span className="text-sm font-medium">ai-design-system</span>
-                      </div>
-                      <Badge variant="secondary" className="text-xs">
-                        Active
-                      </Badge>
-                    </div>
-                    <a href="#" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      docker-dashboard
-                    </a>
-                    <a href="#" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      container-ui
-                    </a>
-                  </nav>
+        <div className="w-full border rounded-md bg-background">
+          <div className="flex items-center justify-between p-3 border-b">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
+                  <span className="text-primary-foreground text-xs font-bold">v0</span>
                 </div>
-
-                <div className="space-y-2 pt-4">
-                  <h4 className="font-medium text-sm">Resources</h4>
-                  <nav className="space-y-1">
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <HelpCircle className="h-4 w-4" />
-                      <span>Documentation</span>
-                    </a>
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <Palette className="h-4 w-4" />
-                      <span>Design System</span>
-                    </a>
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <Code className="h-4 w-4" />
-                      <span>API Reference</span>
-                    </a>
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <Settings className="h-4 w-4" />
-                      <span>Settings</span>
-                    </a>
-                  </nav>
-                </div>
+                <span className="font-semibold text-sm">v0.dev + DDS</span>
               </div>
-            </SheetContent>
-          </Sheet>
+              <Badge variant="secondary" className="text-xs">
+                Beta
+              </Badge>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm">
+                <HelpCircle className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Settings className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+          <div className="p-3">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span>Project:</span>
+              <Badge variant="outline">ai-design-system</Badge>
+            </div>
+          </div>
         </div>
       ),
     },
