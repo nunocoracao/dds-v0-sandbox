@@ -29,7 +29,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
             <div className="p-6">
               <SheetHeader className="text-left">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
+                  <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
                     <span className="text-primary-foreground text-sm font-bold">v0</span>
                   </div>
                   <SheetTitle className="text-xl">v0.dev + DDS</SheetTitle>
@@ -43,7 +43,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
 
               <div className="space-y-6">
                 {/* Active Project */}
-                <Card>
+                <Card className="rounded-sm">
                   <CardHeader className="py-3">
                     <CardTitle className="text-sm font-medium">Active Project</CardTitle>
                   </CardHeader>
@@ -53,7 +53,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                         <span className="font-medium">ai-design-system</span>
                       </div>
-                      <Badge variant="secondary" size="sm">
+                      <Badge variant="secondary" size="sm" className="rounded-sm">
                         Active
                       </Badge>
                     </div>
@@ -102,7 +102,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
                 <Separator />
 
                 {/* Invitation Card */}
-                <Card className="bg-muted/50">
+                <Card className="bg-muted/50 rounded-sm">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm">Join the Docker Design Team</CardTitle>
                     <CardDescription>Help build the next generation of design tools</CardDescription>
@@ -112,7 +112,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
                     exploring new ways to create powerful, consistent interfaces.
                   </CardContent>
                   <CardFooter className="pt-0">
-                    <Button size="sm" className="w-full" asChild>
+                    <Button size="sm" className="w-full rounded-sm" asChild>
                       <a href="https://www.docker.com/careers/" target="_blank" rel="noopener noreferrer">
                         <MessageSquarePlus className="mr-2 h-4 w-4" />
                         Get Involved
@@ -123,7 +123,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
 
                 {/* Version Footer */}
                 <div className="pt-4 text-center">
-                  <div className="inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                  <div className="inline-flex items-center justify-center rounded-sm border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     v0.1.0-alpha
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">&copy; {new Date().getFullYear()} Docker, Inc.</p>
