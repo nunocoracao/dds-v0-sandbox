@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 // Context for shared navigation state
@@ -30,13 +29,11 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
               <SheetHeader className="text-left">
                 <div className="flex items-center gap-2">
                   <img src="/sub-marks/subMarkPrimary.svg" alt="Docker" className="h-8" />
-                  <Badge variant="outline" className="ml-auto">
+                  <Badge variant="outline" className="ml-5">
                     v0.dev + DDS
                   </Badge>
                 </div>
               </SheetHeader>
-
-              <Separator className="my-6" />
 
               <div className="space-y-6">
                 {/* Active Project */}
@@ -95,8 +92,6 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
                     </Button>
                   </div>
                 </div>
-
-                <Separator />
 
                 {/* Invitation Card */}
                 <Card className="bg-muted/50 rounded-sm">
