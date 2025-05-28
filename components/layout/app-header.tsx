@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react"
 import { Menu, ExternalLink, Github, Code, Palette, BookOpen, Rocket, MessageSquarePlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -30,7 +30,6 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
               <SheetHeader className="text-left">
                 <div className="flex items-center gap-2">
                   <img src="/sub-marks/subMarkPrimary.svg" alt="Docker" className="h-8" />
-                  <SheetTitle className="text-xl">v0.dev + DDS</SheetTitle>
                   <Badge variant="outline" className="ml-auto">
                     v0.dev + DDS
                   </Badge>
