@@ -201,9 +201,6 @@ export default function HomePage() {
               </div>
             </SheetContent>
           </Sheet>
-          <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
-            Open v0.dev+DDS Nav
-          </Button>
         </div>
       ),
     },
