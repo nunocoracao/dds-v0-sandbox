@@ -34,7 +34,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
                   </div>
                   <SheetTitle className="text-xl">v0.dev + DDS</SheetTitle>
                   <Badge variant="outline" className="ml-auto">
-                    Beta
+                    v0.dev + DDS
                   </Badge>
                 </div>
               </SheetHeader>
