@@ -19,6 +19,18 @@ import {
   Bell,
   Search,
   Upload,
+  Menu,
+  ChevronRight,
+  Maximize2,
+  Minimize2,
+  Box,
+  Database,
+  Server,
+  Settings,
+  Users,
+  Shield,
+  BarChart,
+  HelpCircle,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
 import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
@@ -41,6 +53,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -53,6 +66,10 @@ export default function HomePage() {
   const [volumeMounted, setVolumeMounted] = useState(false)
   const [selectedImage, setSelectedImage] = useState("nginx:latest")
   const [deploymentProgress, setDeploymentProgress] = useState(0)
+  const [largeIllustration, setLargeIllustration] = useState(false)
+  const [mediumIllustration, setMediumIllustration] = useState(false)
+  const [smallIllustration, setSmallIllustration] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   // Show welcome modal when component showcase loads
   useEffect(() => {
@@ -121,6 +138,129 @@ export default function HomePage() {
   }
 
   const componentCards = [
+    // New complex menu system with fly-out panel
+    {
+      title: "Docker Hub Navigation",
+      prompt:
+        "Create a complex Docker Hub navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
+      component: (
+        <div className="flex items-center gap-2">
+          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Menu className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle className="flex items-center gap-2">
+                  <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Logo" className="h-6 w-auto" />
+                  Docker Hub
+                </SheetTitle>
+              </SheetHeader>
+              <div className="py-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <Box className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Containers</span>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <Database className="h-5 w-5 text-primary" />
+                      <span className="font-medium">Images</span>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem>Official Images</DropdownMenuItem>
+                        <DropdownMenuItem>My Images</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <span>Verified Publishers</span>
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuSubContent>
+                            <DropdownMenuItem>Nginx</DropdownMenuItem>
+                            <DropdownMenuItem>MongoDB</DropdownMenuItem>
+                            <DropdownMenuItem>Redis</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>View All</DropdownMenuItem>
+                          </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Pull Image</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+
+                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <Server className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Volumes</span>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <Settings className="h-5 w-5 text-primary" />
+                      <span className="font-medium">Settings</span>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem>General</DropdownMenuItem>
+                        <DropdownMenuItem>Security</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            <span>Advanced</span>
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuSubContent>
+                            <DropdownMenuItem>Network</DropdownMenuItem>
+                            <DropdownMenuItem>Storage</DropdownMenuItem>
+                            <DropdownMenuItem>Resources</DropdownMenuItem>
+                          </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+
+                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <Users className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Teams</span>
+                  </div>
+
+                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <Shield className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Security</span>
+                  </div>
+
+                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <BarChart className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Analytics</span>
+                  </div>
+
+                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
+                    <HelpCircle className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Help & Support</span>
+                  </div>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+          <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
+            Open Docker Hub Menu
+          </Button>
+        </div>
+      ),
+    },
     // Original enhanced cards with interactions
     {
       title: "Primary Button",
@@ -302,7 +442,7 @@ export default function HomePage() {
         </DropdownMenu>
       ),
     },
-    // Asset cards
+    // Asset cards with toggle buttons
     {
       title: "Docker Logo",
       prompt: "Display the Docker logo using the design system assets",
@@ -325,12 +465,35 @@ export default function HomePage() {
       title: "Large Illustration",
       prompt: "Use large Docker product illustrations for hero sections",
       component: (
-        <div className="flex items-center justify-center p-4">
-          <img
-            src="/illustrations/Product Illustration/Lg/Mock Panels.png"
-            alt="Docker Large Illustration"
-            className="w-full h-auto object-contain"
-          />
+        <div className="space-y-3">
+          <div className="flex items-center justify-center p-4">
+            <img
+              src="/illustrations/Product Illustration/Lg/Mock Panels.png"
+              alt="Docker Large Illustration"
+              className={`w-full h-auto object-contain ${largeIllustration ? "scale-150 transform-gpu" : ""}`}
+              style={{ transformOrigin: "center" }}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLargeIllustration(!largeIllustration)}
+              className="flex items-center gap-1"
+            >
+              {largeIllustration ? (
+                <>
+                  <Minimize2 className="h-3 w-3" />
+                  <span>Normal Size</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="h-3 w-3" />
+                  <span>Enlarge</span>
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       ),
     },
@@ -338,12 +501,35 @@ export default function HomePage() {
       title: "Medium Illustration",
       prompt: "Display medium-sized Docker illustrations for content sections",
       component: (
-        <div className="flex items-center justify-center p-4">
-          <img
-            src="/illustrations/Product Illustration/Md/Option Select.png"
-            alt="Docker Medium Illustration"
-            className="w-full h-auto object-contain"
-          />
+        <div className="space-y-3">
+          <div className="flex items-center justify-center p-4">
+            <img
+              src="/illustrations/Product Illustration/Md/Option Select.png"
+              alt="Docker Medium Illustration"
+              className={`w-full h-auto object-contain ${mediumIllustration ? "scale-150 transform-gpu" : ""}`}
+              style={{ transformOrigin: "center" }}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setMediumIllustration(!mediumIllustration)}
+              className="flex items-center gap-1"
+            >
+              {mediumIllustration ? (
+                <>
+                  <Minimize2 className="h-3 w-3" />
+                  <span>Normal Size</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="h-3 w-3" />
+                  <span>Enlarge</span>
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       ),
     },
@@ -351,12 +537,35 @@ export default function HomePage() {
       title: "Small Illustration",
       prompt: "Use small Docker illustrations for icons and compact spaces",
       component: (
-        <div className="flex items-center justify-center p-4">
-          <img
-            src="/illustrations/Product Illustration/Sm/Run Image.png"
-            alt="Docker Small Illustration"
-            className="w-full h-auto object-contain"
-          />
+        <div className="space-y-3">
+          <div className="flex items-center justify-center p-4">
+            <img
+              src="/illustrations/Product Illustration/Sm/Run Image.png"
+              alt="Docker Small Illustration"
+              className={`w-full h-auto object-contain ${smallIllustration ? "scale-150 transform-gpu" : ""}`}
+              style={{ transformOrigin: "center" }}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSmallIllustration(!smallIllustration)}
+              className="flex items-center gap-1"
+            >
+              {smallIllustration ? (
+                <>
+                  <Minimize2 className="h-3 w-3" />
+                  <span>Normal Size</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="h-3 w-3" />
+                  <span>Enlarge</span>
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       ),
     },
