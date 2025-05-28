@@ -12,7 +12,6 @@ import {
   Palette,
   Layers,
   Sparkles,
-  Users,
   Copy,
   Check,
   Star,
@@ -26,12 +25,34 @@ import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
 import { ConfettiOverlay } from "@/components/confetti-overlay"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Progress } from "@/components/ui/progress"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null)
   const [showWelcomeModal, setShowWelcomeModal] = useState(true)
+  const [heartLiked, setHeartLiked] = useState(false)
+  const [containerRunning, setContainerRunning] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [volumeMounted, setVolumeMounted] = useState(false)
+  const [selectedImage, setSelectedImage] = useState("nginx:latest")
+  const [deploymentProgress, setDeploymentProgress] = useState(0)
 
   // Show welcome modal when component showcase loads
   useEffect(() => {
@@ -39,6 +60,15 @@ export default function HomePage() {
       setShowWelcomeModal(true)
     }
   }, [currentStep])
+
+  useEffect(() => {
+    if (containerRunning && deploymentProgress < 100) {
+      const timer = setTimeout(() => {
+        setDeploymentProgress((prev) => Math.min(prev + 10, 100))
+      }, 200)
+      return () => clearTimeout(timer)
+    }
+  }, [containerRunning, deploymentProgress])
 
   const steps = [
     {
@@ -91,11 +121,246 @@ export default function HomePage() {
   }
 
   const componentCards = [
+    // Original enhanced cards with interactions
     {
       title: "Primary Button",
       prompt: "Create a primary button using shadcn/ui Button component",
       component: <Button className="w-full">Get Started</Button>,
     },
+    {
+      title: "Delete with Confirmation",
+      prompt: "Build a destructive button with double confirmation modal using shadcn/ui Dialog",
+      component: (
+        <>
+          <Button variant="destructive" className="w-full" onClick={() => setShowDeleteModal(true)}>
+            Delete Container
+          </Button>
+          <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
+            <DialogContent className="sm:max-w-[400px]">
+              <DialogHeader>
+                <DialogTitle>Confirm Deletion</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to delete this container? This action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex gap-2 justify-end">
+                <Button variant="outline" onClick={() => setShowDeleteModal(false)}>
+                  Cancel
+                </Button>
+                <Button variant="destructive" onClick={() => setShowDeleteModal(false)}>
+                  Delete
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </>
+      ),
+    },
+    {
+      title: "Heart Icon Toggle",
+      prompt: "Create a heart icon button that changes color when clicked using shadcn/ui Button",
+      component: (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setHeartLiked(!heartLiked)}
+          className={heartLiked ? "text-pink-500 border-pink-500" : ""}
+        >
+          <Heart className={`h-4 w-4 ${heartLiked ? "fill-current" : ""}`} />
+        </Button>
+      ),
+    },
+    {
+      title: "Container Status Toggle",
+      prompt: "Build an interactive container status card with start/stop toggle using shadcn/ui Switch",
+      component: (
+        <Card className="w-full cursor-pointer hover:shadow-md transition-shadow rounded-[var(--border-radius)]">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${containerRunning ? "bg-green-500" : "bg-gray-400"}`} />
+                <span className="text-sm font-medium">{containerRunning ? "Running" : "Stopped"}</span>
+              </div>
+              <Switch
+                checked={containerRunning}
+                onCheckedChange={(checked) => {
+                  setContainerRunning(checked)
+                  if (checked) setDeploymentProgress(0)
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      ),
+    },
+    {
+      title: "Docker Image Selector",
+      prompt: "Create a Docker image selector dropdown using shadcn/ui Select component",
+      component: (
+        <Select value={selectedImage} onValueChange={setSelectedImage}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select image" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="nginx:latest">nginx:latest</SelectItem>
+            <SelectItem value="node:18-alpine">node:18-alpine</SelectItem>
+            <SelectItem value="postgres:15">postgres:15</SelectItem>
+            <SelectItem value="redis:7-alpine">redis:7-alpine</SelectItem>
+          </SelectContent>
+        </Select>
+      ),
+    },
+    {
+      title: "Volume Mount Toggle",
+      prompt: "Build a volume mounting interface using shadcn/ui Checkbox and labels",
+      component: (
+        <div className="space-y-3">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="volume-mount" checked={volumeMounted} onCheckedChange={setVolumeMounted} />
+            <label htmlFor="volume-mount" className="text-sm font-medium">
+              Mount /data volume
+            </label>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {volumeMounted ? "Volume mounted at /data" : "No volumes mounted"}
+          </p>
+        </div>
+      ),
+    },
+    {
+      title: "Deployment Progress",
+      prompt: "Show deployment progress using shadcn/ui Progress component with animations",
+      component: (
+        <div className="space-y-2">
+          <div className="flex justify-between text-xs">
+            <span>Deploying...</span>
+            <span>{deploymentProgress}%</span>
+          </div>
+          <Progress value={deploymentProgress} className="w-full" />
+        </div>
+      ),
+    },
+    {
+      title: "Docker Services Tabs",
+      prompt: "Create service management tabs using shadcn/ui Tabs component",
+      component: (
+        <Tabs defaultValue="containers" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="containers">Containers</TabsTrigger>
+            <TabsTrigger value="images">Images</TabsTrigger>
+            <TabsTrigger value="volumes">Volumes</TabsTrigger>
+          </TabsList>
+          <TabsContent value="containers" className="text-center py-2">
+            <p className="text-xs text-muted-foreground">3 running</p>
+          </TabsContent>
+          <TabsContent value="images" className="text-center py-2">
+            <p className="text-xs text-muted-foreground">12 images</p>
+          </TabsContent>
+          <TabsContent value="volumes" className="text-center py-2">
+            <p className="text-xs text-muted-foreground">5 volumes</p>
+          </TabsContent>
+        </Tabs>
+      ),
+    },
+    {
+      title: "Container Actions Menu",
+      prompt: "Build a container actions dropdown menu using shadcn/ui DropdownMenu with nested options",
+      component: (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full">
+              Container Actions
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Container Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <span>Start</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <span>Stop</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <span>Restart</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <span>Logs</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>
+                  <span>View Logs</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span>Download Logs</span>
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    },
+    // Asset cards
+    {
+      title: "Docker Logo",
+      prompt: "Display the Docker logo using the design system assets",
+      component: (
+        <div className="flex items-center justify-center p-4">
+          <img src="/logo/LogoPrimary.svg" alt="Docker Logo" className="h-8 w-auto object-contain" />
+        </div>
+      ),
+    },
+    {
+      title: "Docker Submark",
+      prompt: "Show the Docker submark logo for compact layouts",
+      component: (
+        <div className="flex items-center justify-center p-4">
+          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark" className="h-6 w-auto object-contain" />
+        </div>
+      ),
+    },
+    {
+      title: "Large Illustration",
+      prompt: "Use large Docker product illustrations for hero sections",
+      component: (
+        <div className="flex items-center justify-center p-2">
+          <img
+            src="/illustrations/Product Illustration/Lg/Mock Panels.png"
+            alt="Docker Large Illustration"
+            className="w-full h-auto object-contain max-h-16"
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Medium Illustration",
+      prompt: "Display medium-sized Docker illustrations for content sections",
+      component: (
+        <div className="flex items-center justify-center p-2">
+          <img
+            src="/illustrations/Product Illustration/Md/Option Select.png"
+            alt="Docker Medium Illustration"
+            className="w-full h-auto object-contain max-h-12"
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Small Illustration",
+      prompt: "Use small Docker illustrations for icons and compact spaces",
+      component: (
+        <div className="flex items-center justify-center p-2">
+          <img
+            src="/illustrations/Product Illustration/Sm/Run Image.png"
+            alt="Docker Small Illustration"
+            className="w-full h-auto object-contain max-h-8"
+          />
+        </div>
+      ),
+    },
+    // Continue with more enhanced cards...
     {
       title: "Secondary Button",
       prompt: "Make a secondary button using shadcn/ui Button variant",
@@ -111,15 +376,6 @@ export default function HomePage() {
       component: (
         <Button variant="outline" className="w-full">
           Outline
-        </Button>
-      ),
-    },
-    {
-      title: "Icon Button",
-      prompt: "Make an icon button using shadcn/ui Button with icon size",
-      component: (
-        <Button variant="outline" size="icon">
-          <Heart className="h-4 w-4" />
         </Button>
       ),
     },
@@ -148,105 +404,6 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Card with Header",
-      prompt: "Create a card using shadcn/ui Card with CardHeader and CardTitle",
-      component: (
-        <Card className="w-full rounded-[var(--border-radius)]">
-          <div className="p-4 pb-2">
-            <h4 className="font-medium">Header Title</h4>
-          </div>
-          <CardContent className="p-4 pt-0">
-            <p className="text-sm text-muted-foreground">Content area</p>
-          </CardContent>
-        </Card>
-      ),
-    },
-    {
-      title: "Ghost Button",
-      prompt: "Make a ghost button using shadcn/ui Button ghost variant",
-      component: (
-        <Button variant="ghost" className="w-full">
-          Ghost Button
-        </Button>
-      ),
-    },
-    {
-      title: "Link Button",
-      prompt: "Create a link-style button using shadcn/ui Button link variant",
-      component: (
-        <Button variant="link" className="w-full">
-          Link Button
-        </Button>
-      ),
-    },
-    {
-      title: "Destructive Button",
-      prompt: "Build a destructive button using shadcn/ui Button destructive variant",
-      component: (
-        <Button variant="destructive" className="w-full">
-          Delete
-        </Button>
-      ),
-    },
-    {
-      title: "Small Button",
-      prompt: "Create a small button using shadcn/ui Button sm size",
-      component: (
-        <Button size="sm" className="w-full">
-          Small Button
-        </Button>
-      ),
-    },
-    {
-      title: "Large Button",
-      prompt: "Make a large button using shadcn/ui Button lg size",
-      component: (
-        <Button size="lg" className="w-full">
-          Large Button
-        </Button>
-      ),
-    },
-    {
-      title: "Card with Footer",
-      prompt: "Build a card using shadcn/ui Card with CardFooter for actions",
-      component: (
-        <Card className="w-full rounded-[var(--border-radius)]">
-          <CardContent className="p-4 pb-2">
-            <p className="text-sm">Card with footer</p>
-          </CardContent>
-          <div className="p-4 pt-0">
-            <Button size="sm" className="w-full">
-              Action
-            </Button>
-          </div>
-        </Card>
-      ),
-    },
-    {
-      title: "Compact Card",
-      prompt: "Create a compact card using shadcn/ui Card with minimal padding",
-      component: (
-        <Card className="w-full rounded-[var(--border-radius)]">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">Compact Layout</span>
-            </div>
-          </CardContent>
-        </Card>
-      ),
-    },
-    {
-      title: "Button with Icon",
-      prompt: "Make a button with icon using shadcn/ui Button and Lucide icons",
-      component: (
-        <Button className="w-full">
-          <Upload className="h-4 w-4 mr-2" />
-          Upload File
-        </Button>
-      ),
-    },
-    {
       title: "Icon-only Buttons",
       prompt: "Create icon-only buttons using shadcn/ui Button icon size variant",
       component: (
@@ -264,58 +421,13 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Card Grid Layout",
-      prompt: "Build a card grid using shadcn/ui Card components",
+      title: "Button with Icon",
+      prompt: "Make a button with icon using shadcn/ui Button and Lucide icons",
       component: (
-        <div className="grid grid-cols-2 gap-2">
-          <Card className="rounded-[var(--border-radius)]">
-            <CardContent className="p-3 text-center">
-              <p className="text-xs">Card 1</p>
-            </CardContent>
-          </Card>
-          <Card className="rounded-[var(--border-radius)]">
-            <CardContent className="p-3 text-center">
-              <p className="text-xs">Card 2</p>
-            </CardContent>
-          </Card>
-        </div>
-      ),
-    },
-    {
-      title: "Interactive Card",
-      prompt: "Create an interactive card using shadcn/ui Card with hover effects",
-      component: (
-        <Card className="w-full cursor-pointer hover:shadow-md transition-shadow rounded-[var(--border-radius)]">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              <span className="text-sm font-medium">Interactive Card</span>
-            </div>
-          </CardContent>
-        </Card>
-      ),
-    },
-    {
-      title: "Button Loading State",
-      prompt: "Show button loading state using shadcn/ui Button with disabled prop",
-      component: (
-        <Button disabled className="w-full">
-          Loading...
+        <Button className="w-full">
+          <Upload className="h-4 w-4 mr-2" />
+          Upload File
         </Button>
-      ),
-    },
-    {
-      title: "Card with Stats",
-      prompt: "Build a stats card using shadcn/ui Card with typography",
-      component: (
-        <Card className="w-full rounded-[var(--border-radius)]">
-          <CardContent className="p-4">
-            <div className="text-center">
-              <p className="text-2xl font-bold">1,234</p>
-              <p className="text-sm text-muted-foreground">Total Users</p>
-            </div>
-          </CardContent>
-        </Card>
       ),
     },
   ]
@@ -470,6 +582,43 @@ export default function HomePage() {
     return null
   }
 
+  const typographyCard = {
+    title: "Typography Showcase",
+    prompt: "Display comprehensive typography examples using Docker Design System tokens",
+    component: (
+      <div className="space-y-4 text-left">
+        <div>
+          <h1 className="text-4xl font-bold font-heading mb-2">The quick brown fox</h1>
+          <p className="text-sm text-muted-foreground">H1 Heading - font-heading, text-4xl, font-bold</p>
+        </div>
+        <div>
+          <h2 className="text-2xl font-semibold font-heading mb-2">jumps over the lazy dog</h2>
+          <p className="text-sm text-muted-foreground">H2 Heading - font-heading, text-2xl, font-semibold</p>
+        </div>
+        <div>
+          <h3 className="text-lg font-medium font-heading mb-2">The five boxing wizards</h3>
+          <p className="text-sm text-muted-foreground">H3 Heading - font-heading, text-lg, font-medium</p>
+        </div>
+        <div>
+          <p className="text-base font-sans mb-2">
+            Body text using the Docker Design System font stack. Perfect for paragraphs and content.
+          </p>
+          <p className="text-sm text-muted-foreground">Body Text - font-sans, text-base</p>
+        </div>
+        <div>
+          <a href="#" className="text-primary hover:underline font-medium">
+            This is a link example
+          </a>
+          <p className="text-sm text-muted-foreground mt-1">Link - text-primary, hover:underline</p>
+        </div>
+        <div>
+          <label className="text-sm font-medium">Form Label</label>
+          <p className="text-sm text-muted-foreground mt-1">Label - text-sm, font-medium</p>
+        </div>
+      </div>
+    ),
+  }
+
   if (currentStep === 3) {
     return (
       <div className="min-h-screen bg-primary">
@@ -516,6 +665,34 @@ export default function HomePage() {
                 </div>
               </Card>
             ))}
+          </div>
+
+          {/* Typography showcase card - full width at bottom */}
+          <div className="mt-8">
+            <Card className="w-full rounded-[var(--border-radius)]">
+              <CardContent className="p-6">
+                <h4 className="font-medium text-lg mb-4">{typographyCard.title}</h4>
+                <p className="text-sm text-muted-foreground mb-6">{typographyCard.prompt}</p>
+
+                <div className="bg-muted/30 rounded-md p-6">{typographyCard.component}</div>
+
+                <div className="mt-4">
+                  <Button variant="secondary" onClick={() => copyToClipboard(typographyCard.prompt)}>
+                    {copiedPrompt === typographyCard.prompt ? (
+                      <>
+                        <Check className="h-3 w-3 mr-2" />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-3 w-3 mr-2" />
+                        Copy Prompt
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
           <Dialog open={showWelcomeModal} onOpenChange={setShowWelcomeModal}>
             <DialogContent className="sm:max-w-[500px] rounded-[var(--border-radius)]">
