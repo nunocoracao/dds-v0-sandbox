@@ -140,9 +140,9 @@ export default function HomePage() {
   const componentCards = [
     // New complex menu system with fly-out panel
     {
-      title: "v0.dev + DDS Navigation",
+      title: "v0.dev+DDS Navigation",
       prompt:
-        "Create a complex v0.dev + DDS navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
+        "Create a complex v0.dev+DDS navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
       component: (
         <div className="flex items-center gap-2">
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -154,7 +154,6 @@ export default function HomePage() {
             <SheetContent side="left" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Logo" className="h-6 w-auto" />
                   <Badge className="bg-primary text-primary-foreground px-2 py-1">v0.dev + DDS</Badge>
                 </SheetTitle>
               </SheetHeader>
@@ -256,7 +255,7 @@ export default function HomePage() {
             </SheetContent>
           </Sheet>
           <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
-            Open Docker Hub Menu
+            Open v0.dev+DDS Nav
           </Button>
         </div>
       ),
