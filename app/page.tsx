@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { AppHeader } from "@/components/layout/app-header"
+import { AppHeader, NavigationTrigger } from "@/components/layout/app-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Stepper } from "@/components/ui/stepper"
@@ -19,18 +19,8 @@ import {
   Bell,
   Search,
   Upload,
-  Menu,
-  ChevronRight,
   Maximize2,
   Minimize2,
-  Box,
-  Database,
-  Server,
-  Settings,
-  Users,
-  Shield,
-  BarChart,
-  HelpCircle,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
 import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
@@ -53,7 +43,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -138,129 +127,18 @@ export default function HomePage() {
   }
 
   const componentCards = [
-    // New complex menu system with fly-out panel
+    // Navigation card using the shared navigation component
     {
       title: "v0.dev+DDS Navigation",
-      prompt:
-        "Create a complex v0.dev+DDS navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
+      prompt: "Create a v0.dev-style navigation header with DDS styling using shadcn/ui components",
       component: (
         <div className="flex items-center gap-2">
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Badge className="bg-primary text-primary-foreground px-2 py-1">v0.dev + DDS</Badge>
-                </SheetTitle>
-              </SheetHeader>
-              <div className="py-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Box className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Containers</span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <Database className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Images</span>
-                    </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem>Official Images</DropdownMenuItem>
-                        <DropdownMenuItem>My Images</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <span>Verified Publishers</span>
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem>Nginx</DropdownMenuItem>
-                            <DropdownMenuItem>MongoDB</DropdownMenuItem>
-                            <DropdownMenuItem>Redis</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>View All</DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Pull Image</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Server className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Volumes</span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <Settings className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Settings</span>
-                    </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem>General</DropdownMenuItem>
-                        <DropdownMenuItem>Security</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <span>Advanced</span>
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem>Network</DropdownMenuItem>
-                            <DropdownMenuItem>Storage</DropdownMenuItem>
-                            <DropdownMenuItem>Resources</DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Users className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Teams</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Shield className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Security</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <BarChart className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Analytics</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <HelpCircle className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Help & Support</span>
-                  </div>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-          <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
-            Open v0.dev+DDS Nav
-          </Button>
+          <NavigationTrigger />
+          <span className="text-sm text-muted-foreground">Click hamburger to open nav</span>
         </div>
       ),
     },
-    // Original enhanced cards with interactions
+    // Rest of the cards remain the same...
     {
       title: "Primary Button",
       prompt: "Create a primary button using shadcn/ui Button component",
@@ -452,11 +330,29 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Docker Submark",
-      prompt: "Show the Docker submark logo for compact layouts",
+      title: "Docker Submark - Small",
+      prompt: "Show the Docker submark logo in small size for compact layouts",
       component: (
         <div className="flex items-center justify-center p-4">
-          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark" className="w-full h-auto object-contain" />
+          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark Small" className="h-6 w-auto object-contain" />
+        </div>
+      ),
+    },
+    {
+      title: "Docker Submark - Medium",
+      prompt: "Show the Docker submark logo in medium size for standard layouts",
+      component: (
+        <div className="flex items-center justify-center p-4">
+          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark Medium" className="h-12 w-auto object-contain" />
+        </div>
+      ),
+    },
+    {
+      title: "Docker Submark - Large",
+      prompt: "Show the Docker submark logo in large size with gradient background",
+      component: (
+        <div className="flex items-center justify-center p-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-sm">
+          <img src="/sub-marks/subMarkWhite.svg" alt="Docker Submark Large" className="h-16 w-auto object-contain" />
         </div>
       ),
     },
