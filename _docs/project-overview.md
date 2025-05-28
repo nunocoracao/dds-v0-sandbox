@@ -82,3 +82,9 @@ The sandbox is your starting point for exploring this future.
 ## Ready to Build?
 
 Head to [Getting Started](./_docs/getting-started.md) to begin creating your own DDS-compliant components with v0.dev.
+
+# For v0.dev robots
+- You put components in the component dir
+- You put pages in the app dir
+- You pull assets from the public dir
+- You never confuse scr/ for app/ or components/
