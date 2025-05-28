@@ -29,9 +29,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
             <div className="p-6">
               <SheetHeader className="text-left">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
-                    <span className="text-primary-foreground text-sm font-bold">v0</span>
-                  </div>
+                  <img src="/sub-marks/subMarkPrimary.svg" alt="Docker" className="h-8" />
                   <SheetTitle className="text-xl">v0.dev + DDS</SheetTitle>
                   <Badge variant="outline" className="ml-auto">
                     v0.dev + DDS
