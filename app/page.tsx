@@ -840,8 +840,17 @@ export default function HomePage() {
               ← Back to Onboarding
             </Button>
             <h1 className="text-3xl font-bold text-white mb-2">Component Showcase</h1>
-            <p className="text-white/80">
-              Copy these prompts to generate components with Docker Design System styling in v0.dev chat.
+            <p className="text-white/80 flex items-center gap-2">
+              Your first prompt could say something like, "get rid of the onboarding UX and show me a DHI utility view"
+              <Button
+                variant="secondary"
+                size="sm"
+                className="whitespace-nowrap flex items-center gap-1"
+                onClick={() => copyToClipboard("get rid of the onboarding UX and show me a DHI utility view")}
+              >
+                <Copy className="h-3 w-3" />
+                Copy
+              </Button>
             </p>
           </div>
 
