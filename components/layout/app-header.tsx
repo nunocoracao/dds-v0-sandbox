@@ -36,24 +36,6 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
               </SheetHeader>
 
               <div className="space-y-4 mt-6">
-                {/* Active Project */}
-                <Card className="rounded-sm">
-                  <CardHeader className="py-4">
-                    <CardTitle className="text-sm font-medium">Active Project</CardTitle>
-                  </CardHeader>
-                  <CardContent className="py-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span className="font-medium">ai-design-system</span>
-                      </div>
-                      <Badge variant="secondary" size="sm" className="rounded-sm">
-                        Active
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
                 {/* Resources */}
                 <div className="space-y-3">
                   <h3 className="text-sm font-medium">Resources</h3>
