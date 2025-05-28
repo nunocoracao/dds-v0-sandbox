@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { AppHeader } from "@/components/layout/app-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -24,11 +24,21 @@ import {
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
 import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
 import { ConfettiOverlay } from "@/components/confetti-overlay"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Badge } from "@/components/ui/badge"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null)
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true)
+
+  // Show welcome modal when component showcase loads
+  useEffect(() => {
+    if (currentStep === 3) {
+      setShowWelcomeModal(true)
+    }
+  }, [currentStep])
 
   const steps = [
     {
@@ -507,6 +517,28 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
+          <Dialog open={showWelcomeModal} onOpenChange={setShowWelcomeModal}>
+            <DialogContent className="sm:max-w-[500px] rounded-[var(--border-radius)]">
+              <DialogHeader className="text-center space-y-4">
+                <div className="flex justify-center">
+                  <Badge className="bg-primary text-primary-foreground px-3 py-1">v0.dev + DDS</Badge>
+                </div>
+                <DialogTitle className="text-2xl font-bold">Welcome to the Showcase, Dockhand! 🚢</DialogTitle>
+                <DialogDescription className="text-base leading-relaxed">
+                  You're now ready to build beautiful UI components with the power of v0.dev and Docker Design System.
+                  <br />
+                  <br />
+                  <strong>Copy any prompt below</strong> and paste it into v0.dev chat to generate components with
+                  perfect DDS styling.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex justify-center pt-2">
+                <Button onClick={() => setShowWelcomeModal(false)} size="lg">
+                  Start Building
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </main>
       </div>
     )
