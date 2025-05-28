@@ -19,11 +19,9 @@ import {
   Bell,
   Search,
   Upload,
+  Menu,
   Maximize2,
   Minimize2,
-  Settings,
-  HelpCircle,
-  Menu,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
 import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
@@ -46,7 +44,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -131,10 +129,11 @@ export default function HomePage() {
   }
 
   const componentCards = [
-    // New complex menu system with fly-out panel
+    // Navigation demo card that opens the same nav as header
     {
       title: "v0.dev+DDS Navigation",
-      prompt: "Create a v0.dev-style navigation header with DDS styling using shadcn/ui components",
+      prompt:
+        "Create a complex v0.dev+DDS navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
       component: (
         <div className="flex items-center gap-2">
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -145,67 +144,37 @@ export default function HomePage() {
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
               <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
-                    <span className="text-primary-foreground text-xs font-bold">v0</span>
-                  </div>
-                  <span>v0.dev + DDS</span>
-                  <Badge variant="outline" className="ml-2">
-                    Beta
-                  </Badge>
-                </SheetTitle>
+                <SheetTitle>Navigation</SheetTitle>
+                <SheetDescription>Navigate through the Docker Design System onboarding</SheetDescription>
               </SheetHeader>
               <div className="mt-6 space-y-4">
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm">Projects</h4>
+                  <h4 className="font-medium">Onboarding Steps</h4>
                   <nav className="space-y-1">
-                    <div className="flex items-center justify-between px-3 py-2 bg-muted rounded-md">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                        <span className="text-sm font-medium">ai-design-system</span>
-                      </div>
-                      <Badge variant="secondary" className="text-xs">
-                        Active
-                      </Badge>
-                    </div>
-                    <a href="#" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      docker-dashboard
+                    <a href="#step-1" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
+                      Step 1: Welcome
                     </a>
-                    <a href="#" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      container-ui
+                    <a href="#step-2" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
+                      Step 2: Learn v0
                     </a>
-                  </nav>
-                </div>
-
-                <div className="space-y-2 pt-4">
-                  <h4 className="font-medium text-sm">Resources</h4>
-                  <nav className="space-y-1">
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <HelpCircle className="h-4 w-4" />
-                      <span>Documentation</span>
+                    <a href="#step-3" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
+                      Step 3: DDS Integration
                     </a>
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <Palette className="h-4 w-4" />
-                      <span>Design System</span>
-                    </a>
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <Code className="h-4 w-4" />
-                      <span>API Reference</span>
-                    </a>
-                    <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                      <Settings className="h-4 w-4" />
-                      <span>Settings</span>
+                    <a href="#step-4" className="block px-3 py-2 text-sm rounded-md hover:bg-accent">
+                      Step 4: Get Started
                     </a>
                   </nav>
                 </div>
               </div>
             </SheetContent>
           </Sheet>
-          <span className="text-sm text-muted-foreground">Click hamburger to open nav</span>
+          <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
+            Open v0.dev+DDS Nav
+          </Button>
         </div>
       ),
     },
-    // Original enhanced cards with interactions
+    // Rest of the cards...
     {
       title: "Primary Button",
       prompt: "Create a primary button using shadcn/ui Button component",
