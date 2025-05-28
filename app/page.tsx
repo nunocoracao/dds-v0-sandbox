@@ -841,7 +841,7 @@ export default function HomePage() {
             </Button>
             <h1 className="text-3xl font-bold text-white mb-2">Component Showcase</h1>
             <p className="text-white/80">
-              Copy these prompts to generate components with Docker Design System styling in v0.dev chat.
+              Your first prompt could say something like, "get rid of the onboarding UX and show me a DHI utility view"
             </p>
           </div>
 
