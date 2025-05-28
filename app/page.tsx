@@ -24,7 +24,6 @@ import {
   Rocket,
   Github,
   BookOpen,
-  MessageSquarePlus,
   ExternalLink,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
@@ -881,12 +880,6 @@ export default function HomePage() {
                       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     >
                       ↑ Back to Top
-                    </Button>
-                    <Button size="sm" className="w-full" asChild>
-                      <a href="https://www.docker.com/careers/" target="_blank" rel="noopener noreferrer">
-                        <MessageSquarePlus className="mr-2 h-4 w-4" />
-                        Join Docker Design
-                      </a>
                     </Button>
                   </div>
                 </div>
