@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react"
 import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { HelpCircle, Palette, Code, Settings } from "lucide-react"
 
@@ -94,16 +94,14 @@ function useNavigation() {
   return context
 }
 
-// Navigation trigger button
+// Navigation trigger button - just a button that opens the sheet
 export function NavigationTrigger() {
   const { setIsOpen } = useNavigation()
 
   return (
-    <SheetTrigger asChild>
-      <Button variant="outline" size="icon" onClick={() => setIsOpen(true)}>
-        <Menu className="h-4 w-4" />
-      </Button>
-    </SheetTrigger>
+    <Button variant="outline" size="icon" onClick={() => setIsOpen(true)}>
+      <Menu className="h-4 w-4" />
+    </Button>
   )
 }
 
@@ -114,12 +112,10 @@ export function AppHeader() {
   return (
     <header className="h-20 flex items-center justify-between px-6">
       <div className="flex items-center gap-4">
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => setIsOpen(true)}>
-            <Menu className="h-6 w-6 text-white" />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </SheetTrigger>
+        <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => setIsOpen(true)}>
+          <Menu className="h-6 w-6 text-white" />
+          <span className="sr-only">Open menu</span>
+        </Button>
 
         <div className="flex items-center gap-3">
           <img src="/sub-marks/subMarkWhite.svg" alt="Docker" className="h-8" />
