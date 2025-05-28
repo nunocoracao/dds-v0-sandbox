@@ -158,3 +158,12 @@
 .animate-slide-up {
   animation: slide-up 0.3s ease-out forwards;
 }
+
+/* Apply DDS border radius to all buttons globally */
+@layer components {
+  button,
+  .button,
+  [role="button"] {
+    border-radius: var(--border-radius) !important;
+  }
+}
