@@ -1,11 +1,13 @@
 "use client"
 
 import { createContext, useContext, useState, type ReactNode } from "react"
-import { Menu } from "lucide-react"
+import { Menu, ExternalLink, Github, Code, Palette, BookOpen, Rocket, MessageSquarePlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
-import { HelpCircle, Palette, Code, Settings } from "lucide-react"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 // Context for shared navigation state
 const NavigationContext = createContext<{
@@ -22,63 +24,113 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       {children}
       {/* Single Sheet instance */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent side="left" className="w-80">
-          <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
-                <span className="text-primary-foreground text-xs font-bold">v0</span>
-              </div>
-              <span>v0.dev + DDS</span>
-              <Badge variant="outline" className="ml-2">
-                Beta
-              </Badge>
-            </SheetTitle>
-            <SheetDescription>Navigate through the Docker Design System onboarding</SheetDescription>
-          </SheetHeader>
-          <div className="mt-6 space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-medium text-sm">Projects</h4>
-              <nav className="space-y-1">
-                <div className="flex items-center justify-between px-3 py-2 bg-muted rounded-md">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary rounded-full"></div>
-                    <span className="text-sm font-medium">ai-design-system</span>
+        <SheetContent side="left" className="w-[350px] p-0">
+          <ScrollArea className="h-full">
+            <div className="p-6">
+              <SheetHeader className="text-left">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
+                    <span className="text-primary-foreground text-sm font-bold">v0</span>
                   </div>
-                  <Badge variant="secondary" className="text-xs">
-                    Active
+                  <SheetTitle className="text-xl">v0.dev + DDS</SheetTitle>
+                  <Badge variant="outline" className="ml-auto">
+                    Beta
                   </Badge>
                 </div>
-                <a href="#" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                  docker-dashboard
-                </a>
-                <a href="#" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                  container-ui
-                </a>
-              </nav>
-            </div>
+              </SheetHeader>
 
-            <div className="space-y-2 pt-4">
-              <h4 className="font-medium text-sm">Resources</h4>
-              <nav className="space-y-1">
-                <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                  <HelpCircle className="h-4 w-4" />
-                  <span>Documentation</span>
-                </a>
-                <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                  <Palette className="h-4 w-4" />
-                  <span>Design System</span>
-                </a>
-                <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                  <Code className="h-4 w-4" />
-                  <span>API Reference</span>
-                </a>
-                <a href="#" className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted">
-                  <Settings className="h-4 w-4" />
-                  <span>Settings</span>
-                </a>
-              </nav>
+              <Separator className="my-6" />
+
+              <div className="space-y-6">
+                {/* Active Project */}
+                <Card>
+                  <CardHeader className="py-3">
+                    <CardTitle className="text-sm font-medium">Active Project</CardTitle>
+                  </CardHeader>
+                  <CardContent className="py-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="font-medium">ai-design-system</span>
+                      </div>
+                      <Badge variant="secondary" size="sm">
+                        Active
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Resources */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-medium">Resources</h3>
+                  <div className="grid gap-2">
+                    <Button variant="ghost" className="justify-start h-9" asChild>
+                      <a href="https://v0.dev" target="_blank" rel="noopener noreferrer">
+                        <Rocket className="mr-2 h-4 w-4" />
+                        <span>v0.dev Platform</span>
+                        <ExternalLink className="ml-auto h-3 w-3 opacity-60" />
+                      </a>
+                    </Button>
+                    <Button variant="ghost" className="justify-start h-9" asChild>
+                      <a href="https://github.com/docker/design" target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" />
+                        <span>Docker Design GitHub</span>
+                        <ExternalLink className="ml-auto h-3 w-3 opacity-60" />
+                      </a>
+                    </Button>
+                    <Button variant="ghost" className="justify-start h-9" asChild>
+                      <a href="#docs">
+                        <BookOpen className="mr-2 h-4 w-4" />
+                        <span>Documentation</span>
+                      </a>
+                    </Button>
+                    <Button variant="ghost" className="justify-start h-9" asChild>
+                      <a href="#components">
+                        <Palette className="mr-2 h-4 w-4" />
+                        <span>Design System</span>
+                      </a>
+                    </Button>
+                    <Button variant="ghost" className="justify-start h-9" asChild>
+                      <a href="#api">
+                        <Code className="mr-2 h-4 w-4" />
+                        <span>API Reference</span>
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Invitation Card */}
+                <Card className="bg-muted/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">Join the Docker Design Team</CardTitle>
+                    <CardDescription>Help build the next generation of design tools</CardDescription>
+                  </CardHeader>
+                  <CardContent className="text-xs text-muted-foreground pb-2">
+                    This is a proof of concept showcasing the integration of v0.dev with the Docker Design System. We're
+                    exploring new ways to create powerful, consistent interfaces.
+                  </CardContent>
+                  <CardFooter className="pt-0">
+                    <Button size="sm" className="w-full" asChild>
+                      <a href="https://www.docker.com/careers/" target="_blank" rel="noopener noreferrer">
+                        <MessageSquarePlus className="mr-2 h-4 w-4" />
+                        Get Involved
+                      </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                {/* Version Footer */}
+                <div className="pt-4 text-center">
+                  <div className="inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                    v0.1.0-alpha
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">&copy; {new Date().getFullYear()} Docker, Inc.</p>
+                </div>
+              </div>
             </div>
-          </div>
+          </ScrollArea>
         </SheetContent>
       </Sheet>
     </NavigationContext.Provider>
