@@ -308,7 +308,7 @@ export default function HomePage() {
       prompt: "Display the Docker logo using the design system assets",
       component: (
         <div className="flex items-center justify-center p-4">
-          <img src="/logo/LogoPrimary.svg" alt="Docker Logo" className="h-8 w-auto object-contain" />
+          <img src="/logo/LogoPrimary.svg" alt="Docker Logo" className="w-full h-auto object-contain" />
         </div>
       ),
     },
@@ -317,7 +317,7 @@ export default function HomePage() {
       prompt: "Show the Docker submark logo for compact layouts",
       component: (
         <div className="flex items-center justify-center p-4">
-          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark" className="h-6 w-auto object-contain" />
+          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark" className="w-full h-auto object-contain" />
         </div>
       ),
     },
@@ -325,11 +325,11 @@ export default function HomePage() {
       title: "Large Illustration",
       prompt: "Use large Docker product illustrations for hero sections",
       component: (
-        <div className="flex items-center justify-center p-2">
+        <div className="flex items-center justify-center p-4">
           <img
             src="/illustrations/Product Illustration/Lg/Mock Panels.png"
             alt="Docker Large Illustration"
-            className="w-full h-auto object-contain max-h-16"
+            className="w-full h-auto object-contain"
           />
         </div>
       ),
@@ -338,11 +338,11 @@ export default function HomePage() {
       title: "Medium Illustration",
       prompt: "Display medium-sized Docker illustrations for content sections",
       component: (
-        <div className="flex items-center justify-center p-2">
+        <div className="flex items-center justify-center p-4">
           <img
             src="/illustrations/Product Illustration/Md/Option Select.png"
             alt="Docker Medium Illustration"
-            className="w-full h-auto object-contain max-h-12"
+            className="w-full h-auto object-contain"
           />
         </div>
       ),
@@ -351,11 +351,11 @@ export default function HomePage() {
       title: "Small Illustration",
       prompt: "Use small Docker illustrations for icons and compact spaces",
       component: (
-        <div className="flex items-center justify-center p-2">
+        <div className="flex items-center justify-center p-4">
           <img
             src="/illustrations/Product Illustration/Sm/Run Image.png"
             alt="Docker Small Illustration"
-            className="w-full h-auto object-contain max-h-8"
+            className="w-full h-auto object-contain"
           />
         </div>
       ),
