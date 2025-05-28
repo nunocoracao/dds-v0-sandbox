@@ -19,17 +19,10 @@ import {
   Bell,
   Search,
   Upload,
-  Menu,
-  ChevronRight,
   Maximize2,
   Minimize2,
-  Box,
-  Database,
-  Server,
   Settings,
   Users,
-  Shield,
-  BarChart,
   HelpCircle,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
@@ -53,7 +46,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -141,122 +133,49 @@ export default function HomePage() {
     // New complex menu system with fly-out panel
     {
       title: "v0.dev+DDS Navigation",
-      prompt:
-        "Create a complex v0.dev+DDS navigation with fly-out panel and nested menus using shadcn/ui Sheet and DropdownMenu",
+      prompt: "Create a v0.dev-style navigation header with DDS styling using shadcn/ui components",
       component: (
-        <div className="flex items-center gap-2">
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Badge className="bg-primary text-primary-foreground px-2 py-1">v0.dev + DDS</Badge>
-                </SheetTitle>
-              </SheetHeader>
-              <div className="py-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Box className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Containers</span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <Database className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Images</span>
-                    </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem>Official Images</DropdownMenuItem>
-                        <DropdownMenuItem>My Images</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <span>Verified Publishers</span>
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem>Nginx</DropdownMenuItem>
-                            <DropdownMenuItem>MongoDB</DropdownMenuItem>
-                            <DropdownMenuItem>Redis</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>View All</DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Pull Image</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Server className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Volumes</span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <Settings className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Settings</span>
-                    </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem>General</DropdownMenuItem>
-                        <DropdownMenuItem>Security</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <span>Advanced</span>
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem>Network</DropdownMenuItem>
-                            <DropdownMenuItem>Storage</DropdownMenuItem>
-                            <DropdownMenuItem>Resources</DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Users className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Teams</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <Shield className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Security</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <BarChart className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Analytics</span>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-muted cursor-pointer">
-                    <HelpCircle className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Help & Support</span>
-                  </div>
+        <div className="w-full border rounded-md bg-background">
+          <div className="flex items-center justify-between p-3 border-b">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
+                  <span className="text-primary-foreground text-xs font-bold">v0</span>
                 </div>
+                <span className="font-semibold text-sm">v0.dev + DDS</span>
               </div>
-            </SheetContent>
-          </Sheet>
-          <Button variant="outline" onClick={() => setSheetOpen(!sheetOpen)}>
-            Open v0.dev+DDS Nav
-          </Button>
+              <Badge variant="secondary" className="text-xs">
+                Beta
+              </Badge>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm">
+                <HelpCircle className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Settings className="h-4 w-4" />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <Users className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Sign Out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+          <div className="p-3">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span>Project:</span>
+              <Badge variant="outline">ai-design-system</Badge>
+            </div>
+          </div>
         </div>
       ),
     },
