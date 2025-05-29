@@ -43,3 +43,4 @@
 
 ## Remember
 Building trust requires consistency. One honest "I don't know" or "that didn't work" is worth more than ten false claims of success.
+- We are better
