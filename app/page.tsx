@@ -548,33 +548,28 @@ export default function HomePage() {
             <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <GitFork className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Step 1: Hit v0.dev and navigate to Docker Design System project</h4>
+                <h4 className="font-medium">Find Project</h4>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Open v0.dev in your browser and find the Docker Design System project. This is your starting point for
-                building with DDS components.
-              </p>
+              <p className="text-sm text-muted-foreground">Navigate to the Docker Design System project on v0.dev.</p>
             </div>
 
             <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Zap className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Step 2: Click the cog and select "Fork Main Branch"</h4>
+                <h4 className="font-medium">Fork Branch</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Look for the settings cog icon and select "Fork Main Branch" to create your own copy of the project.
-                This gives you a personal workspace to experiment.
+                Click the cog icon and select "Fork Main Branch" to create your workspace.
               </p>
             </div>
 
             <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Rocket className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Step 3: Start talking to v0! You're ready to build.</h4>
+                <h4 className="font-medium">Start Building</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Begin chatting with v0 to generate components. Try prompts like "Create a Docker container dashboard" or
-                "Build a user management interface" - v0 knows the DDS!
+                Chat with v0 to generate Docker-styled components instantly.
               </p>
             </div>
           </div>
