@@ -544,46 +544,38 @@ export default function HomePage() {
     if (step === 0) {
       return (
         <div className="flex h-full gap-6">
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col space-y-4">
             <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <GitFork className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Step 1: Fork the Project</h4>
+                <h4 className="font-medium">Step 1: Hit v0.dev and navigate to Docker Design System project</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Create your own copy of the DDS starter project to begin building. Click the fork button in v0 to get
-                your own workspace.
+                Open v0.dev in your browser and find the Docker Design System project. This is your starting point for
+                building with DDS components.
               </p>
             </div>
 
-            <div className="mt-4 flex justify-center flex-1 overflow-hidden">
-              <div className="bg-muted/30 rounded-lg flex items-center justify-center min-h-[200px] w-full">
-                <img
-                  src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
-                  alt="Docker Design System illustration"
-                  className="max-h-full w-auto object-contain opacity-0 transition-opacity duration-300"
-                  onLoad={(e) => {
-                    e.currentTarget.style.opacity = "1"
-                  }}
-                />
+            <div className="bg-muted/50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="h-8 w-8 text-primary" />
+                <h4 className="font-medium">Step 2: Click the cog and select "Fork Main Branch"</h4>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Look for the settings cog icon and select "Fork Main Branch" to create your own copy of the project.
+                This gives you a personal workspace to experiment.
+              </p>
             </div>
-          </div>
 
-          <div className="flex items-stretch h-full">
-            <div className="w-full h-full">
-              <div className="rounded-lg overflow-hidden w-full h-full">
-                <div className="rounded-lg overflow-hidden border shadow-md h-full bg-muted/30 flex items-center justify-center">
-                  <img
-                    src="/v0-fork-gif.gif"
-                    alt="Fork project demo"
-                    className="w-full h-full object-cover opacity-0 transition-opacity duration-300"
-                    onLoad={(e) => {
-                      e.currentTarget.style.opacity = "1"
-                    }}
-                  />
-                </div>
+            <div className="bg-muted/50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Rocket className="h-8 w-8 text-primary" />
+                <h4 className="font-medium">Step 3: Start talking to v0! You're ready to build.</h4>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Begin chatting with v0 to generate components. Try prompts like "Create a Docker container dashboard" or
+                "Build a user management interface" - v0 knows the DDS!
+              </p>
             </div>
           </div>
         </div>
