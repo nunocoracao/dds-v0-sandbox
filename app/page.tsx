@@ -871,12 +871,7 @@ export default function HomePage() {
 
                 {/* Get Involved */}
                 <div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-2 border-white/30 text-white hover:bg-white/10"
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  >
+                  <Button variant="secondary" size="sm" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                     ↑ Back to Top
                   </Button>
                 </div>
