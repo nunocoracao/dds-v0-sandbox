@@ -544,29 +544,33 @@ export default function HomePage() {
     if (step === 0) {
       return (
         <div className="flex h-full gap-6">
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col space-y-4">
             <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <GitFork className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Step 1: Fork the Project</h4>
+                <h4 className="font-medium">Find Project</h4>
+              </div>
+              <p className="text-sm text-muted-foreground">Navigate to the Docker Design System project on v0.dev.</p>
+            </div>
+
+            <div className="bg-muted/50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="h-8 w-8 text-primary" />
+                <h4 className="font-medium">Fork Branch</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Create your own copy of the DDS starter project to begin building. Click the fork button in v0 to get
-                your own workspace.
+                Click the cog icon and select "Fork Main Branch" to create your workspace.
               </p>
             </div>
 
-            <div className="mt-4 flex justify-center flex-1 overflow-hidden">
-              <div className="bg-muted/30 rounded-lg flex items-center justify-center min-h-[200px] w-full">
-                <img
-                  src="/illustrations/Product Illustration/Lg/Folder w Docs.png"
-                  alt="Docker Design System illustration"
-                  className="max-h-full w-auto object-contain opacity-0 transition-opacity duration-300"
-                  onLoad={(e) => {
-                    e.currentTarget.style.opacity = "1"
-                  }}
-                />
+            <div className="bg-muted/50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Rocket className="h-8 w-8 text-primary" />
+                <h4 className="font-medium">Start Building</h4>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Chat with v0 to generate Docker-styled components instantly.
+              </p>
             </div>
           </div>
 
