@@ -578,6 +578,23 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+
+          <div className="flex items-stretch h-full">
+            <div className="w-full h-full">
+              <div className="rounded-lg overflow-hidden w-full h-full">
+                <div className="rounded-lg overflow-hidden border shadow-md h-full bg-muted/30 flex items-center justify-center">
+                  <img
+                    src="/v0-fork-gif.gif"
+                    alt="Fork project demo"
+                    className="w-full h-full object-cover opacity-0 transition-opacity duration-300"
+                    onLoad={(e) => {
+                      e.currentTarget.style.opacity = "1"
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )
     }
