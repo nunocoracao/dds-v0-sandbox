@@ -871,17 +871,18 @@ export default function HomePage() {
 
                 {/* Get Involved */}
                 <div>
-                  <h3 className="text-white font-medium mb-4">Get Involved</h3>
-                  <div className="space-y-3">
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className=""
-                      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    >
-                      ↑ Back to Top
-                    </Button>
-                  </div>
+                  <Card className="bg-white/10 border-white/20">
+                    <CardContent className="p-4">
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                      >
+                        ↑ Back to Top
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
 
