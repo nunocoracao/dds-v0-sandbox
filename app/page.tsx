@@ -870,7 +870,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Get Involved */}
-                <div>
+                <div className="flex justify-end">
                   <Button variant="secondary" size="sm" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                     ↑ Back to Top
                   </Button>
