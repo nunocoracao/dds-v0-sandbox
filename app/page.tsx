@@ -21,6 +21,10 @@ import {
   Upload,
   Maximize2,
   Minimize2,
+  Rocket,
+  Github,
+  BookOpen,
+  ExternalLink,
 } from "lucide-react"
 import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
 import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
@@ -707,7 +711,7 @@ export default function HomePage() {
           <p className="text-base font-sans mb-2">
             Body text using the Docker Design System font stack. Perfect for paragraphs and content.
           </p>
-          <p className="text-sm text-muted-foreground">Body Text - font-sans, text-base</p>
+          <p className="text-sm text-muted-foreground mt-1">Body Text - font-sans, text-base</p>
         </div>
         <div>
           <a href="#" className="text-primary hover:underline font-medium">
@@ -744,7 +748,7 @@ export default function HomePage() {
                 className="whitespace-nowrap flex items-center gap-1"
                 onClick={() => copyToClipboard("get rid of the onboarding UX and show me a DHI utility view")}
               >
-                <Copy className="h-3 w-3" />
+                <Copy className="h-3 w-3 mr-2" />
                 Copy
               </Button>
             </p>
@@ -807,6 +811,84 @@ export default function HomePage() {
               </CardContent>
             </Card>
           </div>
+          {/* Footer */}
+          <footer className="mt-16 border-t border-white/20 pt-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-8 mb-8">
+                {/* Logo and Badge */}
+                <div className="flex flex-col items-start">
+                  <div className="flex items-center gap-3 mb-4">
+                    <img src="/sub-marks/subMarkWhite.svg" alt="Docker" className="h-8" />
+                    <Badge variant="outline" className="border-white/30 text-white">
+                      v0.dev + DDS
+                    </Badge>
+                  </div>
+                  <p className="text-white/70 text-sm">
+                    A proof of concept showcasing the integration of v0.dev with the Docker Design System.
+                  </p>
+                </div>
+
+                {/* Resources */}
+                <div>
+                  <h3 className="text-white font-medium mb-4">Resources</h3>
+                  <div className="space-y-2">
+                    <a
+                      href="https://v0.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
+                    >
+                      <Rocket className="mr-2 h-4 w-4" />
+                      v0.dev Platform
+                      <ExternalLink className="ml-auto h-3 w-3" />
+                    </a>
+                    <a
+                      href="https://github.com/docker/design"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
+                    >
+                      <Github className="mr-2 h-4 w-4" />
+                      Docker Design GitHub
+                      <ExternalLink className="ml-auto h-3 w-3" />
+                    </a>
+                    <a
+                      href="#docs"
+                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
+                    >
+                      <BookOpen className="mr-2 h-4 w-4" />
+                      Documentation
+                    </a>
+                    <a
+                      href="#components"
+                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
+                    >
+                      <Palette className="mr-2 h-4 w-4" />
+                      Design System
+                    </a>
+                  </div>
+                </div>
+
+                {/* Get Involved */}
+                <div className="flex justify-end">
+                  <Button variant="secondary" size="sm" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                    ↑ Back to Top
+                  </Button>
+                </div>
+              </div>
+
+              {/* Bottom bar */}
+              <div className="border-t border-white/20 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <div className="flex items-center gap-4 mb-4 md:mb-0">
+                  <div className="inline-flex items-center justify-center rounded-sm border border-white/30 px-2.5 py-0.5 text-xs font-semibold text-white">
+                    v0.1.0-alpha
+                  </div>
+                  <p className="text-xs text-white/60">&copy; {new Date().getFullYear()} Docker, Inc.</p>
+                </div>
+                <p className="text-xs text-white/60">Built with v0.dev + Docker Design System</p>
+              </div>
+            </div>
+          </footer>
           <Dialog open={showWelcomeModal} onOpenChange={setShowWelcomeModal}>
             <DialogContent className="sm:max-w-[500px] rounded-[var(--border-radius)]">
               <DialogHeader className="text-center space-y-4">
