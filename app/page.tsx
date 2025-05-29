@@ -711,7 +711,7 @@ export default function HomePage() {
           <p className="text-base font-sans mb-2">
             Body text using the Docker Design System font stack. Perfect for paragraphs and content.
           </p>
-          <p className="text-sm text-muted-foreground">Body Text - font-sans, text-base</p>
+          <p className="text-sm text-muted-foreground mt-1">Body Text - font-sans, text-base</p>
         </div>
         <div>
           <a href="#" className="text-primary hover:underline font-medium">
@@ -748,7 +748,7 @@ export default function HomePage() {
                 className="whitespace-nowrap flex items-center gap-1"
                 onClick={() => copyToClipboard("get rid of the onboarding UX and show me a DHI utility view")}
               >
-                <Copy className="h-3 w-3" />
+                <Copy className="h-3 w-3 mr-2" />
                 Copy
               </Button>
             </p>
@@ -871,18 +871,14 @@ export default function HomePage() {
 
                 {/* Get Involved */}
                 <div>
-                  <Card className="bg-white/10 border-white/20">
-                    <CardContent className="p-4">
-                      <Button
-                        variant="default"
-                        size="sm"
-                        className="w-full"
-                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                      >
-                        ↑ Back to Top
-                      </Button>
-                    </CardContent>
-                  </Card>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-2 border-white/30 text-white hover:bg-white/10"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  >
+                    ↑ Back to Top
+                  </Button>
                 </div>
               </div>
 
