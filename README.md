@@ -1,4 +1,4 @@
-# 🎨 Docker Design System Token Pipeline (v0.dev Sandbox)
+# 🎨 v0.dev Sandbox + DDS Token Pipeline
 
 This repository demonstrates a groundbreaking proof-of-concept for automating design system implementation through AI-driven development. It showcases a complete token pipeline from Figma to production, with AI-assisted component generation that respects Docker's design system.
 
