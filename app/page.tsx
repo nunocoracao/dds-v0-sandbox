@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { AppHeader } from "@/components/layout/app-header"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -37,6 +37,11 @@ import {
   Terminal,
   Users,
   Zap,
+  X,
+  Check,
+  BookOpen,
+  Bot,
+  Send,
 } from "lucide-react"
 
 export default function AdminConsole() {
@@ -46,6 +51,42 @@ export default function AdminConsole() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
   const [autoScalingEnabled, setAutoScalingEnabled] = useState(true)
   const [debugModeEnabled, setDebugModeEnabled] = useState(false)
+
+  const [onboardingStep, setOnboardingStep] = useState(1)
+  const [onboardingOpen, setOnboardingOpen] = useState(true)
+
+  const onboardingSteps = [
+    {
+      id: 1,
+      title: "Welcome to Gordon",
+      description: "Get started with your AI-powered Docker assistant",
+      status: "completed" as const,
+    },
+    {
+      id: 2,
+      title: "Configure Models",
+      description: "Set up your AI models and preferences",
+      status: "current" as const,
+    },
+    {
+      id: 3,
+      title: "Connect Integrations",
+      description: "Link your tools and data sources",
+      status: "upcoming" as const,
+    },
+    {
+      id: 4,
+      title: "Setup Channels",
+      description: "Configure where Gordon can interact",
+      status: "upcoming" as const,
+    },
+    {
+      id: 5,
+      title: "Add MCP Servers",
+      description: "Enable Model Context Protocol servers",
+      status: "upcoming" as const,
+    },
+  ]
 
   const recentUsers = [
     {
@@ -104,6 +145,53 @@ export default function AdminConsole() {
     { id: 5, user: "Emma Rodriguez", action: "Added new user", resource: "James Wilson", time: "3 hours ago" },
     { id: 6, user: "Gordon AI", action: "Automated backup", resource: "volume-data-prod", time: "5 hours ago" },
   ]
+
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const [messages, setMessages] = useState([
+    {
+      sender: "Gordon",
+      text: "Hi there! I'm Gordon, your AI assistant for Docker. I can help you manage your containers, models, integrations, and more. To get started, configure your MCP servers and integrations.",
+    },
+  ])
+  const [newMessage, setNewMessage] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
+  const chatContainerRef = useRef(null)
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }, [messages])
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() === "") return
+
+    const userMessage = { sender: "You", text: newMessage }
+    setMessages((prevMessages) => [...prevMessages, userMessage])
+    setNewMessage("")
+
+    setIsTyping(true)
+
+    setTimeout(() => {
+      let gordonResponse = ""
+      if (newMessage.toLowerCase().includes("mcp servers")) {
+        gordonResponse =
+          "MCP Servers allow Gordon to access additional tools and data sources. You can configure them under the 'MCP Servers' tab."
+      } else if (newMessage.toLowerCase().includes("integrations")) {
+        gordonResponse =
+          "Integrations connect Gordon to external services like GitHub, Slack, and more. Configure them under the 'Integrations' tab."
+      } else if (newMessage.toLowerCase().includes("channels")) {
+        gordonResponse =
+          "Channels determine where Gordon can interact with users, such as Docker Desktop, VS Code, and more. Configure them under the 'Channels' tab."
+      } else {
+        gordonResponse = "I can help you with MCP Servers, Integrations, and Channels. What would you like to know?"
+      }
+
+      const gordonMessage = { sender: "Gordon", text: gordonResponse }
+      setMessages((prevMessages) => [...prevMessages, gordonMessage])
+      setIsTyping(false)
+    }, 1500)
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -194,7 +282,81 @@ export default function AdminConsole() {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${onboardingOpen ? "mr-80" : ""}`}>
+          {/* Onboarding Navigation */}
+          {onboardingOpen && (
+            <div className="fixed top-0 right-0 h-full w-80 bg-background border-l shadow-lg z-50 overflow-y-auto">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-semibold">Getting Started</h2>
+                  <Button variant="ghost" size="icon" onClick={() => setOnboardingOpen(false)} className="h-8 w-8">
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                <div className="space-y-4">
+                  {onboardingSteps.map((step, index) => (
+                    <div
+                      key={step.id}
+                      className={`p-4 rounded-lg border cursor-pointer transition-colors ${
+                        step.status === "current"
+                          ? "border-primary bg-primary/5"
+                          : step.status === "completed"
+                            ? "border-green-200 bg-green-50"
+                            : "border-gray-200 bg-gray-50"
+                      }`}
+                      onClick={() => {
+                        setOnboardingStep(step.id)
+                        if (step.id === 2) setActiveTab("models")
+                        if (step.id === 3) setActiveTab("integrations")
+                        if (step.id === 4) setActiveTab("channels")
+                        if (step.id === 5) setActiveTab("mcpservers")
+                      }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                            step.status === "completed"
+                              ? "bg-green-500 text-white"
+                              : step.status === "current"
+                                ? "bg-primary text-white"
+                                : "bg-gray-300 text-gray-600"
+                          }`}
+                        >
+                          {step.status === "completed" ? <Check className="h-3 w-3" /> : step.id}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-medium text-sm">{step.title}</h3>
+                          <p className="text-xs text-muted-foreground mt-1">{step.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 p-4 bg-primary/5 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-medium">Quick Tip</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {onboardingStep === 1 && "Start by configuring your AI models for optimal performance."}
+                    {onboardingStep === 2 && "Choose GPT-4o as your primary model for best results."}
+                    {onboardingStep === 3 && "Connect Notion and Slack for comprehensive knowledge access."}
+                    {onboardingStep === 4 && "Enable Docker Desktop and GitHub channels for seamless workflow."}
+                    {onboardingStep === 5 && "Add GitHub and Docker MCP servers for enhanced capabilities."}
+                  </p>
+                </div>
+
+                <div className="mt-6">
+                  <Button className="w-full" size="sm">
+                    Continue Setup
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Dashboard Tab */}
           {activeTab === "dashboard" && (
             <div className="space-y-6">
@@ -3120,6 +3282,93 @@ export default function AdminConsole() {
           )}
         </main>
       </div>
+
+      {/* Floating Chat Button */}
+      <button
+        className="fixed bottom-6 right-6 bg-primary text-primary-foreground rounded-full p-3 shadow-lg hover:bg-primary/90 transition-colors duration-200 z-50 flex items-center justify-center gap-2"
+        onClick={() => setIsChatOpen(!isChatOpen)}
+      >
+        <Bot className="h-5 w-5 animate-pulse" />
+        <Badge variant="destructive" className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3">
+          3
+        </Badge>
+      </button>
+
+      {/* Getting Started Toggle Button */}
+      {!onboardingOpen && (
+        <Button
+          variant="outline"
+          size="sm"
+          className="fixed bottom-6 right-24 z-50 flex items-center gap-2"
+          onClick={() => setOnboardingOpen(true)}
+        >
+          <BookOpen className="h-4 w-4" />
+          Getting Started
+        </Button>
+      )}
+
+      {/* Chat Window */}
+      {isChatOpen && (
+        <div className="fixed bottom-6 right-48 w-96 bg-background border rounded-lg shadow-lg z-50 flex flex-col">
+          {/* Chat Header */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-primary/10 p-2">
+                <Bot className="h-4 w-4 text-primary" />
+              </div>
+              <h4 className="font-medium text-sm">Gordon AI</h4>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" onClick={() => setIsChatOpen(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Chat Messages */}
+          <div className="p-4 flex-1 overflow-y-auto space-y-3" ref={chatContainerRef}>
+            {messages.map((message, index) => (
+              <div key={index} className={`flex flex-col ${message.sender === "You" ? "items-end" : "items-start"}`}>
+                <div
+                  className={`px-3 py-2 rounded-lg text-sm ${
+                    message.sender === "You"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted hover:bg-muted/80 transition-colors duration-200"
+                  }`}
+                >
+                  {message.text}
+                </div>
+              </div>
+            ))}
+            {isTyping && (
+              <div className="flex items-start">
+                <div className="px-3 py-2 rounded-lg text-sm bg-muted">Gordon is typing...</div>
+              </div>
+            )}
+          </div>
+
+          {/* Chat Input */}
+          <div className="p-4 border-t">
+            <div className="flex items-center gap-3">
+              <Input
+                type="text"
+                placeholder="Type your message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSendMessage()
+                  }
+                }}
+              />
+              <Button onClick={handleSendMessage} disabled={isTyping}>
+                <Send className="h-4 w-4 mr-2" />
+                Send
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
