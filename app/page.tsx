@@ -1,962 +1,3124 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { AppHeader, NavigationTrigger } from "@/components/layout/app-header"
-import { Card, CardContent } from "@/components/ui/card"
+import { useState } from "react"
+import { AppHeader } from "@/components/layout/app-header"
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Stepper } from "@/components/ui/stepper"
-import {
-  GitFork,
-  Zap,
-  Code,
-  Palette,
-  Layers,
-  Sparkles,
-  Copy,
-  Check,
-  Star,
-  Heart,
-  Bell,
-  Search,
-  Upload,
-  Maximize2,
-  Minimize2,
-  Rocket,
-  Github,
-  BookOpen,
-  ExternalLink,
-} from "lucide-react"
-import { SimpleChatBubbles } from "@/components/simple-chat-bubbles"
-import { DesignTokensShowcase } from "@/components/design-tokens-showcase"
-import { ConfettiOverlay } from "@/components/confetti-overlay"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Input } from "@/components/ui/input"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  AlertCircle,
+  Clock,
+  CreditCard,
+  FileText,
+  Filter,
+  Info,
+  LayoutDashboard,
+  MessageSquare,
+  MoreHorizontal,
+  Plus,
+  RefreshCw,
+  Search,
+  Settings,
+  ShieldCheck,
+  Terminal,
+  Users,
+  Zap,
+} from "lucide-react"
 
-export default function HomePage() {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null)
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true)
-  const [heartLiked, setHeartLiked] = useState(false)
-  const [containerRunning, setContainerRunning] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [volumeMounted, setVolumeMounted] = useState(false)
-  const [selectedImage, setSelectedImage] = useState("nginx:latest")
-  const [deploymentProgress, setDeploymentProgress] = useState(0)
-  const [largeIllustration, setLargeIllustration] = useState(false)
-  const [mediumIllustration, setMediumIllustration] = useState(false)
-  const [smallIllustration, setSmallIllustration] = useState(false)
-  const [sheetOpen, setSheetOpen] = useState(false)
+export default function AdminConsole() {
+  const [activeTab, setActiveTab] = useState("dashboard")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [timeRange, setTimeRange] = useState("7d")
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+  const [autoScalingEnabled, setAutoScalingEnabled] = useState(true)
+  const [debugModeEnabled, setDebugModeEnabled] = useState(false)
 
-  // Show welcome modal when component showcase loads
-  useEffect(() => {
-    if (currentStep === 3) {
-      setShowWelcomeModal(true)
-    }
-  }, [currentStep])
-
-  useEffect(() => {
-    if (containerRunning && deploymentProgress < 100) {
-      const timer = setTimeout(() => {
-        setDeploymentProgress((prev) => Math.min(prev + 10, 100))
-      }, 200)
-      return () => clearTimeout(timer)
-    }
-  }, [containerRunning, deploymentProgress])
-
-  const steps = [
+  const recentUsers = [
     {
-      title: "Welcome, Dockhand!",
-      content: "welcome",
+      id: 1,
+      name: "Sarah Johnson",
+      email: "sarah@acmecorp.com",
+      role: "Admin",
+      lastActive: "5 mins ago",
+      status: "Active",
     },
     {
-      title: "Learn v0",
-      content: "learn-v0",
+      id: 2,
+      name: "Michael Chen",
+      email: "michael@acmecorp.com",
+      role: "Developer",
+      lastActive: "27 mins ago",
+      status: "Active",
     },
     {
-      title: "DDS Integration & Advanced Gen UI",
-      content: "dds-integration",
-    },
-  ]
-
-  const handlePrevious = () => {
-    setCurrentStep(Math.max(0, currentStep - 1))
-  }
-
-  const handleNext = () => {
-    if (currentStep === 2) {
-      setCurrentStep(3)
-      setShowConfetti(true)
-    } else {
-      setCurrentStep(Math.min(steps.length - 1, currentStep + 1))
-    }
-  }
-
-  const handleStepClick = (step: number) => {
-    setCurrentStep(step)
-  }
-
-  const handleBackToStepper = () => {
-    setCurrentStep(2)
-  }
-
-  const handleConfettiComplete = () => {
-    setShowConfetti(false)
-  }
-
-  const copyToClipboard = async (prompt: string) => {
-    try {
-      await navigator.clipboard.writeText(prompt)
-      setCopiedPrompt(prompt)
-      setTimeout(() => setCopiedPrompt(null), 2000)
-    } catch (err) {
-      console.error("Failed to copy text: ", err)
-    }
-  }
-
-  const componentCards = [
-    // Navigation card using the shared navigation component
-    {
-      title: "v0.dev+DDS Navigation",
-      prompt: "Create a v0.dev-style navigation header with DDS styling using shadcn/ui components",
-      component: (
-        <div className="flex items-center gap-2">
-          <NavigationTrigger />
-          <span className="text-sm text-muted-foreground">Click hamburger to open nav</span>
-        </div>
-      ),
-    },
-    // Rest of the cards remain the same...
-    {
-      title: "Primary Button",
-      prompt: "Create a primary button using shadcn/ui Button component",
-      component: <Button className="w-full">Get Started</Button>,
+      id: 3,
+      name: "Emma Rodriguez",
+      email: "emma@acmecorp.com",
+      role: "DevOps",
+      lastActive: "1 hour ago",
+      status: "Active",
     },
     {
-      title: "Delete with Confirmation",
-      prompt: "Build a destructive button with double confirmation modal using shadcn/ui Dialog",
-      component: (
-        <>
-          <Button variant="destructive" className="w-full" onClick={() => setShowDeleteModal(true)}>
-            Delete Container
-          </Button>
-          <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
-            <DialogContent className="sm:max-w-[400px]">
-              <DialogHeader>
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogDescription>
-                  Are you sure you want to delete this container? This action cannot be undone.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex gap-2 justify-end">
-                <Button variant="outline" onClick={() => setShowDeleteModal(false)}>
-                  Cancel
-                </Button>
-                <Button variant="destructive" onClick={() => setShowDeleteModal(false)}>
-                  Delete
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </>
-      ),
+      id: 4,
+      name: "James Wilson",
+      email: "james@acmecorp.com",
+      role: "Developer",
+      lastActive: "3 hours ago",
+      status: "Inactive",
     },
     {
-      title: "Heart Icon Toggle",
-      prompt: "Create a heart icon button that changes color when clicked using shadcn/ui Button",
-      component: (
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setHeartLiked(!heartLiked)}
-          className={heartLiked ? "text-pink-500 border-pink-500" : ""}
-        >
-          <Heart className={`h-4 w-4 ${heartLiked ? "fill-current" : ""}`} />
-        </Button>
-      ),
-    },
-    {
-      title: "Container Status Toggle",
-      prompt: "Build an interactive container status card with start/stop toggle using shadcn/ui Switch",
-      component: (
-        <Card className="w-full cursor-pointer hover:shadow-md transition-shadow rounded-[var(--border-radius)]">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${containerRunning ? "bg-green-500" : "bg-gray-400"}`} />
-                <span className="text-sm font-medium">{containerRunning ? "Running" : "Stopped"}</span>
-              </div>
-              <Switch
-                checked={containerRunning}
-                onCheckedChange={(checked) => {
-                  setContainerRunning(checked)
-                  if (checked) setDeploymentProgress(0)
-                }}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      ),
-    },
-    {
-      title: "Docker Image Selector",
-      prompt: "Create a Docker image selector dropdown using shadcn/ui Select component",
-      component: (
-        <Select value={selectedImage} onValueChange={setSelectedImage}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select image" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="nginx:latest">nginx:latest</SelectItem>
-            <SelectItem value="node:18-alpine">node:18-alpine</SelectItem>
-            <SelectItem value="postgres:15">postgres:15</SelectItem>
-            <SelectItem value="redis:7-alpine">redis:7-alpine</SelectItem>
-          </SelectContent>
-        </Select>
-      ),
-    },
-    {
-      title: "Volume Mount Toggle",
-      prompt: "Build a volume mounting interface using shadcn/ui Checkbox and labels",
-      component: (
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="volume-mount" checked={volumeMounted} onCheckedChange={setVolumeMounted} />
-            <label htmlFor="volume-mount" className="text-sm font-medium">
-              Mount /data volume
-            </label>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            {volumeMounted ? "Volume mounted at /data" : "No volumes mounted"}
-          </p>
-        </div>
-      ),
-    },
-    {
-      title: "Deployment Progress",
-      prompt: "Show deployment progress using shadcn/ui Progress component with animations",
-      component: (
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs">
-            <span>Deploying...</span>
-            <span>{deploymentProgress}%</span>
-          </div>
-          <Progress value={deploymentProgress} className="w-full" />
-        </div>
-      ),
-    },
-    {
-      title: "Docker Services Tabs",
-      prompt: "Create service management tabs using shadcn/ui Tabs component",
-      component: (
-        <Tabs defaultValue="containers" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="containers">Containers</TabsTrigger>
-            <TabsTrigger value="images">Images</TabsTrigger>
-            <TabsTrigger value="volumes">Volumes</TabsTrigger>
-          </TabsList>
-          <TabsContent value="containers" className="text-center py-2">
-            <p className="text-xs text-muted-foreground">3 running</p>
-          </TabsContent>
-          <TabsContent value="images" className="text-center py-2">
-            <p className="text-xs text-muted-foreground">12 images</p>
-          </TabsContent>
-          <TabsContent value="volumes" className="text-center py-2">
-            <p className="text-xs text-muted-foreground">5 volumes</p>
-          </TabsContent>
-        </Tabs>
-      ),
-    },
-    {
-      title: "Container Actions Menu",
-      prompt: "Build a container actions dropdown menu using shadcn/ui DropdownMenu with nested options",
-      component: (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full">
-              Container Actions
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Container Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <span>Start</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <span>Stop</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <span>Restart</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <span>Logs</span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <span>View Logs</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Download Logs</span>
-                </DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ),
-    },
-    // Asset cards with toggle buttons
-    {
-      title: "Docker Logo",
-      prompt: "Display the Docker logo using the design system assets",
-      component: (
-        <div className="flex items-center justify-center p-4">
-          <img src="/logo/LogoPrimary.svg" alt="Docker Logo" className="w-full h-auto object-contain" />
-        </div>
-      ),
-    },
-    {
-      title: "Docker Submark - Small",
-      prompt: "Show the Docker submark logo in small size for compact layouts",
-      component: (
-        <div className="flex items-center justify-center p-4">
-          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark Small" className="h-6 w-auto object-contain" />
-        </div>
-      ),
-    },
-    {
-      title: "Docker Submark - Medium",
-      prompt: "Show the Docker submark logo in medium size for standard layouts",
-      component: (
-        <div className="flex items-center justify-center p-4">
-          <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Submark Medium" className="h-12 w-auto object-contain" />
-        </div>
-      ),
-    },
-    {
-      title: "Docker Submark - Large",
-      prompt: "Show the Docker submark logo in large size with gradient background",
-      component: (
-        <div className="flex items-center justify-center p-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-sm">
-          <img src="/sub-marks/subMarkWhite.svg" alt="Docker Submark Large" className="h-16 w-auto object-contain" />
-        </div>
-      ),
-    },
-    {
-      title: "Large Illustration",
-      prompt: "Use large Docker product illustrations for hero sections",
-      component: (
-        <div className="space-y-3">
-          <div className="flex items-center justify-center p-4">
-            <img
-              src="/illustrations/Product Illustration/Lg/Mock Panels.png"
-              alt="Docker Large Illustration"
-              className={`w-full h-auto object-contain ${largeIllustration ? "scale-150 transform-gpu" : ""}`}
-              style={{ transformOrigin: "center" }}
-            />
-          </div>
-          <div className="flex justify-center">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setLargeIllustration(!largeIllustration)}
-              className="flex items-center gap-1"
-            >
-              {largeIllustration ? (
-                <>
-                  <Minimize2 className="h-3 w-3" />
-                  <span>Normal Size</span>
-                </>
-              ) : (
-                <>
-                  <Maximize2 className="h-3 w-3" />
-                  <span>Enlarge</span>
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Medium Illustration",
-      prompt: "Display medium-sized Docker illustrations for content sections",
-      component: (
-        <div className="space-y-3">
-          <div className="flex items-center justify-center p-4">
-            <img
-              src="/illustrations/Product Illustration/Md/Option Select.png"
-              alt="Docker Medium Illustration"
-              className={`w-full h-auto object-contain ${mediumIllustration ? "scale-150 transform-gpu" : ""}`}
-              style={{ transformOrigin: "center" }}
-            />
-          </div>
-          <div className="flex justify-center">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setMediumIllustration(!mediumIllustration)}
-              className="flex items-center gap-1"
-            >
-              {mediumIllustration ? (
-                <>
-                  <Minimize2 className="h-3 w-3" />
-                  <span>Normal Size</span>
-                </>
-              ) : (
-                <>
-                  <Maximize2 className="h-3 w-3" />
-                  <span>Enlarge</span>
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Small Illustration",
-      prompt: "Use small Docker illustrations for icons and compact spaces",
-      component: (
-        <div className="space-y-3">
-          <div className="flex items-center justify-center p-4">
-            <img
-              src="/illustrations/Product Illustration/Sm/Run Image.png"
-              alt="Docker Small Illustration"
-              className={`w-full h-auto object-contain ${smallIllustration ? "scale-150 transform-gpu" : ""}`}
-              style={{ transformOrigin: "center" }}
-            />
-          </div>
-          <div className="flex justify-center">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSmallIllustration(!smallIllustration)}
-              className="flex items-center gap-1"
-            >
-              {smallIllustration ? (
-                <>
-                  <Minimize2 className="h-3 w-3" />
-                  <span>Normal Size</span>
-                </>
-              ) : (
-                <>
-                  <Maximize2 className="h-3 w-3" />
-                  <span>Enlarge</span>
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    // Continue with more enhanced cards...
-    {
-      title: "Secondary Button",
-      prompt: "Make a secondary button using shadcn/ui Button variant",
-      component: (
-        <Button variant="secondary" className="w-full">
-          Secondary
-        </Button>
-      ),
-    },
-    {
-      title: "Outline Button",
-      prompt: "Create an outline button using shadcn/ui Button variant",
-      component: (
-        <Button variant="outline" className="w-full">
-          Outline
-        </Button>
-      ),
-    },
-    {
-      title: "Button Group",
-      prompt: "Create a group of shadcn/ui buttons with different variants",
-      component: (
-        <div className="flex gap-2">
-          <Button size="sm">Save</Button>
-          <Button variant="outline" size="sm">
-            Cancel
-          </Button>
-        </div>
-      ),
-    },
-    {
-      title: "Card Component",
-      prompt: "Build a card using shadcn/ui Card with header and content",
-      component: (
-        <Card className="w-full rounded-[var(--border-radius)]">
-          <CardContent className="p-4">
-            <h4 className="font-medium mb-2">Card Title</h4>
-            <p className="text-sm text-muted-foreground">Card content goes here</p>
-          </CardContent>
-        </Card>
-      ),
-    },
-    {
-      title: "Icon-only Buttons",
-      prompt: "Create icon-only buttons using shadcn/ui Button icon size variant",
-      component: (
-        <div className="flex gap-2">
-          <Button variant="outline" size="icon">
-            <Search className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon">
-            <Bell className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon">
-            <Star className="h-4 w-4" />
-          </Button>
-        </div>
-      ),
-    },
-    {
-      title: "Button with Icon",
-      prompt: "Make a button with icon using shadcn/ui Button and Lucide icons",
-      component: (
-        <Button className="w-full">
-          <Upload className="h-4 w-4 mr-2" />
-          Upload File
-        </Button>
-      ),
+      id: 5,
+      name: "Olivia Taylor",
+      email: "olivia@acmecorp.com",
+      role: "Admin",
+      lastActive: "Yesterday",
+      status: "Active",
     },
   ]
 
-  const renderCardContent = (step: number) => {
-    if (step === 0) {
-      return (
-        <div className="flex h-full gap-6">
-          <div className="flex-1 flex flex-col space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <GitFork className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Find Project</h4>
-              </div>
-              <p className="text-sm text-muted-foreground">Navigate to the Docker Design System project on v0.dev.</p>
-            </div>
+  const recentActivity = [
+    { id: 1, user: "Sarah Johnson", action: "Created new container", resource: "web-server-prod", time: "5 mins ago" },
+    {
+      id: 2,
+      user: "Gordon AI",
+      action: "Optimized resource allocation",
+      resource: "database-cluster",
+      time: "27 mins ago",
+    },
+    { id: 3, user: "Michael Chen", action: "Updated image", resource: "frontend-app:v2.3", time: "1 hour ago" },
+    { id: 4, user: "Gordon AI", action: "Security scan completed", resource: "All containers", time: "2 hours ago" },
+    { id: 5, user: "Emma Rodriguez", action: "Added new user", resource: "James Wilson", time: "3 hours ago" },
+    { id: 6, user: "Gordon AI", action: "Automated backup", resource: "volume-data-prod", time: "5 hours ago" },
+  ]
 
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Fork Branch</h4>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Click the cog icon and select "Fork Main Branch" to create your workspace.
-              </p>
-            </div>
+  return (
+    <div className="min-h-screen bg-background">
+      <AppHeader />
 
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Rocket className="h-8 w-8 text-primary" />
-                <h4 className="font-medium">Start Building</h4>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Chat with v0 to generate Docker-styled components instantly.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-stretch h-full">
-            <div className="w-full h-full">
-              <div className="rounded-lg overflow-hidden w-full h-full">
-                <div className="rounded-lg overflow-hidden border shadow-md h-full bg-muted/30 flex items-center justify-center">
-                  <img
-                    src="/v0-fork-gif.gif"
-                    alt="Fork project demo"
-                    className="w-full h-full object-cover opacity-0 transition-opacity duration-300"
-                    onLoad={(e) => {
-                      e.currentTarget.style.opacity = "1"
-                    }}
-                  />
-                </div>
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="hidden lg:flex flex-col w-64 border-r min-h-[calc(100vh-64px)] p-4">
+          <div className="mb-8 px-4">
+            <div className="flex items-center gap-2">
+              <img src="/sub-marks/subMarkPrimary.svg" alt="Docker Gordon" className="h-8 w-8" />
+              <div>
+                <h3 className="font-bold text-lg">Gordon</h3>
+                <p className="text-xs text-muted-foreground">AI Agent for Docker</p>
               </div>
             </div>
           </div>
-        </div>
-      )
-    }
 
-    if (step === 1) {
-      return (
-        <div className="grid grid-cols-2 gap-6 h-full">
-          <div className="space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-6 w-6 text-primary" />
-                <h4 className="font-medium">AI-Powered Building</h4>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Describe what you want to build in plain English. v0.dev generates React components using DDS tokens
-                with shadcn/ui.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Code className="h-6 w-6 text-primary" />
-                <h4 className="font-medium">Instant Prototypes</h4>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Type "Create a dashboard with user stats" in the v0.dev chat. Review the generated prototype, then push
-                directly to your GitHub branch.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Palette className="h-6 w-6 text-primary" />
-                <h4 className="font-medium">Design System Ready</h4>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Built with Docker Design System tokens and components. Consistent styling and behavior out of the box.
-              </p>
-            </div>
-          </div>
-
-          <div className="h-full">
-            <SimpleChatBubbles />
-          </div>
-        </div>
-      )
-    }
-
-    if (step === 2) {
-      return (
-        <div className="flex h-full gap-6">
-          <div className="flex-1 space-y-4">
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Layers className="h-5 w-5 text-primary" />
-                <h4 className="font-medium text-sm">App Tree Assets</h4>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Docker logos, icons, and illustrations ready to use. Just ask v0: "Add the Docker logo"
-              </p>
-            </div>
-
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Code className="h-5 w-5 text-primary" />
-                <h4 className="font-medium text-sm">shadcn/ui Components</h4>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Full component library knowledge. Request tables, forms, dialogs - it's all built-in.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Palette className="h-5 w-5 text-primary" />
-                <h4 className="font-medium text-sm">DDS Foundation Tokens</h4>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Colors, typography, spacing - all Docker Design System tokens are pre-configured.
-              </p>
-            </div>
-
-            <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="h-5 w-5 text-primary" />
-                <h4 className="font-medium text-sm text-primary">Deep Interactions</h4>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                <strong>v0.dev + DDS is fully versed!</strong> Complex interactions, animations, advanced patterns -
-                just ask.
-              </p>
-            </div>
-          </div>
-
-          <div className="w-1/3">
-            <DesignTokensShowcase />
-          </div>
-        </div>
-      )
-    }
-
-    return null
-  }
-
-  const typographyCard = {
-    title: "Typography Showcase",
-    prompt: "Display comprehensive typography examples using Docker Design System tokens",
-    component: (
-      <div className="space-y-4 text-left">
-        <div>
-          <h1 className="text-4xl font-bold font-heading mb-2">The quick brown fox</h1>
-          <p className="text-sm text-muted-foreground">H1 Heading - font-heading, text-4xl, font-bold</p>
-        </div>
-        <div>
-          <h2 className="text-2xl font-semibold font-heading mb-2">jumps over the lazy dog</h2>
-          <p className="text-sm text-muted-foreground">H2 Heading - font-heading, text-2xl, font-semibold</p>
-        </div>
-        <div>
-          <h3 className="text-lg font-medium font-heading mb-2">The five boxing wizards</h3>
-          <p className="text-sm text-muted-foreground">H3 Heading - font-heading, text-lg, font-medium</p>
-        </div>
-        <div>
-          <p className="text-base font-sans mb-2">
-            Body text using the Docker Design System font stack. Perfect for paragraphs and content.
-          </p>
-          <p className="text-sm text-muted-foreground mt-1">Body Text - font-sans, text-base</p>
-        </div>
-        <div>
-          <a href="#" className="text-primary hover:underline font-medium">
-            This is a link example
-          </a>
-          <p className="text-sm text-muted-foreground mt-1">Link - text-primary, hover:underline</p>
-        </div>
-        <div>
-          <label className="text-sm font-medium">Form Label</label>
-          <p className="text-sm text-muted-foreground mt-1">Label - text-sm, font-medium</p>
-        </div>
-      </div>
-    ),
-  }
-
-  if (currentStep === 3) {
-    return (
-      <div className="min-h-screen bg-primary">
-        <ConfettiOverlay isActive={showConfetti} onComplete={handleConfettiComplete} />
-
-        <AppHeader />
-
-        <main className="p-6">
-          <div className="mb-6">
-            <Button variant="outline" onClick={handleBackToStepper} className="mb-4">
-              ← Back to Onboarding
+          <nav className="space-y-1">
+            <Button
+              variant={activeTab === "dashboard" ? "secondary" : "ghost"}
+              className="w-full justify-start"
+              onClick={() => setActiveTab("dashboard")}
+            >
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Dashboards
             </Button>
-            <h1 className="text-3xl font-bold text-white mb-2">Component Showcase</h1>
-            <p className="text-white/80 flex items-center gap-2">
-              Your first prompt could say something like, "get rid of the onboarding UX and show me a DHI utility view"
-              <Button
-                variant="secondary"
-                size="sm"
-                className="whitespace-nowrap flex items-center gap-1"
-                onClick={() => copyToClipboard("get rid of the onboarding UX and show me a DHI utility view")}
-              >
-                <Copy className="h-3 w-3 mr-2" />
-                Copy
-              </Button>
-            </p>
-          </div>
+            <Button
+              variant={activeTab === "models" ? "secondary" : "ghost"}
+              className="w-full justify-start"
+              onClick={() => setActiveTab("models")}
+            >
+              <Zap className="mr-2 h-4 w-4" />
+              Models
+            </Button>
+            <Button
+              variant={activeTab === "integrations" ? "secondary" : "ghost"}
+              className="w-full justify-start"
+              onClick={() => setActiveTab("integrations")}
+            >
+              <Search className="mr-2 h-4 w-4" />
+              Integrations
+            </Button>
+            <Button
+              variant={activeTab === "channels" ? "secondary" : "ghost"}
+              className="w-full justify-start"
+              onClick={() => setActiveTab("channels")}
+            >
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Channels
+            </Button>
+            <Button
+              variant={activeTab === "mcpservers" ? "secondary" : "ghost"}
+              className="w-full justify-start"
+              onClick={() => setActiveTab("mcpservers")}
+            >
+              <Terminal className="mr-2 h-4 w-4" />
+              MCP Servers
+            </Button>
+            <Button
+              variant={activeTab === "settings" ? "secondary" : "ghost"}
+              className="w-full justify-start"
+              onClick={() => setActiveTab("settings")}
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </Button>
+          </nav>
 
-          <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-            {componentCards.map((card, index) => (
-              <Card key={index} className="flex flex-col h-fit rounded-[var(--border-radius)] break-inside-avoid mb-4">
-                <CardContent className="flex-1 p-4">
-                  <h4 className="font-medium text-sm mb-2">{card.title}</h4>
-                  <p className="text-xs text-muted-foreground mb-4">{card.prompt}</p>
-
-                  <div className="bg-muted/30 rounded-md p-3 mb-4 flex items-center justify-center min-h-[60px]">
-                    {card.component}
+          <div className="mt-auto">
+            <Card className="bg-primary/5 border-primary/10">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="bg-primary/10 p-2 rounded-full">
+                    <Zap className="h-4 w-4 text-primary" />
                   </div>
-                </CardContent>
-                <div className="p-4 pt-0 mt-auto">
-                  <Button variant="secondary" size="sm" className="w-full" onClick={() => copyToClipboard(card.prompt)}>
-                    {copiedPrompt === card.prompt ? (
-                      <>
-                        <Check className="h-3 w-3 mr-2" />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3 w-3 mr-2" />
-                        Copy Prompt
-                      </>
-                    )}
-                  </Button>
+                  <h4 className="font-medium text-sm">Gordon Pro</h4>
                 </div>
-              </Card>
-            ))}
-          </div>
-
-          {/* Typography showcase card - full width at bottom */}
-          <div className="mt-8">
-            <Card className="w-full rounded-[var(--border-radius)]">
-              <CardContent className="p-6">
-                <h4 className="font-medium text-lg mb-4">{typographyCard.title}</h4>
-                <p className="text-sm text-muted-foreground mb-6">{typographyCard.prompt}</p>
-
-                <div className="bg-muted/30 rounded-md p-6">{typographyCard.component}</div>
-
-                <div className="mt-4">
-                  <Button variant="secondary" onClick={() => copyToClipboard(typographyCard.prompt)}>
-                    {copiedPrompt === typographyCard.prompt ? (
-                      <>
-                        <Check className="h-3 w-3 mr-2" />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3 w-3 mr-2" />
-                        Copy Prompt
-                      </>
-                    )}
-                  </Button>
-                </div>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Upgrade to access advanced AI features and priority support.
+                </p>
+                <Button size="sm" className="w-full">
+                  Upgrade Plan
+                </Button>
               </CardContent>
             </Card>
           </div>
-          {/* Footer */}
-          <footer className="mt-16 border-t border-white/20 pt-8">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-8 mb-8">
-                {/* Logo and Badge */}
-                <div className="flex flex-col items-start">
-                  <div className="flex items-center gap-3 mb-4">
-                    <img src="/sub-marks/subMarkWhite.svg" alt="Docker" className="h-8" />
-                    <Badge variant="outline" className="border-white/30 text-white">
-                      v0.dev + DDS
-                    </Badge>
-                  </div>
-                  <p className="text-white/70 text-sm">
-                    A proof of concept showcasing the integration of v0.dev with the Docker Design System.
-                  </p>
-                </div>
+        </aside>
 
-                {/* Resources */}
+        {/* Main content */}
+        <main className="flex-1 p-6">
+          {/* Dashboard Tab */}
+          {activeTab === "dashboard" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-white font-medium mb-4">Resources</h3>
-                  <div className="space-y-2">
-                    <a
-                      href="https://v0.dev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
-                    >
-                      <Rocket className="mr-2 h-4 w-4" />
-                      v0.dev Platform
-                      <ExternalLink className="ml-auto h-3 w-3" />
-                    </a>
-                    <a
-                      href="https://github.com/docker/design"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
-                    >
-                      <Github className="mr-2 h-4 w-4" />
-                      Docker Design GitHub
-                      <ExternalLink className="ml-auto h-3 w-3" />
-                    </a>
-                    <a
-                      href="#docs"
-                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
-                    >
-                      <BookOpen className="mr-2 h-4 w-4" />
-                      Documentation
-                    </a>
-                    <a
-                      href="#components"
-                      className="flex items-center text-white/70 hover:text-white text-sm transition-colors"
-                    >
-                      <Palette className="mr-2 h-4 w-4" />
-                      Design System
-                    </a>
-                  </div>
+                  <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+                  <p className="text-muted-foreground">Overall insights for Gordon AI across your organization.</p>
                 </div>
-
-                {/* Get Involved */}
-                <div className="flex justify-end">
-                  <Button variant="secondary" size="sm" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                    ↑ Back to Top
+                <div className="flex items-center gap-2">
+                  <Select value={timeRange} onValueChange={setTimeRange}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select time range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="24h">Last 24 hours</SelectItem>
+                      <SelectItem value="7d">Last 7 days</SelectItem>
+                      <SelectItem value="30d">Last 30 days</SelectItem>
+                      <SelectItem value="90d">Last 90 days</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button variant="outline" size="icon">
+                    <RefreshCw className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
 
-              {/* Bottom bar */}
-              <div className="border-t border-white/20 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <div className="flex items-center gap-4 mb-4 md:mb-0">
-                  <div className="inline-flex items-center justify-center rounded-sm border border-white/30 px-2.5 py-0.5 text-xs font-semibold text-white">
-                    v0.1.0-alpha
-                  </div>
-                  <p className="text-xs text-white/60">&copy; {new Date().getFullYear()} Docker, Inc.</p>
-                </div>
-                <p className="text-xs text-white/60">Built with v0.dev + Docker Design System</p>
-              </div>
-            </div>
-          </footer>
-          <Dialog open={showWelcomeModal} onOpenChange={setShowWelcomeModal}>
-            <DialogContent className="sm:max-w-[500px] rounded-[var(--border-radius)]">
-              <DialogHeader className="text-center space-y-4">
-                <div className="flex justify-center">
-                  <Badge className="bg-primary text-primary-foreground px-3 py-1">v0.dev + DDS</Badge>
-                </div>
-                <DialogTitle className="text-2xl font-bold">Welcome to the Showcase, Dockhand! 🚢</DialogTitle>
-                <DialogDescription className="text-base leading-relaxed">
-                  You're now ready to build beautiful UI components with the power of v0.dev and Docker Design System.
-                  <br />
-                  <br />
-                  <strong>Copy any prompt below</strong> and paste it into v0.dev chat to generate components with
-                  perfect DDS styling.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex justify-center pt-2">
-                <Button onClick={() => setShowWelcomeModal(false)} size="lg">
-                  Start Building
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </main>
-      </div>
-    )
-  }
+              {/* Status cards */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Gordon AI Status</CardTitle>
+                    <ShieldCheck className="h-4 w-4 text-green-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center space-x-2">
+                      <div className="h-2 w-2 rounded-full bg-green-500" />
+                      <p className="text-xs text-muted-foreground">Operational</p>
+                    </div>
+                    <div className="mt-3 flex items-center">
+                      <p className="text-2xl font-bold">99.9%</p>
+                      <Badge className="ml-2" variant="secondary">
+                        Uptime
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
 
-  return (
-    <div className="h-screen bg-primary flex flex-col">
-      <AppHeader />
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Total Queries</CardTitle>
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">12,543</div>
+                    <p className="text-xs text-muted-foreground">+19% from last period</p>
+                    <Progress className="mt-3" value={78} />
+                  </CardContent>
+                </Card>
 
-      <main className="flex-1 p-6 min-h-0">
-        <div className="w-full h-full overflow-hidden">
-          <div
-            className="flex w-[300%] h-full transition-transform duration-300 ease-in-out"
-            style={{ transform: `translateX(-${currentStep * 33.333}%)` }}
-          >
-            {[0, 1, 2].map((index) => (
-              <div key={index} className="w-1/3 h-full px-3 flex-shrink-0">
-                <Card className="w-full h-full flex flex-col">
-                  <div className="py-3 px-6 flex-shrink-0">
-                    <h2 className="text-xl font-semibold">{steps[index].title}</h2>
-                  </div>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Active Channels</CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">4</div>
+                    <p className="text-xs text-muted-foreground">Desktop, VSCode, Web, CLI</p>
+                    <Progress className="mt-3" value={92} />
+                  </CardContent>
+                </Card>
 
-                  <CardContent className="flex-1 p-6 overflow-y-auto min-h-0">{renderCardContent(index)}</CardContent>
-
-                  <div className="flex justify-between py-3 px-6 flex-shrink-0">
-                    <Button variant="outline" size="lg" disabled={currentStep === 0} onClick={handlePrevious}>
-                      Previous
-                    </Button>
-
-                    <Button size="lg" onClick={handleNext}>
-                      {currentStep === 2 ? "Get Started" : "Next"}
-                    </Button>
-                  </div>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">237</div>
+                    <p className="text-xs text-muted-foreground">+12 new today</p>
+                    <Progress className="mt-3" value={65} />
+                  </CardContent>
                 </Card>
               </div>
-            ))}
-          </div>
-        </div>
-      </main>
 
-      <div className="flex justify-center py-5 flex-shrink-0">
-        <Stepper steps={steps.length} currentStep={currentStep} onStepClick={handleStepClick} />
+              {/* Feature Usage Overview */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Model Usage</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-[300px] flex items-center justify-center bg-muted/30 rounded-md">
+                      <div className="space-y-4 w-full px-8">
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>GPT-4o</span>
+                            <span>68%</span>
+                          </div>
+                          <Progress value={68} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>Claude 3 Opus</span>
+                            <span>22%</span>
+                          </div>
+                          <Progress value={22} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>Llama 3</span>
+                            <span>8%</span>
+                          </div>
+                          <Progress value={8} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>Other Models</span>
+                            <span>2%</span>
+                          </div>
+                          <Progress value={2} className="h-2" />
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Channel Distribution</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-[300px] flex items-center justify-center bg-muted/30 rounded-md">
+                      <div className="space-y-4 w-full px-8">
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>Docker Desktop</span>
+                            <span>45%</span>
+                          </div>
+                          <Progress value={45} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>VS Code Extension</span>
+                            <span>30%</span>
+                          </div>
+                          <Progress value={30} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>Web Interface</span>
+                            <span>15%</span>
+                          </div>
+                          <Progress value={15} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span>CLI</span>
+                            <span>10%</span>
+                          </div>
+                          <Progress value={10} className="h-2" />
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Integration Health and Recent Activity */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader className="flex justify-between">
+                    <CardTitle>Integration Health</CardTitle>
+                    <Button variant="ghost" size="sm">
+                      View all
+                    </Button>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between p-2 rounded-md bg-green-50">
+                        <div className="flex items-center gap-2">
+                          <div className="h-2 w-2 rounded-full bg-green-500" />
+                          <span className="font-medium">GitHub</span>
+                        </div>
+                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                          Healthy
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-md bg-green-50">
+                        <div className="flex items-center gap-2">
+                          <div className="h-2 w-2 rounded-full bg-green-500" />
+                          <span className="font-medium">Docker Hub</span>
+                        </div>
+                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                          Healthy
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-md bg-amber-50">
+                        <div className="flex items-center gap-2">
+                          <div className="h-2 w-2 rounded-full bg-amber-500" />
+                          <span className="font-medium">Jira</span>
+                        </div>
+                        <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                          Degraded
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-md bg-red-50">
+                        <div className="flex items-center gap-2">
+                          <div className="h-2 w-2 rounded-full bg-red-500" />
+                          <span className="font-medium">AWS CloudWatch</span>
+                        </div>
+                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+                          Error
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex justify-between">
+                    <CardTitle>Recent Activity</CardTitle>
+                    <Button variant="ghost" size="sm">
+                      View all
+                    </Button>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {recentActivity.slice(0, 5).map((activity) => (
+                        <div key={activity.id} className="flex items-start gap-3">
+                          <div
+                            className={`mt-0.5 h-2 w-2 rounded-full ${activity.user === "Gordon AI" ? "bg-primary" : "bg-muted-foreground"}`}
+                          />
+                          <div>
+                            <p className="text-sm font-medium">
+                              {activity.user}{" "}
+                              <span className="font-normal text-muted-foreground">{activity.action}</span>
+                            </p>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <span>{activity.resource}</span>
+                              <span>•</span>
+                              <span>{activity.time}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Governance and Compliance */}
+              {/* Overview of Key Sections */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>System Overview</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Quick overview of your Gordon AI configuration across all sections
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-medium">AI Models</h3>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            4 Active
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">GPT-4o primary, 3 fallback models configured</p>
+                      </div>
+                      <div className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-medium">Integrations</h3>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            8 Connected
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">6 healthy, 2 need attention</p>
+                      </div>
+                      <div className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-medium">Channels</h3>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            6 Active
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Desktop, GitHub, Web, VS Code, CLI, Slack</p>
+                      </div>
+                      <div className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-medium">MCP Servers</h3>
+                          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                            8 Configured
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">1 server needs attention</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Models Tab */}
+          {activeTab === "models" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight">Models</h1>
+                  <p className="text-muted-foreground">
+                    Configure AI models available to Gordon and view usage analytics.
+                  </p>
+                </div>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Model
+                </Button>
+              </div>
+
+              {/* Model Usage Overview */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Active Models</CardTitle>
+                    <Zap className="h-4 w-4 text-green-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">4</div>
+                    <p className="text-xs text-muted-foreground">2 primary, 2 fallback</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Total Requests</CardTitle>
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">45,231</div>
+                    <p className="text-xs text-muted-foreground">+23% from last week</p>
+                    <Progress className="mt-3" value={85} />
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Avg Response Time</CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">1.8s</div>
+                    <p className="text-xs text-muted-foreground">-0.2s improvement</p>
+                    <Progress className="mt-3" value={75} />
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Cost This Month</CardTitle>
+                    <CreditCard className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">$1,247</div>
+                    <p className="text-xs text-muted-foreground">Within budget limit</p>
+                    <Progress className="mt-3" value={62} />
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Model Configuration */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Model Configuration</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Configure which AI models Gordon can use and their priority order
+                  </p>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Model</TableHead>
+                        <TableHead>Provider</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Usage (7d)</TableHead>
+                        <TableHead>Avg Response</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-green-500" />
+                            GPT-4o
+                          </div>
+                        </TableCell>
+                        <TableCell>OpenAI</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">Primary</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={68} className="w-16 h-2" />
+                            <span className="text-sm">68%</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>1.2s</TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Model</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-green-500" />
+                            Claude 3 Opus
+                          </div>
+                        </TableCell>
+                        <TableCell>Anthropic</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline">Fallback</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={22} className="w-16 h-2" />
+                            <span className="text-sm">22%</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>2.1s</TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Model</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-green-500" />
+                            Llama 3.1 70B
+                          </div>
+                        </TableCell>
+                        <TableCell>Meta (via Groq)</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline">Fallback</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={8} className="w-16 h-2" />
+                            <span className="text-sm">8%</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>0.8s</TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Model</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-amber-500" />
+                            GPT-3.5 Turbo
+                          </div>
+                        </TableCell>
+                        <TableCell>OpenAI</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                            Standby
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline">Emergency</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={2} className="w-16 h-2" />
+                            <span className="text-sm">2%</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>0.6s</TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Model</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>Activate</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Usage Analytics and Model Settings */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Usage Analytics</CardTitle>
+                    <p className="text-sm text-muted-foreground">Model usage distribution over the last 7 days</p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-[300px] flex items-center justify-center bg-muted/30 rounded-md">
+                      <div className="space-y-4 w-full px-8">
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span className="flex items-center gap-2">
+                              <div className="w-3 h-3 rounded-sm bg-blue-500" />
+                              GPT-4o
+                            </span>
+                            <span>30,742 requests</span>
+                          </div>
+                          <Progress value={68} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span className="flex items-center gap-2">
+                              <div className="w-3 h-3 rounded-sm bg-purple-500" />
+                              Claude 3 Opus
+                            </span>
+                            <span>9,951 requests</span>
+                          </div>
+                          <Progress value={22} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span className="flex items-center gap-2">
+                              <div className="w-3 h-3 rounded-sm bg-green-500" />
+                              Llama 3.1 70B
+                            </span>
+                            <span>3,618 requests</span>
+                          </div>
+                          <Progress value={8} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between text-sm mb-1">
+                            <span className="flex items-center gap-2">
+                              <div className="w-3 h-3 rounded-sm bg-gray-500" />
+                              GPT-3.5 Turbo
+                            </span>
+                            <span>920 requests</span>
+                          </div>
+                          <Progress value={2} className="h-2" />
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Model Settings</CardTitle>
+                    <p className="text-sm text-muted-foreground">Global configuration for model behavior</p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="fallback-strategy">Fallback Strategy</Label>
+                      <Select defaultValue="priority">
+                        <SelectTrigger id="fallback-strategy">
+                          <SelectValue placeholder="Select fallback strategy" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="priority">Priority Order</SelectItem>
+                          <SelectItem value="fastest">Fastest Response</SelectItem>
+                          <SelectItem value="cheapest">Lowest Cost</SelectItem>
+                          <SelectItem value="balanced">Balanced</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="timeout">Request Timeout (seconds)</Label>
+                      <Input id="timeout" type="number" defaultValue="30" />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="retry-attempts">Max Retry Attempts</Label>
+                      <Input id="retry-attempts" type="number" defaultValue="3" />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Auto-failover</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Automatically switch to fallback models on failure
+                        </p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Cost Monitoring</Label>
+                        <p className="text-sm text-muted-foreground">Alert when monthly costs exceed budget</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full">Save Configuration</Button>
+                  </CardFooter>
+                </Card>
+              </div>
+
+              {/* Gordon AI Recommendations */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gordon AI Recommendations</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    AI-powered suggestions for optimizing your model configuration
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <Info className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">Cost Optimization Opportunity</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Consider using Llama 3.1 70B for more routine queries. It's 60% cheaper than GPT-4o with
+                          similar performance for basic Docker tasks.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Not Now
+                          </Button>
+                          <Button size="sm">Configure Auto-routing</Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <AlertCircle className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">Performance Alert</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Claude 3 Opus response times have increased by 15% this week. Consider adjusting the fallback
+                          threshold or checking API status.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Ignore
+                          </Button>
+                          <Button size="sm">Check Status</Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Users Tab */}
+          {activeTab === "integrations" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight">Integrations</h1>
+                  <p className="text-muted-foreground">
+                    Connect external tools and data sources that Gordon can access in real-time.
+                  </p>
+                </div>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Integration
+                </Button>
+              </div>
+
+              {/* Integration Status Overview */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Active Integrations</CardTitle>
+                    <ShieldCheck className="h-4 w-4 text-green-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">8</div>
+                    <p className="text-xs text-muted-foreground">6 healthy, 2 need attention</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Data Sources</CardTitle>
+                    <FileText className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">1.2M</div>
+                    <p className="text-xs text-muted-foreground">Documents indexed</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">API Calls Today</CardTitle>
+                    <RefreshCw className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">2,847</div>
+                    <p className="text-xs text-muted-foreground">+12% from yesterday</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Last Sync</CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">5m</div>
+                    <p className="text-xs text-muted-foreground">ago</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Search and Filter */}
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search integrations..."
+                    className="pl-8"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter by status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Integrations</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="error">Needs Attention</SelectItem>
+                    <SelectItem value="disabled">Disabled</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="icon">
+                  <Filter className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {/* Integrations Table */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Connected Integrations</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Manage external data sources and tools that Gordon can access
+                  </p>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Service</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Last Sync</TableHead>
+                        <TableHead>Documents</TableHead>
+                        <TableHead>Usage</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <div className="w-4 h-4 bg-blue-600 rounded-sm flex items-center justify-center">
+                                <span className="text-white text-xs font-bold">N</span>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="font-medium">Notion</div>
+                              <div className="text-sm text-muted-foreground">Engineering Wiki</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>Documentation</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>2 mins ago</TableCell>
+                        <TableCell>1,247</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={78} className="w-16 h-2" />
+                            <span className="text-sm">High</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Force Sync</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disconnect</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                              <MessageSquare className="h-4 w-4 text-purple-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Slack</div>
+                              <div className="text-sm text-muted-foreground">#engineering, #devops</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>Communication</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>1 min ago</TableCell>
+                        <TableCell>8,432</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={92} className="w-16 h-2" />
+                            <span className="text-sm">High</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Force Sync</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disconnect</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <Users className="h-4 w-4 text-blue-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Confluence</div>
+                              <div className="text-sm text-muted-foreground">Product Documentation</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>Documentation</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>5 mins ago</TableCell>
+                        <TableCell>892</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={45} className="w-16 h-2" />
+                            <span className="text-sm">Medium</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Force Sync</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disconnect</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                              <FileText className="h-4 w-4 text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Google Drive</div>
+                              <div className="text-sm text-muted-foreground">Shared Documents</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>File Storage</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                            Syncing
+                          </Badge>
+                        </TableCell>
+                        <TableCell>15 mins ago</TableCell>
+                        <TableCell>2,156</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={23} className="w-16 h-2" />
+                            <span className="text-sm">Low</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Force Sync</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disconnect</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                              <CreditCard className="h-4 w-4 text-orange-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Salesforce</div>
+                              <div className="text-sm text-muted-foreground">Customer Data</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>CRM</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+                            Error
+                          </Badge>
+                        </TableCell>
+                        <TableCell>2 hours ago</TableCell>
+                        <TableCell>0</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={0} className="w-16 h-2" />
+                            <span className="text-sm">None</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Retry Connection</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disconnect</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Available Integrations and Sync Settings */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Available Integrations</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Popular tools and services you can connect to Gordon
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <FileText className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Jira</div>
+                            <div className="text-sm text-muted-foreground">Project Management</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Connect
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <Users className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">GitHub</div>
+                            <div className="text-sm text-muted-foreground">Code Repository</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Connect
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Microsoft Teams</div>
+                            <div className="text-sm text-muted-foreground">Communication</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Connect
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <FileText className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">SharePoint</div>
+                            <div className="text-sm text-muted-foreground">Document Management</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Connect
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Sync Settings</CardTitle>
+                    <p className="text-sm text-muted-foreground">Configure how Gordon syncs and indexes your data</p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="sync-frequency">Sync Frequency</Label>
+                      <Select defaultValue="15min">
+                        <SelectTrigger id="sync-frequency">
+                          <SelectValue placeholder="Select sync frequency" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="5min">Every 5 minutes</SelectItem>
+                          <SelectItem value="15min">Every 15 minutes</SelectItem>
+                          <SelectItem value="1hour">Every hour</SelectItem>
+                          <SelectItem value="6hours">Every 6 hours</SelectItem>
+                          <SelectItem value="daily">Daily</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="index-depth">Index Depth</Label>
+                      <Select defaultValue="full">
+                        <SelectTrigger id="index-depth">
+                          <SelectValue placeholder="Select index depth" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="metadata">Metadata only</SelectItem>
+                          <SelectItem value="summary">Summary + metadata</SelectItem>
+                          <SelectItem value="full">Full content</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Real-time Updates</Label>
+                        <p className="text-sm text-muted-foreground">Enable webhooks for instant updates</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Auto-retry Failed Syncs</Label>
+                        <p className="text-sm text-muted-foreground">Automatically retry failed synchronizations</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full">Save Settings</Button>
+                  </CardFooter>
+                </Card>
+              </div>
+
+              {/* Gordon AI Integration Insights */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gordon AI Integration Insights</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    AI-powered recommendations for optimizing your integrations
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <Info className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">Salesforce Connection Issue</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          The Salesforce integration has been failing for 2 hours. This appears to be due to an expired
+                          API token. Gordon recommends refreshing the authentication.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Ignore
+                          </Button>
+                          <Button size="sm">Refresh Token</Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <AlertCircle className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">High Usage Detected</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Slack integration is generating high API usage. Consider adjusting sync frequency or filtering
+                          channels to reduce costs and improve performance.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Not Now
+                          </Button>
+                          <Button size="sm">Optimize Settings</Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Channels Tab */}
+          {activeTab === "channels" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight">Channels</h1>
+                  <p className="text-muted-foreground">
+                    Configure where Gordon can interact with users and manage channel-specific capabilities.
+                  </p>
+                </div>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Channel
+                </Button>
+              </div>
+
+              {/* Channel Status Overview */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Active Channels</CardTitle>
+                    <ShieldCheck className="h-4 w-4 text-green-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">6</div>
+                    <p className="text-xs text-muted-foreground">4 fully configured</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Total Interactions</CardTitle>
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">12,543</div>
+                    <p className="text-xs text-muted-foreground">+19% from last week</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Proactive Actions</CardTitle>
+                    <Zap className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">847</div>
+                    <p className="text-xs text-muted-foreground">Gordon-initiated</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Response Time</CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">1.2s</div>
+                    <p className="text-xs text-muted-foreground">Average across channels</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Channel Configuration */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Channel Configuration</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Manage where Gordon can interact and what capabilities are available on each channel
+                  </p>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Channel</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Capabilities</TableHead>
+                        <TableHead>Proactive Mode</TableHead>
+                        <TableHead>Usage (7d)</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <Terminal className="h-4 w-4 text-blue-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Docker Desktop</div>
+                              <div className="text-sm text-muted-foreground">Native integration</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              Chat
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Commands
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Monitoring
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Switch defaultChecked />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={68} className="w-16 h-2" />
+                            <span className="text-sm">5,234</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Channel</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                              <Users className="h-4 w-4 text-purple-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">GitHub PRs</div>
+                              <div className="text-sm text-muted-foreground">Pull request reviews</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              Reviews
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Comments
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Suggestions
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Switch defaultChecked />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={45} className="w-16 h-2" />
+                            <span className="text-sm">2,891</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Channel</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                              <MessageSquare className="h-4 w-4 text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Web Interface</div>
+                              <div className="text-sm text-muted-foreground">Browser-based chat</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              Chat
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              File Upload
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Dashboard
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Switch />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={32} className="w-16 h-2" />
+                            <span className="text-sm">1,847</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Channel</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                              <FileText className="h-4 w-4 text-orange-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">VS Code Extension</div>
+                              <div className="text-sm text-muted-foreground">IDE integration</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              Code Help
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Debugging
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Suggestions
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Switch defaultChecked />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={28} className="w-16 h-2" />
+                            <span className="text-sm">1,523</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Channel</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                              <Terminal className="h-4 w-4 text-gray-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">CLI</div>
+                              <div className="text-sm text-muted-foreground">Command line interface</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              Commands
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Scripts
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Switch />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={15} className="w-16 h-2" />
+                            <span className="text-sm">892</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>View Analytics</DropdownMenuItem>
+                              <DropdownMenuItem>Test Channel</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <MessageSquare className="h-4 w-4 text-blue-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Slack</div>
+                              <div className="text-sm text-muted-foreground">Team communication</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                            Configured
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              Mentions
+                            </Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              Alerts
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Switch />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={8} className="w-16 h-2" />
+                            <span className="text-sm">234</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Activate</DropdownMenuItem>
+                              <DropdownMenuItem>Test Channel</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Channel Settings and Available Channels */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Available Channels</CardTitle>
+                    <p className="text-sm text-muted-foreground">Additional channels you can enable for Gordon</p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <FileText className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Jira</div>
+                            <div className="text-sm text-muted-foreground">Issue tracking & project management</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Enable
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Microsoft Teams</div>
+                            <div className="text-sm text-muted-foreground">Team collaboration</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Enable
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <Terminal className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">JetBrains IDEs</div>
+                            <div className="text-sm text-muted-foreground">IntelliJ, PyCharm, etc.</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Enable
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Discord</div>
+                            <div className="text-sm text-muted-foreground">Community support</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Enable
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Global Channel Settings</CardTitle>
+                    <p className="text-sm text-muted-foreground">Configure default behavior across all channels</p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="response-style">Default Response Style</Label>
+                      <Select defaultValue="helpful">
+                        <SelectTrigger id="response-style">
+                          <SelectValue placeholder="Select response style" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="concise">Concise</SelectItem>
+                          <SelectItem value="helpful">Helpful</SelectItem>
+                          <SelectItem value="detailed">Detailed</SelectItem>
+                          <SelectItem value="technical">Technical</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="proactive-frequency">Proactive Suggestion Frequency</Label>
+                      <Select defaultValue="moderate">
+                        <SelectTrigger id="proactive-frequency">
+                          <SelectValue placeholder="Select frequency" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="minimal">Minimal</SelectItem>
+                          <SelectItem value="moderate">Moderate</SelectItem>
+                          <SelectItem value="frequent">Frequent</SelectItem>
+                          <SelectItem value="aggressive">Aggressive</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Cross-channel Learning</Label>
+                        <p className="text-sm text-muted-foreground">Share context between channels</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Auto-escalation</Label>
+                        <p className="text-sm text-muted-foreground">Escalate complex issues to human support</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Usage Analytics</Label>
+                        <p className="text-sm text-muted-foreground">Collect interaction data for improvements</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full">Save Global Settings</Button>
+                  </CardFooter>
+                </Card>
+              </div>
+
+              {/* Gordon AI Channel Insights */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gordon AI Channel Insights</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    AI-powered recommendations for optimizing channel performance
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <Info className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">High Engagement on GitHub PRs</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Gordon's proactive suggestions on GitHub PRs have a 89% acceptance rate. Consider enabling
+                          similar proactive features on other development channels like VS Code.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Not Now
+                          </Button>
+                          <Button size="sm">Enable Proactive Mode</Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <AlertCircle className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">Slack Channel Underutilized</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          The Slack channel is configured but has low usage. Consider activating it and promoting
+                          Gordon's capabilities to your team, or enabling proactive notifications for important events.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Keep Inactive
+                          </Button>
+                          <Button size="sm">Activate & Promote</Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* MCP Servers Tab */}
+          {activeTab === "mcpservers" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight">MCP Servers</h1>
+                  <p className="text-muted-foreground">
+                    Configure Model Context Protocol servers that Gordon can access for enhanced capabilities.
+                  </p>
+                </div>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add MCP Server
+                </Button>
+              </div>
+
+              {/* MCP Status Overview */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Active MCPs</CardTitle>
+                    <ShieldCheck className="h-4 w-4 text-green-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">8</div>
+                    <p className="text-xs text-muted-foreground">6 healthy, 2 need attention</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Total Requests</CardTitle>
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">15,847</div>
+                    <p className="text-xs text-muted-foreground">+24% from last week</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Available Tools</CardTitle>
+                    <Zap className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">47</div>
+                    <p className="text-xs text-muted-foreground">Across all MCPs</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Avg Response Time</CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">0.8s</div>
+                    <p className="text-xs text-muted-foreground">Across all servers</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Search and Filter */}
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search MCP servers..."
+                    className="pl-8"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter by status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Servers</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="error">Needs Attention</SelectItem>
+                    <SelectItem value="disabled">Disabled</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="icon">
+                  <Filter className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {/* MCP Servers Configuration */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Configured MCP Servers</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Manage Model Context Protocol servers and their access permissions
+                  </p>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>MCP Server</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Tools</TableHead>
+                        <TableHead>Channels</TableHead>
+                        <TableHead>Teams/Users</TableHead>
+                        <TableHead>Usage (7d)</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                              <Users className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">GitHub</div>
+                              <div className="text-sm text-muted-foreground">Repository management & code analysis</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              12 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Desktop
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              CLI
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">All teams</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={78} className="w-16 h-2" />
+                            <span className="text-sm">4,231</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                              <FileText className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Atlassian</div>
+                              <div className="text-sm text-muted-foreground">Jira & Confluence integration</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              8 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Desktop
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Slack
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">Engineering, Product</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={45} className="w-16 h-2" />
+                            <span className="text-sm">1,892</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                              <div className="w-4 h-4 bg-white rounded-sm flex items-center justify-center">
+                                <span className="text-black text-xs font-bold">N</span>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="font-medium">Notion</div>
+                              <div className="text-sm text-muted-foreground">Knowledge base & documentation</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              6 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Desktop
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              VS Code
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">All teams</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={62} className="w-16 h-2" />
+                            <span className="text-sm">2,847</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+                              <MessageSquare className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Slack</div>
+                              <div className="text-sm text-muted-foreground">Team communication & workflow</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              9 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Slack
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">Engineering, DevOps</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={34} className="w-16 h-2" />
+                            <span className="text-sm">1,456</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                              <CreditCard className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Salesforce</div>
+                              <div className="text-sm text-muted-foreground">CRM & customer data</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                            Limited Access
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              5 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">Sales team only</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={12} className="w-16 h-2" />
+                            <span className="text-sm">234</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                              <Terminal className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Docker</div>
+                              <div className="text-sm text-muted-foreground">Container management & registry</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              15 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Desktop
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              CLI
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              VS Code
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">All teams</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={89} className="w-16 h-2" />
+                            <span className="text-sm">5,892</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                              <ShieldCheck className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Docker Scout</div>
+                              <div className="text-sm text-muted-foreground">Security & vulnerability scanning</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              7 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Desktop
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              CLI
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              GitHub
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">DevOps, Security</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={56} className="w-16 h-2" />
+                            <span className="text-sm">1,234</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Manage Access</DropdownMenuItem>
+                              <DropdownMenuItem>View Tools</DropdownMenuItem>
+                              <DropdownMenuItem>Test Connection</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disable</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                              <FileText className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Docker Hub Insights</div>
+                              <div className="text-sm text-muted-foreground">Registry analytics & recommendations</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+                            Error
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              4 tools
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Badge variant="outline" className="text-xs">
+                              Desktop
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              Web
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">DevOps team</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={0} className="w-16 h-2" />
+                            <span className="text-sm">0</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Retry Connection</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Available MCPs and Access Management */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Available MCP Servers</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Popular MCP servers from Docker Hub that you can add
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Microsoft Teams</div>
+                            <div className="text-sm text-muted-foreground">Team collaboration & meetings</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Add
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <FileText className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Linear</div>
+                            <div className="text-sm text-muted-foreground">Issue tracking & project management</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Add
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <Users className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">GitLab</div>
+                            <div className="text-sm text-muted-foreground">DevOps platform & CI/CD</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Add
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <Terminal className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Kubernetes</div>
+                            <div className="text-sm text-muted-foreground">Container orchestration</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Add
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Access Management</CardTitle>
+                    <p className="text-sm text-muted-foreground">Configure team and user access to MCP servers</p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="default-access">Default Access Level</Label>
+                      <Select defaultValue="team-based">
+                        <SelectTrigger id="default-access">
+                          <SelectValue placeholder="Select default access" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all-users">All Users</SelectItem>
+                          <SelectItem value="team-based">Team-based</SelectItem>
+                          <SelectItem value="admin-only">Admin Only</SelectItem>
+                          <SelectItem value="explicit">Explicit Permission</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="audit-logging">Audit Logging</Label>
+                      <Select defaultValue="detailed">
+                        <SelectTrigger id="audit-logging">
+                          <SelectValue placeholder="Select logging level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">None</SelectItem>
+                          <SelectItem value="basic">Basic</SelectItem>
+                          <SelectItem value="detailed">Detailed</SelectItem>
+                          <SelectItem value="full">Full Debug</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Rate Limiting</Label>
+                        <p className="text-sm text-muted-foreground">Limit requests per user/team</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Cross-MCP Data Sharing</Label>
+                        <p className="text-sm text-muted-foreground">Allow MCPs to share context</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Auto-discovery</Label>
+                        <p className="text-sm text-muted-foreground">Automatically detect new MCP servers</p>
+                      </div>
+                      <Switch />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full">Save Access Settings</Button>
+                  </CardFooter>
+                </Card>
+              </div>
+
+              {/* Gordon AI MCP Insights */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gordon AI MCP Insights</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    AI-powered recommendations for optimizing your MCP server configuration
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <AlertCircle className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">Docker Hub Insights Connection Issue</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          The Docker Hub Insights MCP server has been failing for 2 hours. This appears to be due to an
+                          API rate limit. Gordon recommends upgrading your Docker Hub plan or implementing request
+                          throttling.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Ignore
+                          </Button>
+                          <Button size="sm">Configure Throttling</Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <Info className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">High Usage on GitHub MCP</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          The GitHub MCP server is your most used integration with 4,231 requests this week. Consider
+                          enabling it on additional channels like Slack to maximize its value across your team.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Not Now
+                          </Button>
+                          <Button size="sm">Enable on Slack</Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 rounded-lg border p-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <Zap className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium">Salesforce Access Optimization</h4>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Salesforce MCP is currently limited to the Sales team only, but Gordon has detected DevOps
+                          queries that could benefit from customer context. Consider expanding access with appropriate
+                          permissions.
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <Button size="sm" variant="outline">
+                            Keep Restricted
+                          </Button>
+                          <Button size="sm">Review Access</Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Settings Tab */}
+          {activeTab === "settings" && (
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+                <p className="text-muted-foreground">Configure your Docker Gordon AI agent settings.</p>
+              </div>
+
+              <Tabs defaultValue="general">
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="general">General</TabsTrigger>
+                  <TabsTrigger value="ai">AI Configuration</TabsTrigger>
+                  <TabsTrigger value="notifications">Notifications</TabsTrigger>
+                  <TabsTrigger value="billing">Billing</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="general" className="space-y-4 pt-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>General Settings</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="company-name">Company Name</Label>
+                        <Input id="company-name" defaultValue="Acme Corporation" />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="admin-email">Admin Email</Label>
+                        <Input id="admin-email" defaultValue="admin@acmecorp.com" />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="timezone">Timezone</Label>
+                        <Select defaultValue="utc">
+                          <SelectTrigger id="timezone">
+                            <SelectValue placeholder="Select timezone" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="utc">UTC (Coordinated Universal Time)</SelectItem>
+                            <SelectItem value="est">EST (Eastern Standard Time)</SelectItem>
+                            <SelectItem value="pst">PST (Pacific Standard Time)</SelectItem>
+                            <SelectItem value="cet">CET (Central European Time)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label htmlFor="notifications">Notifications</Label>
+                          <p className="text-sm text-muted-foreground">
+                            Receive email notifications for important events
+                          </p>
+                        </div>
+                        <Switch
+                          id="notifications"
+                          checked={notificationsEnabled}
+                          onCheckedChange={setNotificationsEnabled}
+                        />
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-end gap-2">
+                      <Button variant="outline">Cancel</Button>
+                      <Button>Save Changes</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="ai" className="space-y-4 pt-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>AI Configuration</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label htmlFor="auto-scaling">Auto-scaling</Label>
+                          <p className="text-sm text-muted-foreground">
+                            Allow Gordon AI to automatically scale resources
+                          </p>
+                        </div>
+                        <Switch
+                          id="auto-scaling"
+                          checked={autoScalingEnabled}
+                          onCheckedChange={setAutoScalingEnabled}
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label htmlFor="debug-mode">Debug Mode</Label>
+                          <p className="text-sm text-muted-foreground">Enable detailed logging for troubleshooting</p>
+                        </div>
+                        <Switch id="debug-mode" checked={debugModeEnabled} onCheckedChange={setDebugModeEnabled} />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="ai-model">AI Model</Label>
+                        <Select defaultValue="gpt4">
+                          <SelectTrigger id="ai-model">
+                            <SelectValue placeholder="Select AI model" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="gpt4">GPT-4 (Recommended)</SelectItem>
+                            <SelectItem value="gpt35">GPT-3.5 Turbo</SelectItem>
+                            <SelectItem value="claude">Claude 3 Opus</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="response-style">Response Style</Label>
+                        <Select defaultValue="balanced">
+                          <SelectTrigger id="response-style">
+                            <SelectValue placeholder="Select response style" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="concise">Concise</SelectItem>
+                            <SelectItem value="balanced">Balanced</SelectItem>
+                            <SelectItem value="detailed">Detailed</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-end gap-2">
+                      <Button variant="outline">Reset to Defaults</Button>
+                      <Button>Save Changes</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="notifications" className="space-y-4 pt-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Notification Preferences</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label>Security Alerts</Label>
+                          <p className="text-sm text-muted-foreground">Get notified about security vulnerabilities</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label>Performance Alerts</Label>
+                          <p className="text-sm text-muted-foreground">Get notified about performance issues</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label>System Updates</Label>
+                          <p className="text-sm text-muted-foreground">Get notified about system updates</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                          <Label>Weekly Reports</Label>
+                          <p className="text-sm text-muted-foreground">Receive weekly usage and performance reports</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-end gap-2">
+                      <Button variant="outline">Cancel</Button>
+                      <Button>Save Changes</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="billing" className="space-y-4 pt-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Billing Information</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="rounded-lg border p-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-medium">Current Plan</h3>
+                            <div className="flex items-center gap-2 mt-1">
+                              <Badge>Pro</Badge>
+                              <p className="text-sm text-muted-foreground">$99/month</p>
+                            </div>
+                          </div>
+                          <Button variant="outline">Change Plan</Button>
+                        </div>
+                        <div className="mt-4 space-y-2">
+                          <div className="flex items-center justify-between text-sm">
+                            <span>Next billing date</span>
+                            <span className="font-medium">June 15, 2025</span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                            <span>Payment method</span>
+                            <span className="font-medium">Visa ending in 4242</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <h3 className="font-medium">Usage This Month</h3>
+                        <div className="space-y-3">
+                          <div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span>API Queries</span>
+                              <span>8,432 / 10,000</span>
+                            </div>
+                            <Progress value={84} className="h-2 mt-1" />
+                          </div>
+                          <div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span>Container Management</span>
+                              <span>24 / 50</span>
+                            </div>
+                            <Progress value={48} className="h-2 mt-1" />
+                          </div>
+                          <div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span>Storage</span>
+                              <span>45 GB / 100 GB</span>
+                            </div>
+                            <Progress value={45} className="h-2 mt-1" />
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-between">
+                      <Button variant="outline" className="flex items-center gap-2">
+                        <FileText className="h-4 w-4" />
+                        View Invoices
+                      </Button>
+                      <Button className="flex items-center gap-2">
+                        <CreditCard className="h-4 w-4" />
+                        Update Payment Method
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   )
