@@ -133,30 +133,5 @@ export function NavigationTrigger() {
 
 // App header component
 export function AppHeader() {
-  const { setIsOpen } = useNavigation()
-
-  return (
-    <header className="h-20 flex items-center justify-between px-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => setIsOpen(true)}>
-          <Menu className="h-6 w-6 text-white" />
-          <span className="sr-only">Open menu</span>
-        </Button>
-
-        <div className="flex items-center gap-3">
-          <img src="/sub-marks/subMarkWhite.svg" alt="Docker" className="h-8" />
-          <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-2 flex items-center h-5">
-            <span className="text-white text-xs font-medium leading-none">v0.dev+DDS</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
-          Documentation
-        </Button>
-        <Button size="sm">Open v0 Chat</Button>
-      </div>
-    </header>
-  )
+  return null // Return null to remove the header completely
 }
