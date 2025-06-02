@@ -1407,6 +1407,49 @@ export default function AdminConsole() {
                           </DropdownMenu>
                         </TableCell>
                       </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                              <Terminal className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium">Private Registry</div>
+                              <div className="text-sm text-muted-foreground">registry.acmecorp.com</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>Container Registry</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            Active
+                          </Badge>
+                        </TableCell>
+                        <TableCell>3 mins ago</TableCell>
+                        <TableCell>1,847</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Progress value={65} className="w-16 h-2" />
+                            <span className="text-sm">Medium</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>Configure</DropdownMenuItem>
+                              <DropdownMenuItem>Force Sync</DropdownMenuItem>
+                              <DropdownMenuItem>View Logs</DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">Disconnect</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
                     </TableBody>
                   </Table>
                 </CardContent>
@@ -1473,6 +1516,20 @@ export default function AdminConsole() {
                           <div>
                             <div className="font-medium">SharePoint</div>
                             <div className="text-sm text-muted-foreground">Document Management</div>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          Connect
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <Terminal className="h-4 w-4 text-gray-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium">Harbor Registry</div>
+                            <div className="text-sm text-muted-foreground">Enterprise Container Registry</div>
                           </div>
                         </div>
                         <Button size="sm" variant="outline">
